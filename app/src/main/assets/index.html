@@ -7,38 +7,38 @@
 <meta name="claude:viewport-fit-sides" content="cover">
 <style>
 /* Layout: one phone-sized arcade cabinet — header, scrolling screen, 5-tab pixel nav; overlays for onboarding, workouts and dialogs. Colors are set at runtime from the chosen palette. */
-:root{--bg:#1a1433;--panel:#261d4a;--panel2:#33285f;--line:#4a3d85;--a1:#f2b84b;--a2:#ff6b57;--a3:#3fc1b0;--fg:#f6e9d0;--dim:#a79fcf;--onA:#1a1433;--outer:#0f0b20;--fz:1;
+:root{--bg:#1a1433;--panel:#261d4a;--panel2:#33285f;--line:#4a3d85;--a1:#f2b84b;--a2:#ff6b57;--a3:#3fc1b0;--fg:#f6e9d0;--dim:#a79fcf;--onA:#1a1433;--outer:#0f0b20;--fz:1;--dz:1;--bz:1;
   --display:"Press Start 2P","Courier New",monospace;--body:"VT323","Courier New",monospace;color-scheme:dark}
 html,body{height:100%}
-body{margin:0;background:var(--outer);color:var(--fg);font-family:var(--body);font-size:calc(20px*var(--fz));line-height:1.15;box-sizing:border-box;
+body{margin:0;background:var(--outer);color:var(--fg);font-family:var(--body);font-size:calc(20px*var(--fz)*var(--bz));line-height:1.15;box-sizing:border-box;
   padding-block:16px;padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px));display:flex;justify-content:center}
 *{box-sizing:border-box}
 canvas{image-rendering:pixelated;image-rendering:crisp-edges;display:block;flex:none}
-button,a.btn{font:inherit;color:inherit;cursor:pointer}
+button{font:inherit;color:inherit;cursor:pointer}a.btn{cursor:pointer}
 button:disabled{opacity:.4;cursor:default}
 :focus-visible{outline:3px solid var(--a1);outline-offset:2px}
 .app{width:100%;max-width:400px;height:100%;background:var(--bg);display:flex;flex-direction:column;position:relative;overflow:hidden;
   box-shadow:0 0 0 4px var(--line),0 0 0 8px var(--outer),0 0 0 12px var(--panel2)}
 .app.crt::after{content:"";position:absolute;inset:0;pointer-events:none;z-index:20;background:repeating-linear-gradient(0deg,rgba(0,0,0,.10) 0 1px,transparent 1px 3px)}
 header{display:flex;align-items:center;gap:10px;padding:10px 12px;background:var(--panel);border-bottom:4px solid var(--line)}
-.logo{font-family:var(--display);font-size:calc(13px*var(--fz));letter-spacing:1px;color:var(--a1);text-shadow:2px 2px 0 var(--a2)}
-.chip{font-family:var(--display);font-size:calc(7px*var(--fz));padding:6px 6px;background:var(--bg);border:2px solid var(--a3);color:var(--a3);letter-spacing:1px}
+.logo{font-family:var(--display);font-size:calc(13px*var(--fz)*var(--dz));letter-spacing:1px;color:var(--a1);text-shadow:2px 2px 0 var(--a2)}
+.chip{font-family:var(--display);font-size:calc(7px*var(--fz)*var(--dz));padding:6px 6px;background:var(--bg);border:2px solid var(--a3);color:var(--a3);letter-spacing:1px}
 .icon-btn{background:var(--bg);border:2px solid var(--line);padding:5px;display:grid;place-items:center}
 main{flex:1;overflow-y:auto;padding:16px 14px 22px;display:flex;flex-direction:column;gap:14px;min-height:0}
 main::-webkit-scrollbar{width:6px}main::-webkit-scrollbar-thumb{background:var(--line)}
 h1,h2,h3{margin:0;text-wrap:balance;letter-spacing:1px}
-h1{font-family:var(--display);font-size:calc(15px*var(--fz));color:var(--a1);line-height:1.5}
-h2{font-family:var(--display);font-size:calc(10px*var(--fz));color:var(--a1);line-height:1.5}
-h3{font-family:var(--display);font-size:calc(8px*var(--fz));color:var(--fg);line-height:1.6}
+h1{font-family:var(--display);font-size:calc(15px*var(--fz)*var(--dz));color:var(--a1);line-height:1.5}
+h2{font-family:var(--display);font-size:calc(10px*var(--fz)*var(--dz));color:var(--a1);line-height:1.5}
+h3{font-family:var(--display);font-size:calc(8px*var(--fz)*var(--dz));color:var(--fg);line-height:1.6}
 p{margin:0}
-.label{font-family:var(--display);font-size:calc(7px*var(--fz));letter-spacing:1.5px;color:var(--dim);text-transform:uppercase;line-height:1.5}
-.small{font-size:calc(18px*var(--fz));color:var(--dim)}
+.label{font-family:var(--display);font-size:calc(7px*var(--fz)*var(--dz));letter-spacing:1.5px;color:var(--dim);text-transform:uppercase;line-height:1.5}
+.small{font-size:calc(18px*var(--fz)*var(--bz));color:var(--dim)}
 .box{background:var(--panel);border:3px solid var(--line);padding:12px;display:flex;flex-direction:column;gap:10px;box-shadow:4px 4px 0 var(--outer)}
 .row{display:flex;gap:10px;align-items:center;flex-wrap:wrap}
 .spread{justify-content:space-between}
 .nowrap{flex-wrap:nowrap}
 .grow{flex:1;min-width:0}
-.btn{font-family:var(--display);font-size:calc(8px*var(--fz));letter-spacing:1px;padding:12px 12px;background:var(--a2);color:var(--onA);border:0;box-shadow:4px 4px 0 var(--outer);text-transform:uppercase;text-decoration:none;text-align:center;line-height:1.4}
+.btn{font-family:var(--display);font-size:calc(8px*var(--fz)*var(--dz));letter-spacing:1px;padding:12px 12px;background:var(--a2);color:var(--onA);border:0;box-shadow:4px 4px 0 var(--outer);text-transform:uppercase;text-decoration:none;text-align:center;line-height:1.4}
 .btn:active{transform:translate(4px,4px);box-shadow:none}
 .btn.alt{background:var(--a3);color:var(--bg)}
 .btn.ghost{background:var(--panel2);color:var(--fg)}
@@ -46,9 +46,9 @@ p{margin:0}
 .bar{height:14px;background:var(--bg);border:2px solid var(--line);position:relative;overflow:hidden}
 .bar i{position:absolute;inset:0 auto 0 0;background:var(--a1);box-shadow:inset -2px 0 0 rgba(0,0,0,.25)}
 .bar.t i{background:var(--a3)}
-.num{font-family:var(--display);font-size:calc(14px*var(--fz));color:var(--fg);font-variant-numeric:tabular-nums}
+.num{font-family:var(--display);font-size:calc(14px*var(--fz)*var(--dz));color:var(--fg);font-variant-numeric:tabular-nums}
 nav{display:grid;grid-template-columns:repeat(6,1fr);background:var(--panel);border-top:4px solid var(--line)}
-nav button{background:none;border:0;padding:8px 0 7px;display:flex;flex-direction:column;align-items:center;gap:5px;font-family:var(--display);font-size:calc(6px*var(--fz));color:var(--dim);letter-spacing:1px}
+nav button{background:none;border:0;padding:8px 0 7px;display:flex;flex-direction:column;align-items:center;gap:5px;font-family:var(--display);font-size:calc(6px*var(--fz)*var(--dz));color:var(--dim);letter-spacing:1px}
 nav button[aria-current="page"]{color:var(--a1);background:var(--panel2)}
 nav button:not([aria-current="page"]) canvas{opacity:.55}
 .stats{display:grid;grid-template-columns:repeat(3,1fr);gap:8px}
@@ -59,18 +59,18 @@ nav button:not([aria-current="page"]) canvas{opacity:.55}
 .item{display:flex;align-items:center;gap:10px;padding:9px;background:var(--panel2);border:2px solid var(--line);text-align:left;width:100%;color:var(--fg)}
 button.item:hover{border-color:var(--a1)}
 .item .grow{display:flex;flex-direction:column;gap:3px}
-.tag{font-family:var(--display);font-size:calc(6px*var(--fz));padding:4px 5px;background:var(--bg);color:var(--a3);border:1px solid var(--a3);letter-spacing:1px;white-space:nowrap}
+.tag{font-family:var(--display);font-size:calc(6px*var(--fz)*var(--dz));padding:4px 5px;background:var(--bg);color:var(--a3);border:1px solid var(--a3);letter-spacing:1px;white-space:nowrap}
 .tag.c{color:var(--a2);border-color:var(--a2)}
 .tag.s{color:var(--a1);border-color:var(--a1)}
 .field{display:flex;flex-direction:column;gap:6px;flex:1;min-width:0}
-input,select{font-family:var(--body);font-size:calc(22px*var(--fz));background:var(--bg);color:var(--fg);border:2px solid var(--line);padding:5px 8px;width:100%;border-radius:0;min-width:0}
+input,select{font-family:var(--body);font-size:calc(22px*var(--fz)*var(--bz));background:var(--bg);color:var(--fg);border:2px solid var(--line);padding:5px 8px;width:100%;border-radius:0;min-width:0}
 input[type=range]{padding:0;accent-color:var(--a2)}
 input[type=color]{height:40px;padding:2px}
 .seg{display:flex;gap:6px;flex-wrap:wrap}
-.seg button{font-family:var(--display);font-size:calc(7px*var(--fz));padding:9px 8px;background:var(--bg);border:2px solid var(--line);color:var(--dim);letter-spacing:1px}
+.seg button{font-family:var(--display);font-size:calc(7px*var(--fz)*var(--dz));padding:9px 8px;background:var(--bg);border:2px solid var(--line);color:var(--dim);letter-spacing:1px}
 .seg button[aria-pressed="true"]{background:var(--a1);color:var(--bg);border-color:var(--a1)}
 .tabs{display:flex;gap:0;border:3px solid var(--line)}
-.tabs button{flex:1;font-family:var(--display);font-size:calc(7px*var(--fz));padding:10px 2px;background:var(--panel);border:0;color:var(--dim);letter-spacing:1px}
+.tabs button{flex:1;font-family:var(--display);font-size:calc(7px*var(--fz)*var(--dz));padding:10px 2px;background:var(--panel);border:0;color:var(--dim);letter-spacing:1px}
 .tabs button[aria-selected="true"]{background:var(--a1);color:var(--bg)}
 .sw{display:flex;gap:6px;flex-wrap:wrap}
 .sw button{width:30px;height:30px;border:3px solid var(--line);padding:0}
@@ -89,29 +89,29 @@ input[type=color]{height:40px;padding:2px}
 @keyframes bob{50%{transform:translateY(-3px)}}
 @keyframes blink{50%{opacity:.35}}
 .sets{display:flex;gap:8px;flex-wrap:wrap}
-.set{width:52px;height:42px;background:var(--bg);border:2px solid var(--line);font-family:var(--display);font-size:calc(8px*var(--fz));color:var(--dim)}
+.set{width:52px;height:42px;background:var(--bg);border:2px solid var(--line);font-family:var(--display);font-size:calc(8px*var(--fz)*var(--dz));color:var(--dim)}
 .set[aria-pressed="true"]{background:var(--a3);border-color:var(--a3);color:var(--bg)}
 .overlay{position:absolute;inset:0;background:var(--bg);z-index:5;display:flex;flex-direction:column}
 .modal{position:absolute;inset:0;z-index:12;background:rgba(5,3,12,.72);display:flex;align-items:flex-end;justify-content:center;padding:12px}
 .modal .box{width:100%;max-height:92%;overflow-y:auto}
-.toast{position:absolute;left:50%;bottom:84px;transform:translateX(-50%);background:var(--a1);color:var(--bg);font-family:var(--display);font-size:calc(8px*var(--fz));padding:10px 12px;z-index:30;box-shadow:4px 4px 0 var(--outer);white-space:nowrap}
-.note{font-size:calc(17px*var(--fz));color:var(--dim);border-left:4px solid var(--a2);padding-left:8px}
+.toast{position:absolute;left:50%;bottom:84px;transform:translateX(-50%);background:var(--a1);color:var(--bg);font-family:var(--display);font-size:calc(8px*var(--fz)*var(--dz));padding:10px 12px;z-index:30;box-shadow:4px 4px 0 var(--outer);white-space:nowrap}
+.note{font-size:calc(17px*var(--fz)*var(--bz));color:var(--dim);border-left:4px solid var(--a2);padding-left:8px}
 .dots{display:flex;gap:8px;justify-content:center}
 .dots i{width:10px;height:10px;background:var(--line)}
 .dots i.on{background:var(--a1);width:24px}
 .nf{background:#fffdf6;color:#1a1433;padding:10px;font-family:var(--body);border:3px solid var(--line)}
-.nf .t{font-family:var(--display);font-size:calc(11px*var(--fz));letter-spacing:1px;border-bottom:6px solid #1a1433;padding-bottom:6px}
-.nf .r{display:flex;justify-content:space-between;border-top:1px solid #1a1433;padding:2px 0;font-size:calc(19px*var(--fz))}
+.nf .t{font-family:var(--display);font-size:calc(11px*var(--fz)*var(--dz));letter-spacing:1px;border-bottom:6px solid #1a1433;padding-bottom:6px}
+.nf .r{display:flex;justify-content:space-between;border-top:1px solid #1a1433;padding:2px 0;font-size:calc(19px*var(--fz)*var(--bz))}
 .nf .r.ind{padding-left:16px}
 .nf .r.thick{border-top:4px solid #1a1433}
 .nf .big{display:flex;justify-content:space-between;align-items:flex-end;border-bottom:4px solid #1a1433;padding:4px 0}
-.nf .big b{font-family:var(--display);font-size:calc(16px*var(--fz))}
+.nf .big b{font-family:var(--display);font-size:calc(16px*var(--fz)*var(--dz))}
 .nf b{font-weight:normal}
 .grid4{display:grid;grid-template-columns:repeat(4,1fr);gap:8px}
-.tile{display:flex;flex-direction:column;align-items:center;gap:6px;padding:8px 4px;background:var(--panel2);border:2px solid var(--line);color:var(--fg);font-size:calc(15px*var(--fz));text-align:center;line-height:1}
+.tile{display:flex;flex-direction:column;align-items:center;gap:6px;padding:8px 4px;background:var(--panel2);border:2px solid var(--line);color:var(--fg);font-size:calc(15px*var(--fz)*var(--bz));text-align:center;line-height:1}
 .tile:hover{border-color:var(--a1)}
 .week{display:grid;grid-template-columns:repeat(7,1fr);gap:4px}
-.week>div{background:var(--bg);border:2px solid var(--line);padding:6px 2px;display:flex;flex-direction:column;align-items:center;gap:4px;font-family:var(--display);font-size:calc(6px*var(--fz));color:var(--dim)}
+.week>div{background:var(--bg);border:2px solid var(--line);padding:6px 2px;display:flex;flex-direction:column;align-items:center;gap:4px;font-family:var(--display);font-size:calc(6px*var(--fz)*var(--dz));color:var(--dim)}
 .week>div.on{border-color:var(--a2);color:var(--fg)}
 .week>div.today{background:var(--panel2);box-shadow:inset 0 -3px 0 var(--a1)}
 .opt{display:flex;align-items:center;gap:10px;padding:10px;background:var(--panel2);border:2px solid var(--line);width:100%;text-align:left;color:var(--fg)}
@@ -122,22 +122,22 @@ input[type=color]{height:40px;padding:2px}
 .toggle[aria-pressed="true"]::after{left:28px;background:var(--bg)}
 .srow{display:flex;justify-content:space-between;align-items:center;gap:10px;min-height:34px}
 .ctrl{display:flex;gap:6px;align-items:center;flex-wrap:wrap}
-.ctrl .play{width:48px;height:42px;font-family:var(--display);font-size:calc(12px*var(--fz));background:var(--a2);color:var(--onA);border:0;box-shadow:4px 4px 0 var(--outer)}
+.ctrl .play{width:48px;height:42px;font-family:var(--display);font-size:calc(12px*var(--fz)*var(--dz));background:var(--a2);color:var(--onA);border:0;box-shadow:4px 4px 0 var(--outer)}
 .ctrl .play:active{transform:translate(4px,4px);box-shadow:none}
 .hero{display:flex;gap:12px;align-items:flex-end}
 .flagline{display:flex;align-items:center;gap:8px}
 .mm{position:relative;width:100%;max-width:360px;align-self:center;aspect-ratio:340/300}
 .mm>canvas{position:absolute;left:26.47%;top:2%;width:47.06%;height:auto;cursor:pointer}
 .mm svg{position:absolute;inset:0;width:100%;height:100%;pointer-events:none}
-.mm .ml{position:absolute;transform:translateY(-50%);font-family:var(--display);font-size:calc(6px*var(--fz));padding:4px 5px;background:var(--panel2);border:2px solid var(--line);color:var(--fg);letter-spacing:1px;white-space:nowrap}
+.mm .ml{position:absolute;transform:translateY(-50%);font-family:var(--display);font-size:calc(6px*var(--fz)*var(--dz));padding:4px 5px;background:var(--panel2);border:2px solid var(--line);color:var(--fg);letter-spacing:1px;white-space:nowrap}
 .mm .ml:hover,.mm .ml:focus-visible{border-color:var(--a1);color:var(--a1)}
 .mm .ml.l{left:0}.mm .ml.r{right:0}
 .zoom{animation:zoomIn .5s steps(6) both}
 @keyframes zoomIn{from{transform:scale(.2);opacity:0}to{transform:scale(1);opacity:1}}
 .tools{display:grid;grid-template-columns:repeat(3,1fr);gap:8px}
 .cal{display:grid;grid-template-columns:repeat(7,1fr);gap:4px}
-.cal button{aspect-ratio:1;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:3px;font-family:var(--display);font-size:calc(7px*var(--fz));background:var(--bg);border:2px solid var(--line);color:var(--fg);padding:0}
-.cal .wd{text-align:center;font-family:var(--display);font-size:calc(6px*var(--fz));color:var(--dim)}
+.cal button{aspect-ratio:1;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:3px;font-family:var(--display);font-size:calc(7px*var(--fz)*var(--dz));background:var(--bg);border:2px solid var(--line);color:var(--fg);padding:0}
+.cal .wd{text-align:center;font-family:var(--display);font-size:calc(6px*var(--fz)*var(--dz));color:var(--dim)}
 .cal button.other{opacity:.35}
 .cal button.today{border-color:var(--a1)}
 .cal button.sel{background:var(--panel2);box-shadow:inset 0 0 0 2px var(--a2)}
@@ -146,24 +146,90 @@ input[type=color]{height:40px;padding:2px}
 .post{background:var(--panel);border:3px solid var(--line);padding:10px;display:flex;flex-direction:column;gap:8px}
 .post img{width:100%;image-rendering:pixelated;border:2px solid var(--line)}
 .acts{display:flex;gap:8px;align-items:center;flex-wrap:wrap}
-.acts button{display:flex;align-items:center;gap:6px;background:var(--bg);border:2px solid var(--line);padding:5px 8px;font-family:var(--display);font-size:calc(7px*var(--fz));color:var(--fg)}
+.acts button{display:flex;align-items:center;gap:6px;background:var(--bg);border:2px solid var(--line);padding:5px 8px;font-family:var(--display);font-size:calc(7px*var(--fz)*var(--dz));color:var(--fg)}
 .acts button[aria-pressed="true"]{border-color:var(--a3);color:var(--a3)}
-textarea{font-family:var(--body);font-size:calc(20px*var(--fz));background:var(--bg);color:var(--fg);border:2px solid var(--line);padding:6px 8px;width:100%;resize:vertical;min-height:70px;border-radius:0}
+textarea{font-family:var(--body);font-size:calc(20px*var(--fz)*var(--bz));background:var(--bg);color:var(--fg);border:2px solid var(--line);padding:6px 8px;width:100%;resize:vertical;min-height:70px;border-radius:0}
 .cam{background:#000;border:3px solid var(--line);align-self:center;width:100%;max-width:290px}
 .cam canvas{width:100%;height:auto}
 .shutter{width:68px;height:68px;border:6px solid var(--fg);background:var(--a2);box-shadow:4px 4px 0 var(--outer)}
 .shutter:active{transform:translate(4px,4px);box-shadow:none}
 .ad{border:2px dashed var(--line);padding:10px;display:flex;justify-content:space-between;align-items:center;gap:8px;color:var(--dim)}
-.timer{font-family:var(--display);font-size:calc(11px*var(--fz));color:var(--a1);font-variant-numeric:tabular-nums}
+.timer{font-family:var(--display);font-size:calc(11px*var(--fz)*var(--dz));color:var(--a1);font-variant-numeric:tabular-nums}
 .lb-row{display:grid;grid-template-columns:28px 36px minmax(0,1fr) auto;gap:8px;align-items:center;padding:6px 8px;background:var(--panel2);border:2px solid var(--line)}
 .lb-row.me{border-color:var(--a1);background:var(--panel)}
 .ritem{display:flex;align-items:center;gap:8px;padding:6px 8px 6px 0;background:var(--panel2);border:2px solid var(--line)}
 .ritem>.go{flex:1;min-width:0;display:flex;align-items:center;gap:10px;background:none;border:0;text-align:left;color:var(--fg);padding:4px 0 4px 8px}
 @media (prefers-reduced-motion:reduce){.pin.on canvas,.youdot,.zoom{animation:none}}
+@keyframes pageIn{from{opacity:0;transform:translateY(12px)}to{opacity:1;transform:none}}
+main.anim>*{animation:pageIn .34s cubic-bezier(.2,.8,.2,1) both}
+main.anim>*:nth-child(2){animation-delay:.04s}main.anim>*:nth-child(3){animation-delay:.08s}main.anim>*:nth-child(4){animation-delay:.12s}main.anim>*:nth-child(5){animation-delay:.16s}main.anim>*:nth-child(n+6){animation-delay:.2s}
+.overlay{animation:ovIn .3s cubic-bezier(.2,.8,.2,1) both}
+@keyframes ovIn{from{opacity:0;transform:translateX(24px)}to{opacity:1;transform:none}}
+.modal{animation:fadeIn .2s both}.modal>.box{animation:upIn .3s cubic-bezier(.2,.8,.2,1) both}
+@keyframes fadeIn{from{opacity:0}}@keyframes upIn{from{transform:translateY(40px);opacity:0}}
+.modal.center{align-items:center}
+.locked{opacity:.45;border-style:dashed!important}
+nav{grid-template-columns:repeat(7,1fr)!important;position:relative;z-index:5;align-items:start}
+nav button.plus{justify-self:center;width:54px;height:54px;margin-top:-20px;padding:0;background:var(--a2);border:4px solid var(--panel);box-shadow:0 4px 0 var(--outer);display:grid;place-items:center;transition:transform .2s cubic-bezier(.2,1.4,.4,1)}
+nav button.plus canvas{opacity:1!important}
+nav button.plus.open{transform:rotate(45deg)}
+.fab{position:absolute;inset:0;z-index:4;background:rgba(5,3,12,.6);display:flex;align-items:flex-end;justify-content:center;padding:0 12px 96px;animation:fadeIn .2s both}
+.fabbtns{display:flex;gap:14px}
+.fabb{display:flex;flex-direction:column;align-items:center;gap:8px;padding:14px 10px;min-width:128px;background:var(--panel);border:3px solid var(--a1);color:var(--fg);font-family:var(--display);font-size:calc(7px*var(--fz)*var(--dz));letter-spacing:1px;box-shadow:4px 4px 0 var(--outer);animation:fabIn .32s cubic-bezier(.2,1.4,.4,1) both}
+.fabb:nth-child(2){animation-delay:.06s}
+@keyframes fabIn{from{transform:translateY(30px) scale(.6);opacity:0}}
+.lvlup{display:flex;flex-direction:column;align-items:center;gap:10px;text-align:center;position:relative;overflow:hidden}
+.burst{position:absolute;inset:0;width:100%;height:100%;pointer-events:none}
+.bigl{font-family:var(--display);font-size:calc(26px*var(--fz)*var(--dz));color:var(--a1);text-shadow:4px 4px 0 var(--a2);animation:pop .7s cubic-bezier(.2,1.6,.4,1) both}
+@keyframes pop{from{transform:scale(.2);opacity:0}}
+.lmap{position:relative;width:100%;flex:none}
+.lmap svg{position:absolute;inset:0;width:100%;height:100%}
+.lnode{position:absolute;transform:translate(-50%,-50%);width:40px;height:40px;display:grid;place-items:center;background:var(--bg);border:3px solid var(--line);font-family:var(--display);font-size:calc(8px*var(--fz)*var(--dz));color:var(--dim)}
+.lnode.done{background:var(--a3);border-color:var(--a3);color:var(--bg)}
+.lnode.cur{width:54px;height:54px;border-color:var(--a1);background:var(--panel2);box-shadow:0 0 0 4px var(--bg),0 0 0 7px var(--a1);animation:lbob 1s steps(2) infinite}
+@keyframes lbob{50%{transform:translate(-50%,calc(-50% - 3px))}}
+.lrew{position:absolute;transform:translateY(-50%);display:flex;align-items:center;gap:6px;max-width:42%;background:var(--panel);border:2px dashed var(--line);padding:4px 6px;opacity:.75}
+.lrew.got{border-style:solid;border-color:var(--a1);opacity:1}
+.pfp{background:var(--panel2);border:3px solid var(--a1);padding:4px;box-shadow:4px 4px 0 var(--outer);flex:none}
+.moods{display:grid;grid-template-columns:repeat(6,1fr);gap:4px}
+.mood{display:flex;flex-direction:column;align-items:center;gap:5px;background:var(--bg);border:2px solid var(--line);padding:7px 0;color:var(--fg);min-width:0}
+.mood .label{font-size:calc(5px*var(--fz)*var(--dz));letter-spacing:.5px}
+.mood[aria-pressed="true"]{border-color:var(--a1);background:var(--panel2);box-shadow:inset 0 -3px 0 var(--a1)}
+.gearg{display:grid;grid-template-columns:minmax(0,1fr) auto minmax(0,1fr);gap:8px;align-items:center}
+.gcol{display:flex;flex-direction:column;gap:8px;min-width:0}
+.slot{display:flex;flex-direction:column;gap:4px;align-items:flex-start;background:var(--bg);border:2px solid var(--line);padding:6px;color:var(--fg);text-align:left;min-width:0;width:100%}
+.slot:hover{border-color:var(--a1)}
+.slot .sv{font-family:var(--display);font-size:calc(6px*var(--fz)*var(--dz));overflow:hidden;text-overflow:ellipsis;white-space:nowrap;max-width:100%}
+.swatch{width:10px;height:10px;display:block;border:1px solid var(--outer);flex:none}
+.gbody{padding:6px 8px 0}
+.inv{display:grid;grid-template-columns:repeat(6,1fr);gap:6px}
+.islot{display:flex;flex-direction:column;align-items:center;gap:4px;background:var(--bg);border:2px solid var(--line);padding:6px 2px;color:var(--fg);opacity:.45;min-width:0}
+.islot .label{font-size:calc(5px*var(--fz)*var(--dz));letter-spacing:.5px}
+.islot.on{opacity:1;border-color:var(--a3)}
+.coll{display:grid;grid-template-columns:repeat(2,1fr);gap:6px}
+.citem{display:flex;align-items:center;gap:8px;background:var(--bg);border:2px solid var(--line);padding:7px;min-width:0}
+.citem.got{border-color:var(--a1)}
+.citem .label{overflow:hidden;text-overflow:ellipsis}
+.tip{background:var(--panel);border:3px solid var(--line)}
+.tip summary{cursor:pointer;padding:12px;font-family:var(--display);font-size:calc(8px*var(--fz)*var(--dz));line-height:1.6;letter-spacing:1px;list-style:none;display:flex;justify-content:space-between;gap:8px}
+.tip summary::-webkit-details-marker{display:none}
+.tip summary::after{content:"+";color:var(--a1)}
+.tip[open] summary::after{content:"−"}
+.tip p{padding:0 12px 12px}
+.socials{display:flex;gap:8px;flex-wrap:wrap}
+.soc{width:42px;height:42px;display:grid;place-items:center;background:var(--panel2);border:2px solid var(--line);font-family:var(--display);font-size:calc(7px*var(--fz)*var(--dz));color:var(--dim)}
+.loader main{justify-content:center;align-items:center;text-align:center;gap:16px}
+.loader .bar{width:80%;height:18px}
+.loader .bar i{transition:width .15s steps(3)}
+@media (prefers-reduced-motion:reduce){main.anim>*,.overlay,.modal,.modal>.box,.fabb,.bigl,.lnode.cur,.fab{animation:none}}
 </style>
 <style>
 @font-face{font-family:"Press Start 2P";src:url(fonts/PressStart2P.woff2) format("woff2");font-display:block}
 @font-face{font-family:"VT323";src:url(fonts/VT323.woff2) format("woff2");font-display:block}
+@font-face{font-family:"Silkscreen";src:url(fonts/Silkscreen.woff2) format("woff2");font-display:block}
+@font-face{font-family:"Pixelify Sans";src:url(fonts/PixelifySans.woff2) format("woff2");font-display:block}
+@font-face{font-family:"DotGothic16";src:url(fonts/DotGothic16.woff2) format("woff2");font-display:block}
+@font-face{font-family:"Jersey 10";src:url(fonts/Jersey10.woff2) format("woff2");font-display:block}
 body{padding:0!important}.app{max-width:none!important;box-shadow:none!important}
 </style>
 </head>
@@ -173,6 +239,7 @@ body{padding:0!important}.app{max-width:none!important;box-shadow:none!important
   <header id="hdr">
     <span id="logoIcon"></span><span class="logo grow">IRONBIT</span>
     <span class="chip">● OFFLINE</span>
+    <button class="icon-btn modeT" id="modeBtn" aria-label="Switch light or dark mode"></button>
     <button class="icon-btn" id="gear" aria-label="Settings"></button>
   </header>
   <main id="screen"></main>
@@ -198,11 +265,11 @@ function mix(a,b,p){const x=parseInt(a.slice(1),16),y=parseInt(b.slice(1),16),c=
 function lum(hex){const n=parseInt(hex.slice(1),16);return((n>>16)*.299+(n>>8&255)*.587+(n&255)*.114)/255}
 
 /* ================= state (on-device only) ================= */
-const DEF_SET={mode:matchMedia('(prefers-color-scheme: light)').matches?'light':'dark',pal:'night',accent:null,fz:1,crt:true,sfx:true,vol:.5,
-  timerBeep:true,vib:true,rest:60,speed:1,units:'kg',lang:'en',testFast:false,pro:false};
+const DEF_SET={mode:matchMedia('(prefers-color-scheme: light)').matches?'light':'dark',pal:'iron',accent:null,fz:1,crt:false,sfx:true,vol:.5,
+  timerBeep:true,vib:true,rest:60,speed:1,units:'kg',lang:'en',testFast:false,pro:false,modeAuto:true,font:'classic',sfxPack:'retro',unlockAll:false};
 let P=store.get('profile',null);
 let SET={...DEF_SET,...store.get('settings',{})};
-let ST={xp:0,streak:0,workouts:0,protein:0,pDate:today(),log:[],sched:{},...store.get('stats',{})};
+let ST={xp:0,streak:0,workouts:0,protein:0,pDate:today(),log:[],sched:{},mood:null,...store.get('stats',{})};
 if(P){P.city=P.city||'Dubai';P.custom=P.custom||[];P.myGyms=P.myGyms||{}}
 let META={launches:0,rated:false,rateNext:3,donateHide:'',...store.get('meta',{})};
 let PLATE=store.get('plate',[['chicken',150],['rice',150],['hummus',60]]);
@@ -212,6 +279,8 @@ const save=()=>{store.set('profile',P);store.set('settings',SET);store.set('stat
 
 /* ================= themes ================= */
 const PALS={
+ iron:{name:'IRON (DEFAULT)',dark:{bg:'#1d1d21',panel:'#27272d',panel2:'#323239',line:'#46464f',fg:'#f2f0ea',dim:'#a3a1ab',a1:'#f2b84b',a2:'#ff6b57',a3:'#3fc1b0',outer:'#131316'},
+   light:{bg:'#f5f2ea',panel:'#fffdf8',panel2:'#ebe6da',line:'#c9c2b1',fg:'#26242a',dim:'#6e6a73',a1:'#b8680a',a2:'#e04e3a',a3:'#16867a',outer:'#e2ddd0'}},
  night:{name:'DUBAI NIGHT',dark:{bg:'#1a1433',panel:'#261d4a',panel2:'#33285f',line:'#4a3d85',fg:'#f6e9d0',dim:'#a79fcf',a1:'#f2b84b',a2:'#ff6b57',a3:'#3fc1b0',outer:'#0f0b20'},
    light:{bg:'#f6e9d0',panel:'#fff8ea',panel2:'#efdcb8',line:'#c9a46a',fg:'#2b1d2e',dim:'#7a6450',a1:'#b8680a',a2:'#e04e3a',a3:'#16867a',outer:'#e3cfa5'}},
  gameboy:{name:'GAME BOY',dark:{bg:'#0f380f',panel:'#1d4a1d',panel2:'#2a5a24',line:'#4f7a28',fg:'#e0f8d0',dim:'#9bbc0f',a1:'#c4f0c2',a2:'#9bbc0f',a3:'#8bac0f',outer:'#081c08'},
@@ -219,19 +288,24 @@ const PALS={
  neon:{name:'NEON SOUQ',dark:{bg:'#0d0221',panel:'#190535',panel2:'#261447',line:'#541388',fg:'#f4f4ff',dim:'#b8a4e3',a1:'#ffd319',a2:'#ff2a6d',a3:'#05d9e8',outer:'#06010f'},
    light:{bg:'#fff0fb',panel:'#ffffff',panel2:'#f3e1f5',line:'#d29be0',fg:'#2b0b3f',dim:'#7b5a8c',a1:'#a87b00',a2:'#d6115a',a3:'#08808f',outer:'#f0cdea'}},
  nile:{name:'NILE SUNSET',dark:{bg:'#1c1410',panel:'#2a1e17',panel2:'#3a2a1f',line:'#5c4130',fg:'#fbe8d3',dim:'#c9a88a',a1:'#ffb347',a2:'#e2583e',a3:'#5fb49c',outer:'#110b08'},
-   light:{bg:'#fbf1e4',panel:'#fffaf3',panel2:'#f2dcc2',line:'#d1a77e',fg:'#3a2418',dim:'#8a6650',a1:'#b5650d',a2:'#c4432b',a3:'#2f8a72',outer:'#ead2b4'}}
+   light:{bg:'#fbf1e4',panel:'#fffaf3',panel2:'#f2dcc2',line:'#d1a77e',fg:'#3a2418',dim:'#8a6650',a1:'#b5650d',a2:'#c4432b',a3:'#2f8a72',outer:'#ead2b4'}},
+ arcade:{name:'ARCADE',dark:{bg:'#0b0b0b',panel:'#151515',panel2:'#222222',line:'#3a3a3a',fg:'#f5f5f5',dim:'#9e9e9e',a1:'#ffe600',a2:'#ff00a8',a3:'#00e5ff',outer:'#000000'},
+   light:{bg:'#f4f4f4',panel:'#ffffff',panel2:'#e5e5e5',line:'#bdbdbd',fg:'#111111',dim:'#555555',a1:'#8f7d00',a2:'#c4007f',a3:'#007f99',outer:'#dddddd'}},
+ legend:{name:'LEGENDARY GOLD',dark:{bg:'#120d05',panel:'#1f170a',panel2:'#2c2010',line:'#6b5420',fg:'#fff4d6',dim:'#c9b27a',a1:'#ffd54a',a2:'#ff9f1c',a3:'#e8e8e8',outer:'#080502'},
+   light:{bg:'#fff8e1',panel:'#fffdf3',panel2:'#f6e7b8',line:'#c9a227',fg:'#2b2005',dim:'#7a6420',a1:'#8a6700',a2:'#c75b00',a3:'#5f6b73',outer:'#ecd88f'}}
 };
-function applyTheme(){const t={...PALS[SET.pal][SET.mode]};if(SET.accent)t.a2=SET.accent;t.onA=lum(t.a2)>.55?'#1a1433':'#ffffff';
-  const r=document.documentElement.style;for(const[k,v]of Object.entries(t))r.setProperty('--'+k,v);r.setProperty('--fz',SET.fz);r.setProperty('color-scheme',SET.mode);
+function applyTheme(){const pal=PALS[SET.pal]&&unlocked('pal',SET.pal)?SET.pal:'iron',mode=curMode(),t={...PALS[pal][mode]};if(SET.accent)t.a2=SET.accent;t.onA=lum(t.a2)>.55?'#1a1433':'#ffffff';
+  const r=document.documentElement.style;for(const[k,v]of Object.entries(t))r.setProperty('--'+k,v);r.setProperty('--fz',SET.fz);r.setProperty('color-scheme',mode);
+  const F=FONTS[SET.font]||FONTS.classic;r.setProperty('--display',F[1]+',"Courier New",monospace');r.setProperty('--body',F[2]+',"Courier New",monospace');r.setProperty('--dz',F[3]);r.setProperty('--bz',F[4]);
   APP.classList.toggle('crt',!!SET.crt)}
 
 /* ================= sound ================= */
 let AC=null;
-function tone(f,d,type='square',when=0){if(!SET.sfx)return;try{AC=AC||new(window.AudioContext||window.webkitAudioContext)();const t=AC.currentTime+when;
-  const o=AC.createOscillator(),g=AC.createGain();o.type=type;o.frequency.setValueAtTime(f,t);g.gain.setValueAtTime(.12*SET.vol,t);
-  g.gain.exponentialRampToValueAtTime(.0001,t+d);o.connect(g).connect(AC.destination);o.start(t);o.stop(t+d+.03)}catch(e){}}
-const SFX={tap:()=>tone(520,.04),coin:()=>{tone(988,.07);tone(1319,.22,'square',.07)},done:()=>[523,659,784,1047].forEach((f,i)=>tone(f,.16,'square',i*.1)),
-  beep:()=>{if(SET.timerBeep){tone(880,.14);tone(880,.14,'square',.22);tone(1175,.3,'square',.44)}}};
+function tone(f,d,type,when=0){if(!SET.sfx)return;try{AC=AC||new(window.AudioContext||window.webkitAudioContext)();const pk=SET.sfxPack||'retro',t=AC.currentTime+when;
+  const play=(fr,ty,v)=>{const o=AC.createOscillator(),g=AC.createGain();o.type=ty;o.frequency.setValueAtTime(fr,t);g.gain.setValueAtTime(.12*SET.vol*v,t);g.gain.exponentialRampToValueAtTime(.0001,t+d);o.connect(g).connect(AC.destination);o.start(t);o.stop(t+d+.03)};
+  play(pk==='chip'?f*2:f,type||{retro:'square',arcade:'sawtooth',chip:'triangle',legend:'square'}[pk],pk==='arcade'?.7:1);if(pk==='legend'&&!type)play(f*1.5,'triangle',.5)}catch(e){}}
+const SFX={tap:()=>tone(520,.04),coin:()=>{tone(988,.07);tone(1319,.22,null,.07)},done:()=>[523,659,784,1047].forEach((f,i)=>tone(f,.16,null,i*.1)),
+  beep:()=>{if(SET.timerBeep){tone(880,.14);tone(880,.14,null,.22);tone(1175,.3,null,.44)}},lvl:()=>[523,659,784,1047,1319,1568].forEach((f,i)=>tone(f,.2,null,i*.09))};
 const buzz=ms=>{if(SET.vib)try{navigator.vibrate&&navigator.vibrate(ms)}catch(e){}};
 document.addEventListener('click',e=>{if(e.target.closest('button'))SFX.tap()},true);
 
@@ -265,7 +339,21 @@ const SPR={
  bolt:["...YY","..YY.",".YYYY","..YY.",".YY..","YY..."],
  cal:["RRRRRRR","WWWWWWW","WKWKWKW","WWWWWWW","WKWKWKW","WWWWWWW"],
  cam:[".DD....","HHHHHHH","HDDDHQH","HDKDHHH","HDDDHHH","HHHHHHH"],
- club:["WWWWWWW","WKWKWKW","WWWWWWW","WW.....","W......"]
+ club:["WWWWWWW","WKWKWKW","WWWWWWW","WW.....","W......"],
+ sun:["..Y..","Y.Y.Y",".YYY.","YYYYY",".YYY.","Y.Y.Y","..Y.."],
+ moon:[".KKK.","KK...","K....","K....","K....","KK...",".KKK."],
+ plus:["..WW..","..WW..","WWWWWW","WWWWWW","..WW..","..WW.."],
+ lock:[".GGG.","G...G","GGGGG","GDDDG","GDGDG","GGGGG"],
+ note:["..WWW","..W.W","..W.W","WWW.W","WWWWW","WWW.."],
+ shirt:["RR.RR","RRRRR",".RRR.",".RRR."],
+ hat:[".YYY.","YYYYY","YYYYYYY"],
+ crown:["Y.Y.Y","YYYYY","YRYRY","YYYYY"],
+ glasses:["HHH.HHH","HQHHHQH","HHH.HHH"],
+ earbuds:["WW..WW","WW..WW",".W..W."],
+ chain:["Y...Y",".Y.Y.","..Y.."],
+ gloves:["DDDD","DDDD","DDDD",".DD."],
+ cape:["RRRRR","RRRRR","RRRRR","RR.RR"],
+ aura:["Y.Y.Y",".YYY.","YYWYY",".YYY.","Y.Y.Y"]
 };
 function px(name,s=3){const rows=SPR[name],hh=rows.length,w=Math.max(...rows.map(r=>r.length));const[c,g]=mk(w,hh);
   rows.forEach((r,j)=>[...r].forEach((ch,i)=>{if(PAL[ch])R(g,PAL[ch],i,j)}));return show(c,s)}
@@ -323,8 +411,8 @@ const EYES=['#2b1a10','#6b4423','#2e6b3a','#2d6b8f','#6d7380','#a0782a'];
 const HAIRC=['#1b1414','#3b2a1a','#6b4423','#a0662f','#d9a441','#e8d9b0','#9aa3b5','#c0392b','#3fc1b0','#8e44ad'];
 const CLOTH=['#ff6b57','#f2b84b','#3fc1b0','#2d6b8f','#7b6fb0','#26232e','#f3efe6','#c0392b','#2e7d32','#e84393','#8d6e63','#9aa3b5'];
 const HAIRS=['short','buzz','long','bun','curly','afro','bald'],BEARDS=['none','stubble','full'];
-const TOPS=['tee','tank','hoodie','compression','kandura'],BOTS=['shorts','joggers','leggings'];
-const HEADS=['none','cap','beanie','headband','ghutra','hijab'],ACCS=['watch','ring','glasses','earbuds','chain','wristband','gloves'];
+const TOPS=['tee','tank','hoodie','compression','kandura','tracksuit','kit','trad','armor'],BOTS=['shorts','joggers','leggings'];
+const HEADS=['none','cap','beanie','headband','bandana','ghutra','imma','hijab','crown'],ACCS=['watch','ring','glasses','earbuds','chain','wristband','gloves','cape','aura'];
 const pick=a=>a[Math.floor(Math.random()*a.length)];
 function defChar(sex){return{skin:'#e0a372',eye:'#2b1a10',hair:sex==='f'?'long':'short',hairC:'#1b1414',beard:sex==='f'?'none':'stubble',top:'tee',topC:'#ff6b57',
   bottom:sex==='f'?'leggings':'shorts',botC:'#26232e',shoeC:'#3fc1b0',head:'none',headC:'#f3efe6',acc:['watch'],accC:'#f2b84b'}}
@@ -333,43 +421,49 @@ function randChar(sex){return{skin:pick(SKINS),eye:pick(EYES),hair:pick(HAIRS),h
 function build(pr){const hg=pr?.height||172,wg=pr?.weight||72,hf=clamp((hg-150)/50,0,1),bmi=wg/((hg/100)**2);return{hf,bmi,b:bmi<20?0:bmi<25.5?1:bmi<30?2:3}}
 
 /* front view, 36x52 */
-function drawFront(pr,C){
-  const[c,g]=mk(36,52),cx=18,{hf,b}=build(pr);
+function drawFront(pr,C0,mood){
+  const C=effChar(pr,C0),[c,g]=mk(36,52),cx=18,{hf,b}=build(pr);
   const legLen=10+Math.round(hf*4),torsoLen=11+Math.round(hf*1.4),hw=[4,5,6,7][b],aw=[2,2,3,3][b],lw=[2,3,3,4][b];
   const shoeTop=48,hipY=shoeTop-legLen,shY=hipY-torsoLen,hT=shY-12,ey=hT+5;
   const S=C.skin,S2=shade(S,-.18),S3=shade(S,.15),T=C.topC,T2=shade(T,-.22),T3=shade(T,.18),B=C.botC,B2=shade(B,-.25),SH=C.shoeC,
-    H=C.hairC,H2=shade(H,-.3),H3=shade(H,.22),HC=C.headC,HC2=shade(HC,-.2),robe=C.top==='kandura',covered=C.head==='ghutra'||C.head==='hijab',has=a=>C.acc.includes(a);
+    H=C.hairC,H2=shade(H,-.3),H3=shade(H,.22),HC=C.headC,HC2=shade(HC,-.2),robe=C.top==='kandura'||C.top==='kurta',kurta=C.top==='kurta',covered=C.head==='ghutra'||C.head==='hijab',has=a=>C.acc.includes(a);
   // back layer
   if(!covered&&C.head!=='beanie'){if(C.hair==='long')R(g,H,cx-6,hT+2,12,13);if(C.hair==='afro')disc(g,H,cx,hT+3,7);if(C.hair==='bun'&&C.head!=='cap')R(g,H,cx-2,hT-3,4,3)}
   if(C.head==='ghutra')R(g,HC,cx-7,hT+2,14,shY-hT+2);
   if(C.head==='hijab')R(g,HC,cx-7,hT+1,14,shY-hT+4);
   if(C.top==='hoodie')R(g,T2,cx-4,shY-2,8,3);
+  if(has('cape')){const cl=torsoLen+Math.round(legLen*.7);R(g,'#c0392b',cx-hw-2,shY,hw*2+4,cl);R(g,'#8e2a20',cx+hw,shY+2,2,cl-2)}
   // legs
   const legs=[cx-1-lw,cx+1];
-  if(!robe)legs.forEach(x=>{
+  if(!robe||kurta)legs.forEach(x=>{
     R(g,B,x,hipY,lw,legLen);R(g,B2,x+lw-1,hipY,1,legLen);
     if(C.bottom==='shorts'){R(g,S,x,hipY+5,lw,legLen-5);R(g,S2,x+lw-1,hipY+5,1,legLen-5)}
     if(C.bottom==='joggers')R(g,B2,x,shoeTop-1,lw,1);
     if(C.bottom==='leggings')R(g,shade(B,.15),x,hipY+2,1,legLen-3)});
   legs.forEach((x,i)=>{const sx=i?x:x-1;R(g,SH,sx,shoeTop,lw+1,1);R(g,'#f3efe6',sx,shoeTop+1,lw+1,1);R(g,shade(SH,.35),sx+(i?1:0),shoeTop,1,1)});
   // torso
-  if(robe){for(let y=shY;y<shoeTop;y++){const half=hw+Math.floor((y-shY)/9);R(g,T,cx-half,y,half*2,1);R(g,T2,cx+half-1,y,1,1);R(g,T3,cx-half,y,1,1)}
+  if(robe){for(let y=shY;y<(kurta?hipY+6:shoeTop);y++){const half=hw+Math.floor((y-shY)/9);R(g,T,cx-half,y,half*2,1);R(g,T2,cx+half-1,y,1,1);R(g,T3,cx-half,y,1,1)}
     R(g,T2,cx,shY+2,1,7);R(g,T3,cx-1,shY+1,1,1)}
   else{R(g,T,cx-hw,shY,hw*2,torsoLen);R(g,T2,cx+hw-1,shY,1,torsoLen);R(g,T3,cx-hw,shY+1,1,torsoLen-3);
     if(C.top==='tank'){R(g,S,cx-2,shY,4,2);R(g,S,cx-hw,shY,2,3);R(g,S,cx+hw-2,shY,2,3);R(g,S2,cx+hw-1,shY,1,3)}else R(g,S2,cx-1,shY,2,1);
     if(C.top==='hoodie'){R(g,T2,cx-hw+2,hipY-6,hw*2-4,3);R(g,'#f3efe6',cx-2,shY+1,1,3);R(g,'#f3efe6',cx+1,shY+1,1,3)}
     if(C.top==='compression'){R(g,T2,cx-1,shY+3,2,1);R(g,T2,cx-hw+1,shY+6,hw*2-2,1);R(g,T3,cx-hw+1,shY+2,2,1)}
     if(C.top==='tee')R(g,T3,cx-3,shY+3,2,1);
+    if(C.top==='tracksuit'){R(g,'#f3efe6',cx,shY+1,1,torsoLen-3);R(g,T2,cx-hw+1,hipY-4,hw*2-2,1)}
+    if(C.top==='armor'){for(let y=shY+3;y<hipY-2;y+=3)R(g,T2,cx-hw+1,y,hw*2-2,1);R(g,'#f2c14e',cx-1,shY+2,2,2)}
+    if(C.kit2){R(g,C.kit2,cx-2,shY,4,1);R(g,C.kit2,cx+1,shY+3,2,3)}
     R(g,B,cx-hw,hipY-2,hw*2,2);R(g,B2,cx-hw,hipY-2,hw*2,1);R(g,B,cx-1,hipY,2,2)}
   g.clearRect(cx-hw,shY,1,1);g.clearRect(cx+hw-1,shY,1,1);
   // arms
-  const armLen=torsoLen+1,sl={tee:4,tank:0,hoodie:armLen-2,compression:armLen-2,kandura:armLen-2}[C.top];
+  const armLen=torsoLen+1,sl={tee:4,tank:0,hoodie:armLen-2,compression:armLen-2,kandura:armLen-2,kurta:armLen-2,tracksuit:armLen-2,armor:armLen-2}[C.top]||0;
   [cx-hw-aw,cx+hw].forEach((x,i)=>{const y=shY+1;R(g,S,x,y,aw,armLen);R(g,i?S2:S3,x+(i?aw-1:0),y,1,armLen-2);
     if(sl){R(g,T,x,y,aw,sl);R(g,i?T2:T3,x+(i?aw-1:0),y,1,sl)}
+    if(C.top==='tracksuit')R(g,'#f3efe6',x+(i?aw-1:0),y,1,armLen-2);if(C.kit2&&sl)R(g,C.kit2,x,y+sl-1,aw,1);
     const hy=y+armLen-2;R(g,has('gloves')?'#2b2b33':S,x,hy,aw,2);
     if(i===0&&has('watch')){R(g,'#1d1d24',x,hy-2,aw,2);R(g,'#3fc1b0',x+(aw>2?1:0),hy-2,1,1)}
     if(i===1&&has('wristband'))R(g,C.accC,x,hy-2,aw,2);
     if(i===1&&has('ring'))R(g,'#f2c14e',x,hy+1,1,1)});
+  if(C.top==='armor'){R(g,T3,cx-hw-aw-1,shY,aw+2,3);R(g,T3,cx+hw-1,shY,aw+2,3)}
   // neck + head
   R(g,S2,cx-1,shY-2,2,2);
   R(g,S,cx-5,hT,10,10);[[-5,0],[4,0],[-5,9],[4,9],[-5,8],[4,8]].forEach(([x,y])=>g.clearRect(cx+x,hT+y,1,1));
@@ -382,6 +476,7 @@ function drawFront(pr,C){
   const blush=mix(S,'#ff6b6b',.35);R(g,blush,cx-4,ey+2,1,1);R(g,blush,cx+3,ey+2,1,1);
   if(C.beard==='stubble'){for(let y=ey+2;y<=hT+9;y++)for(let x=cx-4;x<=cx+3;x++)if((x+y)%2===0&&!(y===ey+3&&x>=cx-1&&x<=cx))R(g,shade(S,-.28),x,y)}
   if(C.beard==='full'){R(g,H,cx-5,ey+2,1,2);R(g,H,cx+4,ey+2,1,2);R(g,H,cx-4,ey+3,8,3);R(g,H,cx-3,hT+9,6,1);R(g,H,cx-2,hT+10,4,1);R(g,H,cx-2,ey+2,4,1);R(g,shade(S,-.4),cx-1,ey+3,2,1);R(g,H2,cx+2,ey+4,2,2)}
+  if(mood)faceMood(g,mood,cx,ey,S,H);
   // hair front
   if(!covered){const st=C.hair;
     if(st==='short'||st==='long'||st==='bun'){R(g,H,cx-4,hT-1,8,1);R(g,H,cx-5,hT,10,2);R(g,H,cx-5,hT+2,1,3);R(g,H,cx+4,hT+2,1,3);R(g,H,cx-4,hT+2,3,1);R(g,H3,cx-3,hT,3,1);R(g,H2,cx+2,hT+1,2,1);
@@ -395,15 +490,18 @@ function drawFront(pr,C){
   if(C.head==='headband'){R(g,HC,cx-5,hT+2,10,1);R(g,HC,cx-6,hT+2,1,2);R(g,HC2,cx+4,hT+2,1,1)}
   if(C.head==='ghutra'){R(g,HC,cx-6,hT-1,12,4);R(g,HC,cx-6,hT+3,1,8);R(g,HC,cx+5,hT+3,1,8);R(g,HC2,cx+5,hT+3,1,8);R(g,'#1a1a1a',cx-5,hT-1,10,1);R(g,'#1a1a1a',cx-5,hT+1,10,1)}
   if(C.head==='hijab'){R(g,HC,cx-6,hT-1,12,3);R(g,HC,cx-6,hT+2,2,8);R(g,HC,cx+4,hT+2,2,8);R(g,HC2,cx+5,hT+2,1,8);R(g,HC,cx-5,hT+9,10,2);R(g,HC,cx-4,shY-2,8,3);R(g,shade(HC,.2),cx-4,hT,3,1)}
+  if(C.head==='bandana'){R(g,HC,cx-5,hT-1,10,3);pts(g,'#f3efe6',[[cx-3,hT],[cx,hT-1],[cx+2,hT+1],[cx-1,hT+1]]);R(g,HC,cx+5,hT+1,2,1);R(g,HC,cx+6,hT+2,1,2)}
+  if(C.head==='imma'){R(g,'#f6f3ec',cx-6,hT-3,12,5);for(let x=cx-6;x<cx+6;x+=3)R(g,'#d9d2c3',x,hT-2,2,1);R(g,'#d9d2c3',cx-6,hT,12,1)}
+  if(C.head==='crown'){R(g,'#f2c14e',cx-4,hT-3,8,2);pts(g,'#f2c14e',[[cx-4,hT-4],[cx-1,hT-5],[cx,hT-5],[cx+3,hT-4]]);R(g,'#c0392b',cx-1,hT-3,2,1);R(g,'#ffe08a',cx-3,hT-3,1,1)}
   // face accessories
   if(has('glasses')){R(g,'#1d1d24',cx-5,ey-1,4,1);R(g,'#1d1d24',cx,ey-1,4,1);R(g,'#1d1d24',cx-5,ey,1,2);R(g,'#1d1d24',cx-1,ey,1,1);R(g,'#1d1d24',cx+3,ey,1,2);R(g,'#1d1d24',cx-5,ey+2,4,1);R(g,'#1d1d24',cx,ey+2,4,1)}
   if(has('earbuds')&&!covered){R(g,'#ffffff',cx-6,hT+5,1,1);R(g,'#ffffff',cx+5,hT+5,1,1)}
   if(has('chain'))pts(g,'#f2c14e',[[cx-2,shY],[cx-1,shY+1],[cx,shY+1],[cx+1,shY]]);
-  return outline(c)}
+  outline(c);return has('aura')?outline(c,'#f2c14e'):c}
 
 /* side view, 52x52, posed */
-function drawSide(pr,C,pose,A){
-  const[c,g]=mk(52,52),{hf,b}=build(pr),k=.9+hf*.2;
+function drawSide(pr,C0,pose,A){
+  const C=effChar(pr,C0),[c,g]=mk(52,52),{hf,b}=build(pr),k=.9+hf*.2;
   const Lt=12*k,Lth=9.5*k,Lsh=9*k,Lua=6.5*k,Lfa=6.5*k,tw=[5,6,7,8][b],lw=[3,3,4,5][b],aw=[2,3,3,3][b];
   const dv=a=>{const r=a*Math.PI/180;return[Math.sin(r),Math.cos(r)]},add=(p,a,l)=>{const v=dv(a);return[p[0]+v[0]*l,p[1]+v[1]*l]};
   const hip=[0,0],sh=add(hip,pose.torso,Lt),nA=pose.neck??pose.torso,hd=add(sh,nA,5.5);
@@ -417,8 +515,8 @@ function drawSide(pr,C,pose,A){
   const Hp=T(hip),Sh=T(sh),Hd=T(hd),Kn=T(kn),An=T(an),Kn2=T(kn2),An2=T(an2),El=T(el),Ha=T(ha),El2=T(el2),Ha2=T(ha2);
   const toe=a=>T(add(a===1?an:an2,(a===1?pose.shin:sn2)+90-lift*14,3));
   const seg=(a,b2,w,col)=>{lineW(g,a,b2,w+2,OL);lineW(g,a,b2,w,col)};
-  const S=C.skin,T1=C.topC,B1=C.botC,SH=C.shoeC,robe=C.top==='kandura',has=x=>C.acc.includes(x),dk=x=>shade(x,-.25);
-  const longSl=['hoodie','compression','kandura'].includes(C.top),longLeg=C.bottom!=='shorts'||robe;
+  const S=C.skin,T1=C.topC,B1=C.botC,SH=C.shoeC,robe=C.top==='kandura'||C.top==='kurta',robeFull=C.top==='kandura',has=x=>C.acc.includes(x),dk=x=>shade(x,-.25);
+  const longSl=['hoodie','compression','kandura','kurta','tracksuit','armor'].includes(C.top),longLeg=C.bottom!=='shorts'||robeFull;
   const u=dv(nA),f=dv(nA-90);
   // scenery
   if(A.mat)R(g,'#2c998b',3,G,46,2);
@@ -431,13 +529,14 @@ function drawSide(pr,C,pose,A){
   if(A.prop==='cableFront'){R(g,'#9aa3b5',Ha[0],Ha[1],51-Ha[0],1);R(g,OL,49,Ha[1]-2,3,5)}
   if(!A.mat&&!A.bench)R(g,'rgba(0,0,0,.22)',An[0]-7,G,16,1);
   // far limbs
-  const leg=(Kx,Ax,tw2,far,n)=>{const bc=far?dk(B1):B1,lc=longLeg?(robe?(far?dk(T1):T1):bc):(far?dk(S):S);
+  const leg=(Kx,Ax,tw2,far,n)=>{const bc=far?dk(B1):B1,lc=longLeg?(robeFull?(far?dk(T1):T1):bc):(far?dk(S):S);
     seg(Hp,Kx,lw,robe?(far?dk(T1):T1):bc);seg(Kx,Ax,lw,lc);if(!longLeg)seg(Kx,[Kx[0]+(Hp[0]-Kx[0])*.3|0,Kx[1]+(Hp[1]-Kx[1])*.3|0],lw,bc);
     const tp=toe(n);seg(Ax,tp,2,far?dk(SH):SH)};
   const arm=(Ex,Hx,far)=>{const sk=far?dk(S):S,tc=far?dk(T1):T1;seg(Sh,Ex,aw,longSl?tc:(C.top==='tee'?tc:sk));seg(Ex,Hx,aw,longSl?tc:sk);
     if(C.top==='tee')seg(Ex,[Math.round((Sh[0]+Ex[0])/2),Math.round((Sh[1]+Ex[1])/2)],aw,sk);
     disc(g,OL,Hx[0],Hx[1],1.6);disc(g,has('gloves')?'#2b2b33':sk,Hx[0],Hx[1],1)};
   const off=([x,y])=>[x-1,y];
+  if(has('cape'))seg([Math.round(Sh[0]-f[0]*1.5),Math.round(Sh[1]-f[1]*1.5)],[Math.round((Hp[0]+Kn[0])/2-f[0]*3),Math.round((Hp[1]+Kn[1])/2-f[1]*3)],4,'#c0392b');
   arm(off(El2),off(Ha2),true);
   leg(off(Kn2),off(An2),lw,true,2);
   // drapes behind torso
@@ -468,10 +567,13 @@ function drawSide(pr,C,pose,A){
     if(C.head==='headband'&&su>=1.2&&su<2.4)col=C.headC;
     if(C.head==='ghutra'&&(su>=.8||sf<=-.8))col=(su>=2.2&&su<3.2&&sf<=1.5)?'#1a1a1a':C.headC;
     if(C.head==='hijab'&&sf<=1.6)col=C.headC;
+    if(C.head==='bandana'&&su>=1.2)col=((x*3+y)%4===0)?'#f3efe6':C.headC;
+    if(C.head==='imma'&&(su>=.6||(sf<=-1.5&&su>=-1)))col=((x+y)%3===0)?'#d9d2c3':'#f6f3ec';
     R(g,col,hx+x,hy+y)}
   R(g,S,nose[0],nose[1]);
   if(C.hair==='bun'&&!covered)disc(g,C.hairC,hx+u[0]*4-f[0]*2,hy+u[1]*4-f[1]*2,1.5);
   if(C.head==='cap')for(let i=3;i<=5;i++)R(g,shade(C.headC,-.25),Math.round(hx+u[0]*1.6+f[0]*i),Math.round(hy+u[1]*1.6+f[1]*i));
+  if(C.head==='crown')for(let k2=-2;k2<=2;k2++){const bx=Math.round(hx+u[0]*4.5+f[0]*k2),by=Math.round(hy+u[1]*4.5+f[1]*k2);R(g,'#f2c14e',bx,by);if(k2%2===0)R(g,'#f2c14e',Math.round(bx+u[0]),Math.round(by+u[1]))}
   const e=[Math.round(hx+f[0]*2.2+u[0]*.4),Math.round(hy+f[1]*2.2+u[1]*.4)];
   R(g,'#ffffff',e[0]-Math.round(f[0]),e[1]-Math.round(f[1]));R(g,C.eye,e[0],e[1]);
   if(!covered||C.head==='ghutra')R(g,C.hair==='bald'?shade(S,-.3):C.hairC,Math.round(e[0]+u[0]*1.4),Math.round(e[1]+u[1]*1.4));
@@ -491,7 +593,7 @@ function drawSide(pr,C,pose,A){
   if(has('watch')){R(g,'#1d1d24',wr[0],wr[1],2,2);R(g,'#3fc1b0',wr[0],wr[1])}
   if(has('wristband'))R(g,C.accC,wr[0],wr[1],2,2);
   if(has('ring'))R(g,'#f2c14e',Ha[0],Ha[1]);
-  return c}
+  return has('aura')?outline(c,'#f2c14e'):c}
 
 /* ================= exercise animations ================= */
 const ST0={torso:180,thigh:0,shin:0,uarm:4,farm:4};
@@ -582,12 +684,10 @@ function weekPlan(){const go=P.goal,n=go.days;
   const w=Array(7).fill(null);slots.forEach((d,i)=>w[d]=seq[i]);(P.custom||[]).forEach(r=>r.days.forEach(d=>w[d]=r.id));return w}
 const setsFor=s=>clamp(s+({beginner:-1,intermediate:0,advanced:1}[P.goal.level]||0),2,6);
 const todayIdx=()=>(new Date().getDay()+6)%7;
-function calc(){const p=P,G=GOALS[p.goal.type];const bmr=10*p.weight+6.25*p.height-5*p.age+(p.sex==='m'?5:-161);
+function calc(pr){const p=pr||P,G=GOALS[p.goal.type];const bmr=10*p.weight+6.25*p.height-5*p.age+(p.sex==='m'?5:-161);
   const tdee=bmr*(1.3+p.goal.days*.06),kcal=Math.round((tdee+G[2])/10)*10,pro=Math.round(p.weight*G[3]),fat=Math.round(kcal*.27/9),carb=Math.max(0,Math.round((kcal-pro*4-fat*9)/4));
   return{kcal,pro,fat,carb}}
-const lvl=()=>Math.floor(ST.xp/100)+1,RANKS=['ROOKIE','ROOKIE','IRON ROOKIE','BRAWLER','IRON KNIGHT','TITAN','LEGEND'];
-const rank=()=>RANKS[Math.min(lvl(),RANKS.length-1)];
-function addXP(n){ST.xp+=n;save();SFX.coin();buzz(25);toast('+'+n+' XP')}
+function addXP(n){gainXP(n)}
 
 /* ================= food ================= */
 const plate=g=>{ell(g,'#efe9dc',9,12,7,3);ell(g,'#d9d1bf',9,12,5,2)};
@@ -732,11 +832,12 @@ const SCREENS={
   return[
    h('div',{class:'hero'},h('div',{class:'stage',style:'width:42%'},an.el),
      h('div',{class:'grow',style:'display:flex;flex-direction:column;gap:8px'},avatarRow(2),h('span',{class:'small'},`LVL ${l} · ${rank()}`),
-       h('div',{class:'bar'},h('i',{style:`width:${ST.xp%100}%`})),h('span',{class:'small'},`${ST.xp%100}/100 XP to level ${l+1}`))),
+       h('div',{class:'bar'},h('i',{style:`width:${lvlProg().pct}%`})),h('div',{class:'row spread nowrap'},h('span',{class:'small'},`${lvlProg().cur}/${lvlProg().need} XP`),h('div',{class:'row nowrap',style:'gap:4px'},h('button',{class:'btn ghost',style:'padding:6px 8px','aria-label':'How XP works',onclick:xpHelp},'?'),h('button',{class:'btn ghost',style:'padding:6px 8px',onclick:openLevelMap},'MAP'))))),
    h('div',{class:'stats'},
      h('div',{class:'stat'},px('flame',3),h('span',{class:'num'},ST.streak),h('span',{class:'label'},'STREAK')),
      h('div',{class:'stat'},px('star',3),h('span',{class:'num'},ST.xp),h('span',{class:'label'},'TOTAL XP')),
      h('div',{class:'stat'},px('dumb',3),h('span',{class:'num'},ST.workouts),h('span',{class:'label'},'WORKOUTS'))),
+   h('div',{class:'tools'},h('button',{class:'tile',onclick:tipsSheet},px('bolt',4),'TIPS & TRICKS'),h('button',{class:'tile',onclick:shopSheet},foodIcon('dumbbells',3),'GEAR SHOP'),h('button',{class:'tile',onclick:openLevelMap},px('star',4),'LEVEL MAP')),
    showDonate&&h('div',{class:'box',style:'border-color:var(--a2)'},h('div',{class:'row nowrap'},px('heart',3),h('span',{class:'grow'},'IronBit is free with no ads. If it helps you, you can buy the developer a karak.')),
      h('div',{class:'row'},h('button',{class:'btn',onclick:donateModal},'DONATE'),h('button',{class:'btn ghost',onclick:()=>{META.donateHide=today();save();render()}},'NOT NOW'))),
    r?h('div',{class:'box'},h('div',{class:'row spread'},h('span',{class:'label'},'TODAY\'S WORKOUT · '+DAYS[ti]),h('span',{class:'tag s'},'+50 XP')),
@@ -752,18 +853,7 @@ const SCREENS={
  fuel(){const tabs=[['targets','TARGET'],['foods','FOODS'],['plate','PLATE'],['meals','MEALS']];
   return[h('div',{class:'tabs',role:'tablist'},tabs.map(([id,t])=>h('button',{role:'tab','aria-selected':String(fuelTab===id),onclick:()=>{fuelTab=id;render()}},t))),...FUEL[fuelTab]()]},
  map:mapScreen,club:()=>clubScreen(),
- me(){const l=lvl(),c=calc();
-  return[h('div',{class:'hero'},h('div',{class:'stage',style:'padding:8px 10px 0'},show(drawFront(P,P.char),4)),
-    h('div',{class:'grow',style:'display:flex;flex-direction:column;gap:8px'},avatarRow(3),h('span',{class:'small'},(P.city||'')+' · '+(FL[P.country]||FL.XX)[0]),
-      h('span',{class:'small'},`${P.age} yrs · ${P.height} cm · ${fmtW(P.weight)}`),h('span',{class:'tag',style:'align-self:flex-start'},`LVL ${l} · ${rank()}`))),
-   h('div',{class:'row'},h('button',{class:'btn alt grow',onclick:()=>onboard('char',true)},'EDIT CHARACTER'),h('button',{class:'btn ghost grow',onclick:()=>onboard('info',true)},'EDIT INFO')),
-   h('div',{class:'box'},h('span',{class:'label'},'MY GOAL'),h('h3',{},GOALS[P.goal.type][0]),
-     h('span',{class:'small'},`${P.goal.days} days/week · ${P.goal.mins} min · ${P.goal.level} · ${{gym:'full gym',db:'dumbbells',none:'no equipment'}[P.goal.equip]}`),
-     P.goal.target?h('span',{class:'small'},`Target weight: ${fmtW(P.goal.target)} (${P.goal.target>P.weight?'+':''}${fmtW(P.goal.target-P.weight)})`):null,
-     h('div',{class:'macro'},h('div',{},h('span',{class:'label'},'KCAL'),h('span',{class:'num',style:'font-size:11px'},c.kcal)),h('div',{},h('span',{class:'label'},'PROTEIN'),h('span',{class:'num',style:'font-size:11px'},c.pro+'g')),h('div',{},h('span',{class:'label'},'XP'),h('span',{class:'num',style:'font-size:11px'},ST.xp))),
-     h('button',{class:'btn ghost',onclick:()=>onboard('goal',true)},'CHANGE GOAL')),
-   SET.pro?h('div',{class:'srow box'},h('span',{},'IronBit Pro preview is on'),h('span',{class:'tag s'},'PRO')):h('button',{class:'opt',onclick:()=>proModal()},px('star',3),h('span',{class:'grow'},'Go IronBit Pro: no ads, unlimited routines'),h('span',{class:'tag s'},'PRO')),
-   h('button',{class:'btn ghost',onclick:()=>{tab='settings';render()}},'⚙ SETTINGS')]},
+ me:()=>meScreen(),
  settings:settingsScreen
 };
 const fmtW=kg=>SET.units==='lb'?Math.round(kg*2.2046)+' lb':Math.round(kg*10)/10+' kg';
@@ -864,26 +954,33 @@ function settingsScreen(){
    h('div',{class:'box'},h('span',{class:'label'},'PROFILE'),
      h('div',{class:'row'},h('button',{class:'btn ghost grow',onclick:()=>onboard('info',true)},'MY INFO'),h('button',{class:'btn ghost grow',onclick:()=>onboard('goal',true)},'MY GOAL'),h('button',{class:'btn ghost grow',onclick:()=>onboard('char',true)},'CHARACTER'),h('button',{class:'btn ghost grow',onclick:()=>onboard('info',true)},'MY CITY'))),
    h('div',{class:'box'},h('span',{class:'label'},'LOOK'),
-     segR('mode','Mode',[['dark','DARK'],['light','LIGHT']]),
+     h('div',{class:'srow'},h('span',{},'Mode'),h('div',{class:'seg'},[['auto','AUTO'],['dark','DARK'],['light','LIGHT']].map(([v,t])=>h('button',{'aria-pressed':String(SET.modeAuto?v==='auto':v===SET.mode),onclick:()=>{if(v==='auto')SET.modeAuto=true;else{SET.modeAuto=false;SET.mode=v}save();applyTheme();refreshModeIcons();render(true)}},t)))),
      h('span',{},'Color theme'),
-     h('div',{class:'list'},Object.entries(PALS).map(([id,p])=>{const t=p[SET.mode];return h('button',{class:'opt','aria-pressed':String(SET.pal===id),onclick:()=>{SET.pal=id;SET.accent=null;save();applyTheme();render()}},
-       h('span',{class:'row nowrap',style:'gap:0'},[t.bg,t.panel2,t.a1,t.a2,t.a3].map(c=>h('i',{style:`width:16px;height:22px;background:${c};display:block`}))),h('span',{class:'grow'},p.name))})),
-     h('div',{class:'srow'},h('label',{for:'acc'},'Custom accent color'),h('div',{class:'row nowrap'},h('input',{id:'acc',type:'color',value:SET.accent||PALS[SET.pal][SET.mode].a2,style:'width:56px',onchange:e=>{SET.accent=e.target.value;save();applyTheme();render()}}),
+     h('div',{class:'list'},Object.entries(PALS).map(([id,p])=>{const t=p[curMode()],ok=unlocked('pal',id);return h('button',{class:'opt'+(ok?'':' locked'),'aria-pressed':String(SET.pal===id),onclick:()=>{if(!ok){toast('UNLOCKS AT LVL '+lockLvl('pal',id));return}SET.pal=id;SET.accent=null;save();applyTheme();render(true)}},
+       h('span',{class:'row nowrap',style:'gap:0'},[t.bg,t.panel2,t.a1,t.a2,t.a3].map(c=>h('i',{style:`width:16px;height:22px;background:${c};display:block`}))),h('span',{class:'grow'},p.name),ok?null:h('span',{class:'tag'},'LVL '+lockLvl('pal',id)))})),
+     h('div',{class:'srow'},h('label',{for:'acc'},'Custom accent color'),h('div',{class:'row nowrap'},h('input',{id:'acc',type:'color',value:SET.accent||PALS[SET.pal][curMode()].a2,style:'width:56px',onchange:e=>{SET.accent=e.target.value;save();applyTheme();render()}}),
        SET.accent&&h('button',{class:'btn ghost',style:'padding:8px',onclick:()=>{SET.accent=null;save();applyTheme();render()}},'RESET'))),
      segR('fz','Text size',[[.9,'S'],[1,'M'],[1.15,'L']]),tg('crt','Retro scanlines')),
+   h('div',{class:'box'},h('span',{class:'label'},'FONT'),h('p',{class:'note'},'IronBit looks best with the default pixel font.'),
+     h('div',{class:'list'},Object.entries(FONTS).map(([id,[nm,d,b]])=>h('button',{class:'opt','aria-pressed':String(SET.font===id),onclick:()=>{SET.font=id;save();applyTheme();render(true)}},
+       h('span',{class:'grow',style:'display:flex;flex-direction:column;gap:5px'},h('span',{style:`font-family:${d},monospace;font-size:${id==='classic'?10:14}px`},nm),h('span',{style:`font-family:${b},monospace;font-size:${id==='classic'?18:15}px;color:var(--dim)`},'Get fit, bit by bit.')),
+       id==='classic'?h('span',{class:'tag s'},'RECOMMENDED'):null)))),
    h('div',{class:'box'},h('span',{class:'label'},'SOUND & FEEL'),tg('sfx','Sound effects'),
+     h('div',{class:'srow'},h('span',{},'Sound pack'),h('div',{class:'seg'},[['retro','RETRO'],['arcade','ARCADE'],['chip','CHIP'],['legend','LEGEND']].map(([v,t])=>{const ok=unlocked('sfx',v);return h('button',{'aria-pressed':String((SET.sfxPack||'retro')===v),class:ok?null:'locked',onclick:()=>{if(!ok){toast('UNLOCKS AT LVL '+lockLvl('sfx',v));return}SET.sfxPack=v;save();SFX.lvl();render(true)}},ok?t:t+' L'+lockLvl('sfx',v))}))),
      h('div',{class:'srow'},h('label',{for:'vol'},'Volume'),h('input',{id:'vol',type:'range',min:0,max:1,step:.1,value:SET.vol,style:'width:140px',onchange:e=>{SET.vol=+e.target.value;save();SFX.coin()}})),
      tg('timerBeep','Rest timer beep'),tg('vib','Vibration')),
    h('div',{class:'box'},h('span',{class:'label'},'TRAINING'),segR('rest','Rest timer',[[30,'30S'],[60,'60S'],[90,'90S'],[120,'2M']]),
      segR('speed','Coach speed',[[.5,'.5×'],[1,'1×'],[1.5,'1.5×'],[2,'2×']]),segR('units','Weight units',[['kg','KG'],['lb','LB']])),
-   h('div',{class:'box'},h('span',{class:'label'},'PROTOTYPE TESTING'),tg('testFast','Fast session timer (20×)'),tg('pro','Preview Pro (hides ads)'),h('span',{class:'small'},'These switches only exist in the test build.')),
+   h('div',{class:'box'},h('span',{class:'label'},'PROTOTYPE TESTING'),tg('testFast','Fast session timer (20×)'),tg('pro','Preview Pro (hides ads)'),tg('unlockAll','Unlock all rewards'),h('span',{class:'small'},'These switches only exist in the test build.')),
    h('div',{class:'box'},h('span',{class:'label'},'LANGUAGE'),h('div',{class:'srow'},h('span',{},'App language'),h('div',{class:'seg'},h('button',{'aria-pressed':'true'},'EN'),h('button',{'aria-pressed':'false',onclick:()=>toast('ARABIC COMING SOON')},'عربي')))),
    h('div',{class:'box'},h('span',{class:'label'},'SUPPORT IRONBIT'),
      h('button',{class:'opt',onclick:rateModal},px('star',3),h('span',{class:'grow'},'Rate IronBit on Google Play')),
      h('button',{class:'opt',onclick:donateModal},px('heart',3),h('span',{class:'grow'},'Donate to the developer')),
+     h('button',{class:'opt',onclick:tipsSheet},px('bolt',3),h('span',{class:'grow'},'Tips & tricks')),
+     h('button',{class:'opt',onclick:shopSheet},foodIcon('dumbbells',2),h('span',{class:'grow'},'Gear shop')),
      h('button',{class:'opt',onclick:aboutModal},px('dumb',3),h('span',{class:'grow'},'About IronBit')),
      h('button',{class:'opt',onclick:()=>onboard('intro',true)},px('flame',3),h('span',{class:'grow'},'Replay the intro'))),
-   resetBtn,h('span',{class:'small',style:'text-align:center'},'IronBit v0.3 · prototype')]}
+   resetBtn,h('span',{class:'small',style:'text-align:center'},'IronBit v0.4 · prototype · Get fit, bit by bit.')]}
 
 /* ---- dialogs ---- */
 const STORE_URL='https://play.google.com/store/apps/details?id=com.ironbit.app';
@@ -899,7 +996,7 @@ function donateModal(){let m;m=modal(h('div',{class:'row nowrap'},px('heart',4),
 function aboutModal(){let m;m=modal(h('div',{class:'row nowrap'},px('dumb',4),h('h2',{},'ABOUT IRONBIT')),
   h('p',{},'IronBit is a pixel-art gym companion. Training plans, a coach that looks like you, a muscle map, nutrition facts, a club to share progress, and a map of gyms in your city.'),
   h('div',{class:'list'},[['Internet needed','ONLY FOR CLUB'],['Account needed','NO'],['Ads','NONE'],['Your data','STAYS ON PHONE'],['Price','FREE']].map(([a,b])=>h('div',{class:'srow'},h('span',{},a),h('span',{class:'tag'},b)))),
-  h('span',{class:'small'},'Version 0.3 prototype. Fonts: Press Start 2P and VT323 (SIL Open Font License).'),h('button',{class:'btn ghost',onclick:()=>m.remove()},'CLOSE'))}
+  h('span',{class:'tag s',style:'align-self:flex-start'},'GET FIT, BIT BY BIT.'),h('span',{class:'label'},'FOLLOW IRONBIT · COMING SOON'),h('div',{class:'socials'},['WEB','FB','IG','X','TT','GH'].map(x=>h('span',{class:'soc',title:x+' (coming soon)'},x))),h('span',{class:'small'},'Version 0.4 prototype. Fonts: Press Start 2P, VT323, Silkscreen, Pixelify Sans, DotGothic16, Jersey 10 (SIL Open Font License).'),h('button',{class:'btn ghost',onclick:()=>m.remove()},'CLOSE'))}
 
 /* ================= routines: helpers ================= */
 const DIFF={'Bench press':3,'Deadlift':3,'Back squat':3,'Overhead press':3,'Barbell row':3,'Romanian deadlift':3,
@@ -1040,7 +1137,8 @@ function calendarView(){const base=calMonth?new Date(calMonth+'-01T12:00'):new D
      h('div',{class:'stat'},h('span',{class:'num'},done.reduce((a,l)=>a+l.xp,0)),h('span',{class:'label'},'XP THIS MONTH')))]}
 
 /* ================= workout session ================= */
-function openWorkout(rid){const r=allR()[rid];if(!r)return;let idx=0,restT=null;
+function openWorkout(rid){const r=allR()[rid];if(!r)return;closeFab();loadingScreen(()=>startSession(rid),r.name)}
+function startSession(rid){const r=allR()[rid];if(!r)return;let idx=0,restT=null;
   const nSets=e=>r.custom?e[1]:setsFor(e[1]),done=r.ex.map(e=>Array(nSets(e)).fill(false)),diff=rDiff(r),speedUp=SET.testFast?20:1;
   const total=r.ex.reduce((a,e)=>a+nSets(e)*(45+SET.rest),0);let left=total,paused=false,pending=0,claimed=false,speed=SET.speed;
   const ov=h('div',{class:'overlay'});APP.append(ov);
@@ -1056,9 +1154,9 @@ function openWorkout(rid){const r=allR()[rid];if(!r)return;let idx=0,restT=null;
     if(left>0){let m;m=modal(h('h2',{},'END SESSION EARLY?'),h('p',{},`The session timer isn't finished, so the ${pending} XP you earned won't be saved and this workout won't count on the leaderboard. You can pause instead.`),
       h('button',{class:'btn',onclick:()=>{m.remove();log(false);close()}},'END WITHOUT XP'),h('button',{class:'btn ghost',onclick:()=>m.remove()},'KEEP TRAINING'));return}
     close()};
-  const claim=()=>{const bonus=diff*50,got=pending+bonus;claimed=true;ST.xp+=got;ST.workouts++;ST.streak++;log(true);SFX.done();buzz(80);close();toast('+'+got+' XP BANKED');
+  const claim=()=>{const bonus=diff*50,got=pending+bonus;claimed=true;ST.workouts++;ST.streak++;log(true);SFX.done();buzz(80);close();gainXP(got);
     if(ST.workouts===1&&!META.rated)setTimeout(rateModal,1300)};
-  const body=h('main',{});
+  const body=h('main',{class:'anim'});
   ov.append(h('header',{},h('button',{class:'btn ghost',style:'padding:8px 10px',onclick:quit,'aria-label':'End workout'},'✕'),
     h('div',{class:'grow',style:'display:flex;flex-direction:column;gap:5px;min-width:0'},h('span',{class:'logo',style:'font-size:9px'},r.name),pEl),tEl,pauseBtn),body);
   function draw(){const[name,,reps]=r.ex[idx],[ak,muscle,cues]=EX[name],sets=done[idx],pl=player(ak,0,{speed}),ed=diffOf(name);
@@ -1072,6 +1170,7 @@ function openWorkout(rid){const r=allR()[rid];if(!r)return;let idx=0,restT=null;
       h('div',{class:'row spread'},h('h2',{},`${idx+1}/${r.ex.length} · ${name.toUpperCase()}`),h('span',{class:'tag s'},sets.length+' × '+reps)),
       h('span',{class:'label'},'TARGETS: '+muscle+' · '+stars(ed)+' · '+(10*ed)+' XP PER SET'),
       h('div',{class:'box'},h('span',{class:'label'},'FORM CUES'),...cues.map((c,i)=>h('div',{class:'row nowrap',style:'align-items:flex-start'},h('span',{class:'tag'},i+1),h('span',{},c)))),
+      h('div',{class:'box',style:'border-color:var(--a3)'},h('span',{class:'label'},'PRO TIP'),h('p',{},exTip(name))),
       h('div',{class:'sets'},sets.map((d,i)=>h('button',{class:'set','aria-pressed':String(d),onclick:()=>{sets[i]=!d;pending+=d?-10*ed:10*ed;if(!d){SFX.coin();startRest()}upd();draw()}},'SET '+(i+1)))),
       h('div',{class:'box'},h('div',{class:'row spread'},h('span',{class:'label'},'REST TIMER'),restNum),h('div',{class:'bar t'},restBar)),
       h('div',{class:'row nowrap'},h('button',{class:'btn ghost',disabled:idx===0,onclick:()=>{idx--;draw()}},'◀ PREV'),h('button',{class:'btn alt grow',disabled:idx===r.ex.length-1,onclick:()=>{idx++;draw()}},'NEXT ▶')),
@@ -1089,7 +1188,7 @@ function randCharR(r,sex){const pk=a=>a[Math.floor(r()*a.length)];return{skin:pk
   beard:sex==='f'?'none':pk(BEARDS),top:pk(['tee','tank','hoodie','compression']),topC:pk(CLOTH),bottom:pk(BOTS),botC:pk(CLOTH),shoeC:pk(CLOTH),
   head:sex==='f'&&r()<.4?'hijab':pk(['none','none','cap','headband']),headC:pk(CLOTH),acc:ACCS.filter(()=>r()<.2),accC:pk(CLOTH)}}
 const DU={};function demoUser(i){if(DU[i])return DU[i];const[n,s,c,xp]=DEMO_USERS[i],r=rng('u'+n);return DU[i]={name:n,sex:s,country:c,xp,height:158+Math.floor(r()*30),weight:55+Math.floor(r()*35),char:randCharR(r,s)}}
-function headIcon(pr,C,s=2){const f=drawFront(pr,C),d=f.getContext('2d').getImageData(0,0,36,52).data;let top=0;
+function headIcon(pr,C,s=2,mood){const f=drawFront(pr,C,mood),d=f.getContext('2d').getImageData(0,0,36,52).data;let top=0;
   outer:for(let y=0;y<52;y++)for(let x=0;x<36;x++)if(d[(y*36+x)*4+3]>40){top=y;break outer}
   const[c,g]=mk(18,18);g.drawImage(f,9,Math.max(0,top),18,18,0,0,18,18);return show(c,s)}
 function sceneImg(){if(SCENE)return SCENE;const[c,g]=mk(96,72);R(g,'#33285f',0,0,96,50);R(g,'#4a3d85',0,48,96,2);R(g,'#5b4a63',0,50,96,22);for(let x=0;x<96;x+=8)R(g,'#4b3b52',x,50,1,22);
@@ -1192,20 +1291,20 @@ function adSlot(){return SET.pro?null:h('div',{class:'ad'},h('span',{class:'labe
 
 /* ================= onboarding ================= */
 const COUNTRY_LIST=Object.entries(FL).filter(([c])=>c!=='XX').sort((a,b)=>a[1][0].localeCompare(b[1][0])).concat([['XX',FL.XX]]);
-function onboard(start,edit){
+function onboard(start,edit,ctab0){
   const ov=h('div',{class:'overlay'});APP.append(ov);
   const D=P?JSON.parse(JSON.stringify(P)):{name:'',age:25,sex:'m',height:172,weight:72,country:'AE',city:'Dubai',custom:[],myGyms:{},goal:{type:'muscle',level:'beginner',days:3,mins:60,equip:'gym',target:null},char:defChar('m')};
-  const steps=['intro','info','hello','goal','char'];let step=start,slide=0;
+  const steps=['intro','info','hello','goal','char','done'];let step=start,slide=0;
   const finish=()=>{P=D;save();ov.remove();render();if(!edit)toast('WELCOME, '+(P.name||'PLAYER').toUpperCase()+'!')};
   const next=()=>{if(edit){if(step==='intro'){ov.remove();return}finish();return}const i=steps.indexOf(step);if(i===steps.length-1)finish();else{step=steps[i+1];draw()}};
   const back=()=>{if(edit){ov.remove();return}const i=steps.indexOf(step);if(i>1){step=steps[i-1];draw()}};
   const shell=(title,body,cta,ok=true)=>{const i=steps.indexOf(step);ov.replaceChildren(
-    h('header',{},(edit||i>1)?h('button',{class:'btn ghost',style:'padding:8px 10px',onclick:back,'aria-label':edit?'Close':'Back'},edit?'✕':'◀'):px('dumb',2),h('span',{class:'logo grow',style:'font-size:10px'},title),!edit?h('span',{class:'chip'},`STEP ${i}/4`):null),
-    h('main',{},...body),
+    h('header',{},(edit||i>1)?h('button',{class:'btn ghost',style:'padding:8px 10px',onclick:back,'aria-label':edit?'Close':'Back'},edit?'✕':'◀'):px('dumb',2),h('span',{class:'logo grow',style:'font-size:10px'},title),!edit?h('span',{class:'chip'},`STEP ${i}/4`):null,modeToggle()),
+    h('main',{class:'anim'},...body),
     h('div',{style:'padding:12px 14px;background:var(--panel);border-top:4px solid var(--line)'},h('button',{class:'btn wide',disabled:!ok,onclick:next},cta)))};
   const st=k=>h('div',{class:'stage',style:'width:62%;align-self:center'},player(k,0,{getChar:()=>D.char,getProf:()=>D}).el);
   const SLIDES=[
-    ()=>[st('idle'),h('h1',{},'WELCOME TO IRONBIT'),h('p',{},'Your pocket gym coach. Training, food and progress, all in pixel art. The core app works without internet.')],
+    ()=>[st('idle'),h('h1',{},'WELCOME TO IRONBIT'),h('span',{class:'tag s',style:'align-self:flex-start'},'GET FIT, BIT BY BIT.'),h('p',{},'Your pocket gym coach. Training, food and progress, all in pixel art. The core app works without internet.')],
     ()=>[st('squat'),h('h1',{},'TRAIN SMART'),h('p',{},'Plans built around your goal, and a pixel coach that looks like you and shows every move.')],
     ()=>[h('div',{style:'align-self:center'},show(drawBody('front','chest',false),3)),h('h1',{},'KNOW YOUR MUSCLES'),h('p',{},'Tap any muscle on the map to learn what it does and which exercises train it. Then build your own routine.')],
     ()=>[h('div',{class:'row nowrap',style:'justify-content:center;gap:8px;padding:12px 0'},foodIcon('chicken',4),h('span',{class:'num'},'+'),foodIcon('rice',4),h('span',{class:'num'},'='),h('div',{style:'display:flex;flex-direction:column;align-items:center;gap:6px'},px('bolt',5),h('span',{class:'tag s'},'51G PROTEIN'))),
@@ -1214,8 +1313,8 @@ function onboard(start,edit){
     ()=>[h('div',{class:'row',style:'justify-content:center;gap:10px;padding:20px 0'},px('dumb',6),px('star',6),px('club',6)),h('h1',{},'LEVEL UP TOGETHER'),h('p',{},'Finish your session timer to earn XP, climb the leaderboard and cheer others on with dumbbells.')]];
   function draw(){
     if(step==='intro'){const last=slide===SLIDES.length-1,skip=()=>{edit?ov.remove():(step='info',draw())};
-      ov.replaceChildren(h('header',{},px('dumb',2),h('span',{class:'logo grow'},'IRONBIT'),h('button',{class:'btn ghost',style:'padding:8px 10px',onclick:skip},'SKIP')),
-        h('main',{style:'justify-content:center;gap:16px'},...SLIDES[slide]()),
+      ov.replaceChildren(h('header',{},px('dumb',2),h('span',{class:'logo grow'},'IRONBIT'),modeToggle(),h('button',{class:'btn ghost',style:'padding:8px 10px',onclick:skip},'SKIP')),
+        h('main',{class:'anim',style:'justify-content:center;gap:16px'},...SLIDES[slide]()),
         h('div',{style:'padding:12px 14px;display:flex;flex-direction:column;gap:12px;background:var(--panel);border-top:4px solid var(--line)'},
           h('div',{class:'dots'},SLIDES.map((_,i)=>h('i',{class:i===slide?'on':''}))),
           h('div',{class:'row nowrap'},slide>0?h('button',{class:'btn ghost',onclick:()=>{slide--;draw()},'aria-label':'Previous'},'◀'):null,
@@ -1226,15 +1325,16 @@ function onboard(start,edit){
       shell(edit?'MY INFO':'ABOUT YOU',[h('h2',{},'TELL US ABOUT YOU'),h('span',{class:'small'},'No sign-up. This stays on your phone and shapes your plan, your character and your gym map.'),
         h('label',{class:'field',for:'nm'},h('span',{class:'label'},'NAME'),h('input',{id:'nm',maxlength:14,value:D.name,placeholder:'Your name',autocomplete:'given-name',oninput:e=>{D.name=e.target.value;ov.querySelector('.wide').disabled=!okName()}})),
         h('div',{class:'row nowrap'},num('ag','AGE',D.age,13,90,v=>D.age=v),h('div',{class:'field'},h('span',{class:'label'},'SEX'),h('div',{class:'seg'},[['m','M'],['f','F']].map(([v,t])=>h('button',{'aria-pressed':String(D.sex===v),
-          onclick:()=>{if(D.sex!==v){D.sex=v;if(!edit)D.char=defChar(v)}draw()}},t))))),
+          onclick:()=>{if(D.sex!==v){D.sex=v;if(!edit)D.char=defChar(v);fixHead(D.char,v)}draw()}},t))))),
         h('div',{class:'row nowrap'},num('ht','HEIGHT CM',D.height,120,230,v=>D.height=v),num('wt','WEIGHT '+SET.units.toUpperCase(),wIn,SET.units==='lb'?66:30,SET.units==='lb'?550:250,v=>D.weight=SET.units==='lb'?Math.round(v/2.2046*10)/10:v)),
         h('label',{class:'field',for:'ct'},h('span',{class:'label'},'NATIONALITY'),h('select',{id:'ct',onchange:e=>{D.country=e.target.value;prev.replaceChildren(flag(D.country,3),h('span',{class:'tag s'},FL[D.country][1]))}},
           COUNTRY_LIST.map(([c,[n]])=>{const o=h('option',{value:c},n);if(c===D.country)o.selected=true;return o}))),
         h('div',{class:'row'},h('span',{class:'label'},'SHOWN ON YOUR PROFILE AS'),prev),
+        h('p',{class:'note'},'Heads up: some outfits you unlock as you level up are traditional clothes and kits from your country.'),
         h('label',{class:'field',for:'cy'},h('span',{class:'label'},'WHERE YOU LIVE (FOR THE GYM MAP)'),h('select',{id:'cy',onchange:e=>{D.city=e.target.value}},
           Object.keys(CITIES).map(c=>{const o=h('option',{value:c},c==='Other'?'Other city':c);if(c===D.city)o.selected=true;return o})))],edit?'SAVE':'NEXT ▶',okName());return}
-    if(step==='hello'){ov.replaceChildren(h('header',{},px('dumb',2),h('span',{class:'logo grow',style:'font-size:10px'},'YOUR PLAN'),h('span',{class:'chip'},'STEP 2/4')),
-        h('main',{style:'justify-content:center;gap:18px'},st('idle'),h('h1',{},'LET\'S PERSONALIZE YOUR GOALS TOGETHER'),
+    if(step==='hello'){ov.replaceChildren(h('header',{},px('dumb',2),h('span',{class:'logo grow',style:'font-size:10px'},'YOUR PLAN'),h('span',{class:'chip'},'STEP 2/4'),modeToggle()),
+        h('main',{class:'anim',style:'justify-content:center;gap:18px'},st('idle'),h('h1',{},'LET\'S PERSONALIZE YOUR GOALS TOGETHER'),
           h('p',{},`Nice to meet you, ${D.name.trim()||'champ'}. Answer a few quick questions and IronBit builds your weekly plan, your protein target and your XP path.`)),
         h('div',{style:'padding:12px 14px;display:flex;gap:10px;background:var(--panel);border-top:4px solid var(--line)'},h('button',{class:'btn ghost',onclick:back,'aria-label':'Back'},'◀'),h('button',{class:'btn grow',onclick:next},'LET\'S DO IT ▶')));return}
     if(step==='goal'){const G=D.goal,seg=(key,opts)=>h('div',{class:'seg'},opts.map(([v,t])=>h('button',{'aria-pressed':String(G[key]===v),onclick:()=>{G[key]=v;draw()}},t)));
@@ -1247,39 +1347,261 @@ function onboard(start,edit){
         h('span',{class:'label'},'WHERE YOU TRAIN'),seg('equip',[['gym','FULL GYM'],['db','DUMBBELLS'],['none','NO EQUIPMENT']]),
         h('label',{class:'field',for:'tw'},h('span',{class:'label'},'TARGET WEIGHT '+SET.units.toUpperCase()+' (OPTIONAL)'),h('input',{id:'tw',type:'number',inputmode:'numeric',placeholder:'e.g. '+(SET.units==='lb'?Math.round(D.weight*2.2):Math.round(D.weight)),
           value:G.target?(SET.units==='lb'?Math.round(G.target*2.2046):G.target):'',onchange:e=>{const v=+e.target.value;G.target=v?(SET.units==='lb'?Math.round(v/2.2046*10)/10:v):null}}))],edit?'SAVE':'NEXT ▶');return}
-    if(step==='char')charStep()}
-  let ctab='body';
+    if(step==='char')charStep();if(step==='done')doneStep()}
+  let ctab=ctab0||'body';
   function charStep(){const C=D.char;
     const front=h('div',{class:'stage',style:'padding:6px 8px 0'},show(drawFront(D,C),4)),side=h('div',{class:'stage',style:'width:150px'},player('curl',0,{getChar:()=>D.char,getProf:()=>D}).el);
     const redraw=()=>{front.replaceChildren(show(drawFront(D,C),4))};
     const sw=(key,cols)=>h('div',{class:'sw'},cols.map(c=>h('button',{'aria-label':c,'aria-pressed':String(C[key]===c),style:`background:${c}`,onclick:e=>{C[key]=c;[...e.currentTarget.parentNode.children].forEach(b=>b.setAttribute('aria-pressed',String(b===e.currentTarget)));redraw()}})));
-    const ch=(key,opts)=>h('div',{class:'seg'},opts.map(o=>h('button',{'aria-pressed':String(C[key]===o),onclick:e=>{C[key]=o;[...e.currentTarget.parentNode.children].forEach(b=>b.setAttribute('aria-pressed',String(b===e.currentTarget)));redraw()}},o.toUpperCase())));
-    const accs=h('div',{class:'seg'},ACCS.map(a=>h('button',{'aria-pressed':String(C.acc.includes(a)),onclick:e=>{C.acc=C.acc.includes(a)?C.acc.filter(x=>x!==a):[...C.acc,a];e.currentTarget.setAttribute('aria-pressed',String(C.acc.includes(a)));redraw()}},a.toUpperCase())));
+    const ch=(key,opts)=>h('div',{class:'seg'},opts.map(o=>{const lk=key==='top'||key==='head'?key:null,ok=!lk||unlocked(lk,o);return h('button',{'aria-pressed':String(C[key]===o),class:ok?null:'locked',onclick:e=>{if(!ok){toast('UNLOCKS AT LVL '+lockLvl(lk,o));return}C[key]=o;[...e.currentTarget.parentNode.children].forEach(b=>b.setAttribute('aria-pressed',String(b===e.currentTarget)));redraw()}},(ok?'':'L'+lockLvl(lk,o)+' · ')+(LABELS[o]||o.toUpperCase()))}));
+    const accs=h('div',{class:'seg'},ACCS.map(a=>{const ok=unlocked('acc',a);return h('button',{'aria-pressed':String(C.acc.includes(a)),class:ok?null:'locked',onclick:e=>{if(!ok){toast('UNLOCKS AT LVL '+lockLvl('acc',a));return}C.acc=C.acc.includes(a)?C.acc.filter(x=>x!==a):[...C.acc,a];e.currentTarget.setAttribute('aria-pressed',String(C.acc.includes(a)));redraw()}},(ok?'':'L'+lockLvl('acc',a)+' · ')+(LABELS[a]||a.toUpperCase()))}));
     const bd=build(D);
     const panes={body:()=>[h('span',{class:'label'},'SKIN TONE'),sw('skin',SKINS),h('span',{class:'label'},'EYE COLOR'),sw('eye',EYES),
         h('p',{class:'note'},`Body shape follows your stats: ${D.height} cm, ${fmtW(D.weight)}, ${['slim','average','solid','heavy'][bd.b]} build. Update your weight later and your character changes too.`)],
       hair:()=>[h('span',{class:'label'},'HAIR STYLE'),ch('hair',HAIRS),h('span',{class:'label'},'HAIR COLOR'),sw('hairC',HAIRC),h('span',{class:'label'},'BEARD'),ch('beard',BEARDS)],
       outfit:()=>[h('span',{class:'label'},'TOP'),ch('top',TOPS),sw('topC',CLOTH),h('span',{class:'label'},'BOTTOMS'),ch('bottom',BOTS),sw('botC',CLOTH),h('span',{class:'label'},'SHOES'),sw('shoeC',CLOTH)],
-      gear:()=>[h('span',{class:'label'},'HEADWEAR'),ch('head',HEADS),sw('headC',CLOTH),h('span',{class:'label'},'ACCESSORIES'),accs,h('span',{class:'label'},'WRISTBAND COLOR'),sw('accC',CLOTH)]};
+      gear:()=>[h('span',{class:'label'},'HEADWEAR'),ch('head',HEADS.filter(x=>headOk(x,D.sex))),sw('headC',CLOTH),h('span',{class:'label'},'ACCESSORIES'),accs,h('span',{class:'label'},'WRISTBAND COLOR'),sw('accC',CLOTH)]};
     shell(edit?'MY CHARACTER':'YOUR CHARACTER',[
       h('div',{class:'row nowrap',style:'align-items:flex-end;justify-content:center'},front,side),
-      h('div',{class:'row nowrap'},h('button',{class:'btn ghost grow',onclick:()=>{D.char=randChar(D.sex);charStep()}},'RANDOM'),h('button',{class:'btn ghost grow',onclick:()=>{D.char=defChar(D.sex);charStep()}},'RESET')),
+      h('div',{class:'row nowrap'},h('button',{class:'btn ghost grow',onclick:()=>{D.char=sanitizeChar(randChar(D.sex),D.sex);charStep()}},'RANDOM'),h('button',{class:'btn ghost grow',onclick:()=>{D.char=defChar(D.sex);charStep()}},'RESET')),
       h('div',{class:'tabs',role:'tablist'},[['body','BODY'],['hair','HAIR'],['outfit','OUTFIT'],['gear','GEAR']].map(([k,t])=>h('button',{role:'tab','aria-selected':String(ctab===k),onclick:()=>{ctab=k;charStep()}},t))),
-      ...panes[ctab]()],edit?'SAVE':'START TRAINING ▶')}
+      ...panes[ctab]()],edit?'SAVE':'ALMOST DONE ▶')}
+  function doneStep(){const keep=P;P=D;const c=calc(),w=weekPlan(),R=allR(),nr=REWARDS[0];P=keep;
+    ov.replaceChildren(h('header',{},px('star',3),h('span',{class:'logo grow',style:'font-size:10px'},'ALL SET'),modeToggle()),
+      h('main',{class:'anim',style:'gap:14px'},h('div',{class:'row nowrap',style:'justify-content:center;align-items:flex-end'},h('div',{class:'stage',style:'padding:6px 8px 0'},show(drawFront(D,D.char,'great'),4)),h('div',{class:'stage',style:'width:140px'},player('curl',0,{getChar:()=>D.char,getProf:()=>D}).el)),
+        h('h1',{},`YOU'RE ALL SET, ${(D.name.trim()||'CHAMP').toUpperCase()}!`),
+        h('div',{class:'macro'},h('div',{},h('span',{class:'label'},'TRAINING'),h('span',{class:'num',style:'font-size:11px'},D.goal.days+'×/WK')),h('div',{},h('span',{class:'label'},'PROTEIN'),h('span',{class:'num',style:'font-size:11px'},c.pro+'G')),h('div',{},h('span',{class:'label'},'KCAL'),h('span',{class:'num',style:'font-size:11px'},c.kcal))),
+        h('div',{class:'week'},w.map((r,i)=>h('div',{class:r?'on':''},DAYS[i].slice(0,2),r?px('dumb',2):h('span',{},'·'),r?R[r].name.split(' ')[0].slice(0,5):'REST'))),
+        xpRules(),h('p',{class:'note'},`Your first reward unlocks at LVL ${nr[0]}: ${nr[3].toLowerCase()}.`)),
+      h('div',{style:'padding:12px 14px;display:flex;gap:10px;background:var(--panel);border-top:4px solid var(--line)'},h('button',{class:'btn ghost',onclick:()=>{step='char';draw()},'aria-label':'Back'},'◀'),h('button',{class:'btn grow',onclick:finish},'ENTER IRONBIT ▶')))}
   draw()}
 
+/* ================= v0.4: modes, fonts, levels, rewards ================= */
+const FONTS={classic:['CLASSIC PIXEL','"Press Start 2P"','"VT323"',1,1],blocky:['BLOCKY','Silkscreen','"VT323"',1.25,1],soft:['SOFT PIXEL','"Pixelify Sans"','"Pixelify Sans"',1.45,.82],
+  dot:['DOT MATRIX','"DotGothic16"','"DotGothic16"',1.35,.8],jersey:['JERSEY','"Jersey 10"','"Jersey 10"',1.9,1.05],normal:['NORMAL','system-ui,-apple-system,"Segoe UI",Roboto,sans-serif','system-ui,-apple-system,"Segoe UI",Roboto,sans-serif',1.4,.8]};
+function curMode(){return SET.modeAuto?(matchMedia('(prefers-color-scheme: dark)').matches?'dark':'light'):SET.mode}
+function toggleMode(){SET.modeAuto=false;SET.mode=curMode()==='dark'?'light':'dark';save();applyTheme();refreshModeIcons()}
+function refreshModeIcons(){document.querySelectorAll('.modeT').forEach(b=>{b.replaceChildren(px(curMode()==='dark'?'sun':'moon',2));b.setAttribute('aria-label',curMode()==='dark'?'Switch to light mode':'Switch to dark mode')})}
+function modeToggle(){return h('button',{class:'icon-btn modeT','aria-label':curMode()==='dark'?'Switch to light mode':'Switch to dark mode',onclick:toggleMode},px(curMode()==='dark'?'sun':'moon',2))}
+function xpAt(L){return 50*L*(L-1)}
+function lvl(){let L=1;while(ST.xp>=xpAt(L+1)&&L<99)L++;return L}
+function lvlProg(){const L=lvl(),a=xpAt(L),b=xpAt(L+1);return{L,cur:ST.xp-a,need:b-a,pct:Math.min(100,(ST.xp-a)/(b-a)*100)}}
+const RANK_AT=[[1,'ROOKIE'],[3,'IRON ROOKIE'],[5,'BRAWLER'],[8,'IRON KNIGHT'],[12,'GLADIATOR'],[18,'TITAN'],[25,'LEGEND'],[30,'IRON GOD']];
+function rank(){const L=lvl();return RANK_AT.filter(r=>r[0]<=L).pop()[1]}
+const UNLOCK={top:{tracksuit:3,kit:5,trad:8,armor:15},head:{bandana:4,crown:30},acc:{cape:18,aura:20},pal:{arcade:7,legend:10},sfx:{arcade:2,chip:12,legend:25}};
+function lockLvl(k,id){return(UNLOCK[k]||{})[id]||0}
+function unlocked(k,id){return SET.unlockAll||lvl()>=lockLvl(k,id)}
+const REWARDS=[[2,'sfx','arcade','ARCADE SOUND PACK'],[3,'top','tracksuit','TRACKSUIT'],[4,'head','bandana','BANDANA'],[5,'top','kit','NATIONAL KIT'],[7,'pal','arcade','ARCADE THEME'],
+  [8,'top','trad','TRADITIONAL OUTFIT'],[10,'pal','legend','LEGENDARY GOLD THEME'],[12,'sfx','chip','CHIPTUNE SOUND PACK'],[15,'top','armor','KNIGHT ARMOR'],[18,'acc','cape','HERO CAPE'],
+  [20,'acc','aura','GOLDEN AURA'],[25,'sfx','legend','LEGENDARY SOUND PACK'],[30,'head','crown','IRON CROWN']];
+const nextReward=()=>REWARDS.find(r=>r[0]>lvl());
+const LABELS={kit:'NATIONAL KIT',trad:'TRADITIONAL',imma:'TURBAN',armor:'KNIGHT ARMOR',aura:'GOLD AURA'};
+const headOk=(hd,sex)=>!(sex==='m'&&hd==='hijab')&&!(sex==='f'&&(hd==='ghutra'||hd==='imma'));
+function fixHead(C,sex){if(!headOk(C.head,sex))C.head='none';return C}
+function sanitizeChar(C,sex){fixHead(C,sex);if(!unlocked('top',C.top))C.top='tee';if(!unlocked('head',C.head))C.head='none';C.acc=C.acc.filter(a=>unlocked('acc',a));return C}
+function flagCols(code){const cols=[];(FL[code]||FL.XX)[2].forEach(op=>{if(op[0]==='h'||op[0]==='v')cols.push(...op[1]);else if(typeof op[1]==='string')cols.push(op[1])});const u=[...new Set(cols)];return u.length>1?u:['#2d6b8f','#ffffff']}
+const GULF={m:['kandura','#f6f3ec','ghutra'],f:['kandura','#26232e','hijab']},LEVANT={m:['kandura','#f3efe6','ghutra'],f:['kandura','#c0392b','hijab']},SOUTHASIA={m:['kurta','#f2b84b',null],f:['kurta','#e84393',null]};
+const TRAD={SD:{m:['kandura','#f6f3ec','imma'],f:['kandura','#e84393','hijab']},EG:{m:['kandura','#5b7fa6',null],f:['kandura','#7b6fb0','hijab']},
+  AE:GULF,SA:GULF,QA:GULF,KW:GULF,BH:GULF,OM:{m:['kandura','#f6f3ec','imma'],f:['kandura','#2d6b8f','hijab']},JO:LEVANT,SY:LEVANT,LB:LEVANT,IQ:LEVANT,YE:{m:['kandura','#f3efe6','imma'],f:['kandura','#26232e','hijab']},
+  IN:SOUTHASIA,PK:{m:['kurta','#f3efe6',null],f:['kurta','#3fc1b0',null]},BD:SOUTHASIA,NP:SOUTHASIA,LK:SOUTHASIA,SO:{m:['kandura','#f3efe6',null],f:['kandura','#2d6b8f','hijab']},
+  PH:{m:['compression','#f3efe6',null],f:['compression','#f6e9d0',null]},MA:{m:['kandura','#8d6e63',null],f:['kandura','#e84393','hijab']}};
+function effChar(pr,C){if(C.top!=='kit'&&C.top!=='trad')return C;const o={...C},cc=(pr&&pr.country)||'XX',sex=(pr&&pr.sex)||'m';
+  if(C.top==='trad'&&TRAD[cc]){const[t,col,hd]=TRAD[cc][sex];o.top=t;o.topC=col;if(hd&&C.head==='none'){o.head=hd;o.headC=hd==='hijab'?shade(col,-.15):'#f6f3ec'}return o}
+  const fc=flagCols(cc);o.top='tee';o.topC=C.top==='trad'?'#f2c14e':fc[0];o.kit2=fc.find(x=>x!==o.topC)||'#ffffff';return o}
+function rewardIcon(r){const[,k,id]=r;if(k==='pal'){const t=PALS[id].dark;return h('span',{class:'row nowrap',style:'gap:0;flex:none'},[t.bg,t.a1,t.a2,t.a3].map(c=>h('i',{style:`width:6px;height:14px;display:block;background:${c}`})))}
+  return px(k==='top'?'shirt':k==='head'?(id==='crown'?'crown':'hat'):k==='acc'?id:'note',2)}
+function gainXP(n){if(!n)return;const b=lvl();ST.xp+=n;save();SFX.coin();buzz(25);toast('+'+n+' XP');const a=lvl();if(a>b)setTimeout(()=>levelUp(a),600)}
+function levelUp(L){SFX.lvl();buzz(200);const rw=REWARDS.filter(r=>r[0]===L),[cv,g]=mk(120,160);cv.className='burst';cv.setAttribute('aria-hidden','true');
+  const parts=Array.from({length:80},()=>({x:60,y:60,vx:(Math.random()-.5)*5,vy:-Math.random()*4.5-1,c:['#f2b84b','#ff6b57','#3fc1b0','#f6e9d0','#7b6fb0'][Math.floor(Math.random()*5)]}));let fr=0;
+  const anim=()=>{if(!cv.isConnected||fr++>150)return;g.clearRect(0,0,120,160);parts.forEach(p=>{p.x+=p.vx;p.y+=p.vy;p.vy+=.1;g.fillStyle=p.c;g.fillRect(p.x|0,p.y|0,2,2)});requestAnimationFrame(anim)};
+  const nr=nextReward();let m;
+  m=modal(h('div',{class:'lvlup'},cv,h('span',{class:'label'},'LEVEL UP!'),h('div',{class:'bigl'},'LVL '+L),h('h2',{},rank()),
+    rw.length?rw.map(r=>h('div',{class:'box',style:'border-color:var(--a1);width:100%'},h('span',{class:'label'},'UNLOCKED'),h('div',{class:'row nowrap',style:'justify-content:center'},rewardIcon(r),h('h3',{},r[3])))):
+      h('p',{class:'small'},nr?`Next reward at LVL ${nr[0]}: ${nr[3].toLowerCase()}`:'You unlocked everything. Legend.'),
+    h('div',{class:'row nowrap',style:'width:100%'},h('button',{class:'btn ghost grow',onclick:()=>{m.remove();openLevelMap()}},'LEVEL MAP'),h('button',{class:'btn grow',onclick:()=>m.remove()},'AWESOME!'))));
+  m.classList.add('center');if(!matchMedia('(prefers-reduced-motion: reduce)').matches)anim()}
+function xpRules(){return h('div',{class:'box'},h('span',{class:'label'},'HOW XP WORKS'),
+  ...[['dumb','Finish a set: 10, 20 or 30 XP, depending on how hard the exercise is'],['flame','XP is banked when the session timer reaches 0, plus a 50–150 XP finish bonus'],['bolt','Pause whenever you need. Ending early banks nothing'],
+    ['star','Level up to unlock outfits, themes and sound packs'],['club','Only finished sessions count on the leaderboard'],['heart','Small bonuses for logging food, your mood and posts']].map(([i,t])=>h('div',{class:'row nowrap',style:'align-items:flex-start'},px(i,2),h('span',{},t))))}
+function xpHelp(){let m;m=modal(xpRules(),h('button',{class:'btn',onclick:()=>{m.remove();openLevelMap()}},'SEE LEVEL MAP'),h('button',{class:'btn ghost',onclick:()=>m.remove()},'GOT IT'))}
+function sheet(title,build){const ov=h('div',{class:'overlay'}),body=h('main',{class:'anim'});APP.append(ov);const close=()=>ov.remove();
+  ov.append(h('header',{},h('button',{class:'btn ghost',style:'padding:8px 10px','aria-label':'Back',onclick:close},'◀'),h('span',{class:'logo grow',style:'font-size:10px'},title),modeToggle()),body);
+  const redraw=()=>body.replaceChildren(...build(redraw,close).flat().filter(Boolean));redraw();return ov}
+function openLevelMap(){sheet('LEVEL MAP',()=>{const L=lvl(),N=30,H=N*64+40,wrap=h('div',{class:'lmap',style:`height:${H}px`}),NS='http://www.w3.org/2000/svg',svg=document.createElementNS(NS,'svg');
+  svg.setAttribute('viewBox',`0 0 100 ${H}`);svg.setAttribute('preserveAspectRatio','none');const pos=i=>({x:50+Math.sin(i*.8)*30,y:H-30-(i-1)*64});
+  const line=(from,to,col,dash)=>{const pl=document.createElementNS(NS,'polyline'),pp=[];for(let i=from;i<=to;i++){const p=pos(i);pp.push(p.x+','+p.y)}pl.setAttribute('points',pp.join(' '));pl.style.fill='none';pl.style.stroke=col;pl.setAttribute('stroke-width','6');pl.setAttribute('vector-effect','non-scaling-stroke');if(dash)pl.setAttribute('stroke-dasharray','6 6');svg.append(pl)};
+  line(1,N,'var(--line)',true);if(L>1)line(1,Math.min(L,N),'var(--a3)',false);wrap.append(svg);
+  for(let i=1;i<=N;i++){const p=pos(i),rw=REWARDS.find(r=>r[0]===i),st=i<L?'done':i===L?'cur':'todo';
+    wrap.append(h('div',{class:'lnode '+st,style:`left:${p.x}%;top:${p.y}px`,'aria-label':'Level '+i+(st==='cur'?', you are here':'')},i===L?headIcon(P,P.char,2,todayMood()):h('span',{},i)));
+    if(rw)wrap.append(h('div',{class:'lrew'+(i<=L?' got':''),style:`top:${p.y}px;${p.x>50?'right:'+(100-p.x+9)+'%':'left:'+(p.x+9)+'%'}`},rewardIcon(rw),h('span',{class:'label'},(i<=L?'':'LVL '+i+' · ')+rw[3])))}
+  setTimeout(()=>{const cur=wrap.querySelector('.lnode.cur');cur&&cur.scrollIntoView({block:'center'})},80);
+  const pr=lvlProg(),nr=nextReward();
+  return[h('div',{class:'box'},h('div',{class:'row spread'},h('h3',{},'LVL '+pr.L+' · '+rank()),h('span',{class:'small'},pr.cur+' / '+pr.need+' XP')),h('div',{class:'bar'},h('i',{style:`width:${pr.pct}%`})),
+    nr?h('span',{class:'small'},`Next: ${nr[3].toLowerCase()} at LVL ${nr[0]}`):null),wrap]})}
+
+/* ================= mood ================= */
+const MOODS={great:['ENERGIZED','Great day to push a little harder.',['Do your planned workout, maybe add one extra set','Go for a new best, with good form','Share your win in the club'],'train'],
+  good:['GOOD','Solid. Stick to the plan.',['Do your planned workout','Hit your protein target today','Drink water through the day'],'train'],
+  okay:['OKAY','Showing up is what counts.',['Warm up for 5–10 minutes, then decide how hard to go','A shorter session still counts','Put on a playlist you love'],'train'],
+  tired:['TIRED','Listen to your body today.',['Try a lighter session like No-Gym Home','Aim for 7–9 hours of sleep tonight','Drink water and eat a proper meal'],'home'],
+  sore:['SORE','Some soreness is normal after training.',['Train a different muscle group today','A light walk and stretching help recovery','Protein and sleep help muscles repair'],'mobility','Sharp or joint pain is different from soreness. Rest it and get it checked if it doesn\'t go away.'],
+  stressed:['STRESSED','Moving can help clear your head.',['A 20-minute session can lift your mood','Try slow breathing: in for 4, hold for 4, out for 4','A short walk outside helps too'],'home']};
+function todayMood(){return ST.mood&&ST.mood.d===today()?ST.mood.m:null}
+function moodFace(m,s=3){const[c,g]=mk(11,11),K='#3b2a1a';disc(g,'#f2b84b',5,5,4.5);R(g,'#ffd66b',3,2,2,1);
+  if(m==='tired'){R(g,K,3,5,2,1);R(g,K,6,5,2,1)}else{R(g,K,3,4,1,2);R(g,K,7,4,1,2)}
+  if(m==='great'){R(g,K,3,7,5,1);R(g,'#ffffff',4,7,3,1);R(g,K,2,6,1,1);R(g,K,8,6,1,1);R(g,K,4,8,3,1)}
+  else if(m==='good'){R(g,K,4,8,3,1);R(g,K,3,7,1,1);R(g,K,7,7,1,1)}
+  else if(m==='okay')R(g,K,4,7,3,1);
+  else if(m==='tired'){R(g,K,4,8,3,1);R(g,'#a79fcf',8,1,2,1);R(g,'#a79fcf',9,2,1,1);R(g,'#a79fcf',8,3,2,1)}
+  else{pts(g,K,[[3,8],[4,7],[5,8],[6,7],[7,8]]);if(m==='sore')R(g,'#7fd3ff',9,3,1,2);else{R(g,K,2,3,2,1);R(g,K,7,3,2,1)}}
+  return show(outline(c),s)}
+function faceMood(g,m,cx,ey,S,H){const M=shade(S,-.45);if(m==='okay'||!m)return;R(g,S,cx-1,ey+3,2,1);
+  if(m==='great'){R(g,M,cx-2,ey+3,4,1);R(g,'#ffffff',cx-1,ey+3,2,1);R(g,M,cx-3,ey+2,1,1);R(g,M,cx+2,ey+2,1,1)}
+  else if(m==='good'){R(g,M,cx-1,ey+3,2,1);R(g,M,cx-2,ey+2,1,1);R(g,M,cx+1,ey+2,1,1)}
+  else if(m==='tired'){R(g,shade(S,-.2),cx-4,ey,2,1);R(g,shade(S,-.2),cx+1,ey,2,1);R(g,M,cx-1,ey+3,2,1);R(g,shade(S,-.12),cx-4,ey+2,2,1);R(g,shade(S,-.12),cx+1,ey+2,2,1)}
+  else{pts(g,M,[[cx-2,ey+3],[cx-1,ey+4],[cx,ey+3],[cx+1,ey+4]]);if(m==='sore'){R(g,'#7fd3ff',cx+5,ey-4,1,2);R(g,'#7fd3ff',cx+6,ey-3,1,2)}else{R(g,H,cx-3,ey-1,1,1);R(g,H,cx+1,ey-1,1,1)}}}
+function moodAction(a){if(a==='train')quickStart();else if(a==='home')openWorkout('home');else{tab='train';trainView='muscles';render()}}
+function moodBox(){const m=todayMood(),M=m&&MOODS[m];
+  return h('div',{class:'box'},h('span',{class:'label'},'HOW DO YOU FEEL TODAY?'),
+    h('div',{class:'moods'},Object.entries(MOODS).map(([k,[t]])=>h('button',{class:'mood','aria-pressed':String(m===k),'aria-label':t,onclick:()=>{const first=!m;ST.mood={d:today(),m:k};save();if(first)gainXP(2);render(true)}},moodFace(k,3),h('span',{class:'label'},t)))),
+    ...(M?[h('h3',{},M[1]),h('div',{class:'list'},M[2].map(t=>h('div',{class:'row nowrap',style:'align-items:flex-start'},px('star',2),h('span',{},t)))),M[4]?h('p',{class:'note'},M[4]):null,
+      h('button',{class:'btn alt',onclick:()=>moodAction(M[3])},M[3]==='train'?'▶ START TODAY\'S WORKOUT':M[3]==='home'?'▶ START A LIGHT SESSION':'▶ PICK A DIFFERENT MUSCLE')]
+      :[h('span',{class:'small'},'Pick a face. Your profile picture changes with your mood, and IronBit suggests what to do today.')]))}
+
+/* ================= me page ================= */
+function meScreen(){const pr=lvlProg(),c=calc(),C=effChar(P,P.char),has=a=>C.acc.includes(a),mood=todayMood(),nice=s=>(LABELS[s]||s||'none').toUpperCase();
+  const slot=(lab,val,col,tk)=>h('button',{class:'slot',onclick:()=>onboard('char',true,tk)},h('span',{class:'label'},lab),h('span',{class:'row nowrap',style:'gap:6px;min-width:0;max-width:100%'},col?h('i',{class:'swatch',style:`background:${col}`}):null,h('span',{class:'sv'},val)));
+  return[
+   h('div',{class:'row nowrap',style:'align-items:center'},h('div',{class:'pfp'},headIcon(P,P.char,4,mood)),
+     h('div',{class:'grow',style:'display:flex;flex-direction:column;gap:7px'},avatarRow(2),h('span',{class:'small'},`${P.city||''} · ${P.age} yrs · ${P.height} cm · ${fmtW(P.weight)}`),
+       h('div',{class:'row nowrap'},h('span',{class:'tag s'},'LVL '+pr.L),h('span',{class:'label'},rank())),h('div',{class:'bar'},h('i',{style:`width:${pr.pct}%`})))),
+   moodBox(),
+   h('div',{class:'box'},h('div',{class:'row spread'},h('span',{class:'label'},'EQUIPMENT'),h('span',{class:'small'},'Tap a slot to change it')),
+     h('div',{class:'gearg'},
+       h('div',{class:'gcol'},slot('HEAD',nice(C.head),C.head!=='none'?C.headC:null,'gear'),slot('TOP',nice(P.char.top),C.topC,'outfit'),slot('BOTTOMS',nice(C.bottom),C.botC,'outfit')),
+       h('div',{class:'stage gbody'},show(drawFront(P,P.char,mood),3)),
+       h('div',{class:'gcol'},slot('L WRIST',has('watch')?'WATCH':'EMPTY',null,'gear'),slot('R WRIST',has('wristband')?'BAND':has('ring')?'RING':'EMPTY',has('wristband')?C.accC:null,'gear'),slot('FEET','SNEAKERS',C.shoeC,'outfit'))),
+     h('span',{class:'label'},'ACCESSORIES'),
+     h('div',{class:'inv'},['glasses','earbuds','chain','gloves','cape','aura'].map(a=>h('button',{class:'islot'+(has(a)?' on':''),'aria-label':a+(has(a)?' equipped':''),onclick:()=>onboard('char',true,'gear')},px(a,2),h('span',{class:'label'},a.toUpperCase()))))),
+   h('div',{class:'row nowrap'},h('button',{class:'btn alt grow',onclick:openLevelMap},'LEVEL MAP'),h('button',{class:'btn ghost grow',onclick:()=>onboard('char',true)},'EDIT LOOK')),
+   h('div',{class:'box'},h('div',{class:'row spread'},h('span',{class:'label'},'COLLECTION'),h('span',{class:'small'},REWARDS.filter(r=>unlocked(r[1],r[2])).length+' / '+REWARDS.length)),
+     h('div',{class:'coll'},REWARDS.map(r=>{const ok=unlocked(r[1],r[2]);return h('button',{class:'citem'+(ok?' got':' locked'),style:'color:var(--fg);text-align:left',onclick:()=>ok?(r[1]==='pal'||r[1]==='sfx'?(tab='settings',render()):onboard('char',true,r[1]==='top'?'outfit':'gear')):toast('REACH LVL '+r[0]+' TO UNLOCK')},
+       ok?rewardIcon(r):px('lock',2),h('span',{class:'grow',style:'display:flex;flex-direction:column;gap:3px;min-width:0'},h('span',{class:'label',style:'color:var(--fg)'},r[3]),h('span',{class:'label'},ok?'UNLOCKED':'LVL '+r[0])))}))),
+   h('div',{class:'box'},h('span',{class:'label'},'MY GOAL'),h('h3',{},GOALS[P.goal.type][0]),
+     h('span',{class:'small'},`${P.goal.days} days/week · ${P.goal.mins} min · ${P.goal.level} · ${{gym:'full gym',db:'dumbbells',none:'no equipment'}[P.goal.equip]}`),
+     h('div',{class:'macro'},h('div',{},h('span',{class:'label'},'KCAL'),h('span',{class:'num',style:'font-size:11px'},c.kcal)),h('div',{},h('span',{class:'label'},'PROTEIN'),h('span',{class:'num',style:'font-size:11px'},c.pro+'g')),h('div',{},h('span',{class:'label'},'XP'),h('span',{class:'num',style:'font-size:11px'},ST.xp))),
+     h('div',{class:'row nowrap'},h('button',{class:'btn ghost grow',onclick:()=>onboard('goal',true)},'CHANGE GOAL'),h('button',{class:'btn ghost grow',onclick:()=>onboard('info',true)},'EDIT INFO'))),
+   SET.pro?h('div',{class:'srow box'},h('span',{},'IronBit Pro preview is on'),h('span',{class:'tag s'},'PRO')):h('button',{class:'opt',onclick:()=>proModal()},px('star',3),h('span',{class:'grow'},'Go IronBit Pro: no ads, unlimited routines'),h('span',{class:'tag s'},'PRO')),
+   h('button',{class:'btn ghost',onclick:()=>{tab='settings';render()}},'⚙ SETTINGS')]}
+
+/* ================= quick actions ================= */
+function quickStart(){const rid=planFor(today());if(rid){openWorkout(rid);return}const R=allR();let m;
+  m=modal(h('h2',{},'START A WORKOUT'),h('span',{class:'small'},'Nothing planned today. Pick a routine:'),
+    h('div',{class:'list'},Object.entries(R).map(([id,r])=>h('button',{class:'item',onclick:()=>{m.remove();openWorkout(id)}},px('dumb',3),h('span',{class:'grow'},h('h3',{},r.name),h('span',{class:'small'},r.ex.length+' moves · '+stars(rDiff(r))))))),
+    h('button',{class:'btn ghost',onclick:()=>m.remove()},'CLOSE'))}
+function fabMenu(){if(APP.querySelector('.fab')){closeFab();return}const f=h('div',{class:'fab',onclick:e=>{if(e.target===f)closeFab()}},
+    h('div',{class:'fabbtns'},h('button',{class:'fabb',onclick:()=>{closeFab();pickFood(id=>foodModal(id))}},foodIcon('chicken',3),'LOG FOOD'),
+      h('button',{class:'fabb',onclick:()=>{closeFab();quickStart()}},px('dumb',4),'START WORKOUT')));
+  APP.append(f);const p=APP.querySelector('nav .plus');if(p){p.classList.add('open');p.setAttribute('aria-expanded','true')}}
+function closeFab(){const f=APP.querySelector('.fab');if(f)f.remove();const p=APP.querySelector('nav .plus');if(p){p.classList.remove('open');p.setAttribute('aria-expanded','false')}}
+
+/* ================= loading screen ================= */
+const JOKES=['My favorite exercise is a cross between a lunge and a crunch. I call it lunch.','Leg day is like a group chat. Everyone skips it until it gets serious.',
+  'I told my trainer I want to get in shape. He said round is a shape. We are starting anyway.','Rest days are save points. Use them, but don\'t live there.',
+  'Why don\'t skeletons go to the gym? Their heart isn\'t in it.','Protein shake in one hand, phone in the other. That\'s balance training.',
+  'Loading muscles. Please don\'t turn off your motivation.','I lift, therefore I snack.','Warming up the pixels. Your gains are almost ready.',
+  'Sweat is just your fat crying. Let it.','The barbell doesn\'t care about your excuses. It doesn\'t care about anything. It\'s a barbell.'];
+const QTIPS=['Warm up for 5–10 minutes before heavy sets.','Breathe out on the hard part of each rep.','Leave 1–2 reps in the tank on most sets.','Rest 60–90 seconds for muscle, 2–3 minutes for heavy strength sets.',
+  'Sip water between sets.','Wipe down benches after you use them.','Add a little weight or one more rep each week.','Sleep is when muscles actually grow.','Film one set to check your form.',
+  'Put your weights back when you\'re done.','Spread protein across your meals.','Beat last week, not other people.'];
+function loadingScreen(next,title){const ov=h('div',{class:'overlay loader'});APP.append(ov);let done=false,t=0;const go=()=>{if(done)return;done=true;clearInterval(t);ov.remove();next()};
+  const bar=h('i',{style:'width:0%'}),pl=player('idle',0,{}),pct=h('span',{class:'label'},'0%');
+  ov.append(h('main',{class:'anim'},h('span',{class:'tag s'},'GET FIT, BIT BY BIT.'),h('h2',{},'LOADING '+title),h('div',{class:'stage',style:'width:44%'},pl.el),
+    h('div',{class:'bar'},bar),pct,h('div',{class:'box',style:'text-align:left;width:100%'},h('span',{class:'label'},'JOKE OF THE SET'),h('p',{},pick(JOKES)),h('span',{class:'label'},'QUICK TIP'),h('p',{},pick(QTIPS))),
+    h('span',{class:'small'},'Tap anywhere to skip')));
+  ov.addEventListener('click',go);let p=0;SFX.tap();t=setInterval(()=>{p=Math.min(100,p+3+Math.random()*6);bar.style.width=p+'%';pct.textContent=Math.round(p)+'%';if(p>=100){clearInterval(t);SFX.coin();setTimeout(go,450)}},150)}
+function exTip(n){const m=Object.values(MUSCLES).find(M=>M.ex.includes(n));return m?m.tip:QTIPS[n.length%QTIPS.length]}
+
+/* ================= tips & tricks ================= */
+const TIPS={'GYM LIFE':[['Re-rack your weights','Put plates and dumbbells back where they belong. Weights left on the floor are the top gym annoyance and a trip hazard.'],
+   ['Wipe down equipment','Use the gym spray or wipes after benches and machines, and bring a small towel.'],
+   ['Share at busy times','Let others "work in" between your sets on a machine. It keeps the gym moving.'],
+   ['Give lifters space','Don\'t walk right in front of someone mid-set or stand too close to their mirror.'],
+   ['Ask for a spot','For heavy bench press or squats, ask someone to spot you. Most lifters are happy to help.']],
+ 'EQUIPMENT':[['Barbell','A standard Olympic barbell weighs 20 kg; the women\'s bar is 15 kg. Count the bar when you add up plates.'],
+   ['Dumbbells','Great for fixing left-right differences and for training at home.'],
+   ['Cable machine','Keeps tension through the whole move. Swap attachments (rope, bar, handle) for different exercises.'],
+   ['Smith machine','The bar runs on fixed rails. It feels safer, but it moves differently from a free barbell.'],
+   ['Squat rack','Set the safety bars just below your lowest point so you can fail a rep safely.'],
+   ['Resistance bands','Cheap, light and perfect for warm-ups, rehab work and travel.']],
+ 'NUTRITION':[['What is a calorie (kcal)?','A unit of energy in food. Eat more than you burn to gain weight, less to lose it. The "calories" on food labels are kilocalories (kcal).'],
+   ['What is protein?','The nutrient that builds and repairs muscle. Found in meat, fish, eggs, dairy, beans and lentils. Many lifters aim for about 1.6–2.2 g per kg of body weight a day.'],
+   ['Carbs','Your main training fuel. Rice, bread, oats, fruit and potatoes.'],
+   ['Fats','Needed for hormones and overall health. Olive oil, nuts, avocado and fish are good sources.'],
+   ['Macros in numbers','Protein and carbs have 4 kcal per gram, fat has 9. That\'s how the plate calculator adds up your meal.'],
+   ['Water','Drink through the day, and more on hot days or when you sweat a lot.']],
+ 'SUPPLEMENTS':[['Protein powder','Food in powder form, usually 20–25 g of protein per scoop. Handy when meals alone don\'t hit your target. Whey comes from milk; plant versions suit vegans or lactose issues.'],
+   ['Creatine','One of the most researched supplements. Creatine monohydrate at 3–5 g a day can help strength and power. Take it daily; timing matters little.'],
+   ['Pre-workout & caffeine','Can boost energy. Watch the dose and skip it late in the day so it doesn\'t hurt your sleep.'],
+   ['Pick tested products','Look for third-party testing seals so you know what\'s inside the tub.'],
+   ['Food first','Supplements add to good food and sleep; they don\'t replace them. Check with a doctor first if you have a health condition.']],
+ 'RECOVERY':[['Sleep','7–9 hours a night is when your body repairs and builds muscle.'],
+   ['Rest days','Muscles grow while you recover. Training each muscle about twice a week works well for most people.'],
+   ['Soreness (DOMS)','Normal 1–3 days after a new or hard workout. Sharp or joint pain is different: stop and get it checked.'],
+   ['Deload weeks','Every 6–8 weeks, an easier week helps you come back stronger.']]};
+function tipsSheet(){let cat='GYM LIFE';sheet('TIPS & TRICKS',redraw=>[h('div',{class:'seg'},Object.keys(TIPS).map(c=>h('button',{'aria-pressed':String(c===cat),onclick:()=>{cat=c;redraw()}},c))),
+  ...TIPS[cat].map(([t,b],i)=>{const d=h('details',{class:'tip'},h('summary',{},t.toUpperCase()),h('p',{},b));if(i===0)d.open=true;return d})])}
+
+/* ================= gear shop ================= */
+const AFF_TAG=''; /* set your Amazon Associates tag here, e.g. 'yourtag-21' */
+const AMZ={AE:'ae',SA:'sa',EG:'eg',GB:'co.uk',US:'com',IN:'in',TR:'com.tr',DE:'de',FR:'fr',IT:'it'};
+const amzTld=()=>AMZ[(CITIES[P.city]||CITIES.Other)[0]]||'com';
+const amzUrl=q=>`https://www.amazon.${amzTld()}/s?k=${encodeURIComponent(q)}${AFF_TAG?'&tag='+encodeURIComponent(AFF_TAG):''}`;
+const SHOP={'PROTEIN':[['whey','Whey protein','whey protein powder','Look for 20–25 g of protein per scoop and a third-party tested label.'],['tubG','Plant protein','vegan protein powder','A good pick if dairy upsets your stomach.'],['bar','Protein bars','protein bars','Handy snack. Check the sugar, some bars are candy in disguise.']],
+  'CREATINE':[['tub','Creatine monohydrate','creatine monohydrate powder','Plain monohydrate is the most researched form. Unflavored mixes into anything.'],['shaker','Shaker bottle','protein shaker bottle','A mesh ball or grid stops lumps.']],
+  'RECOVERY':[['bottle','Electrolytes','electrolyte powder','Useful on hot days and long sweaty sessions.'],['roller','Foam roller','foam roller','Medium density is a good start.']],
+  'EQUIPMENT':[['dumbbells','Adjustable dumbbells','adjustable dumbbells','Save space at home. Check the max weight per hand.'],['bands','Resistance bands','resistance bands set','Get a set with several strengths.'],['kettlebell','Kettlebell','kettlebell','Start around 8–12 kg for swings.'],
+   ['mat','Exercise mat','exercise mat','Thicker mats are kinder to knees.'],['rope','Jump rope','jump rope','Speed ropes are great for cardio.'],['pullbar','Pull-up bar','doorway pull-up bar','Measure your door frame first.'],
+   ['belt','Lifting belt','weightlifting belt','Only needed for heavy squats and deadlifts.'],['wraps','Wrist wraps','wrist wraps','Support for heavy pressing.'],['gloves2','Gym gloves','gym gloves','Protects hands from calluses.']]};
+function ringE(g,c,cx,cy,rx,ry){for(let y=-ry;y<=ry;y++)for(let x=-rx;x<=rx;x++){const v=x*x/(rx*rx+.6)+y*y/(ry*ry+.6);if(v<=1&&v>=.42)R(g,c,cx+x,cy+y)}}
+Object.assign(ICON,{
+ tub:g=>{R(g,'#f3efe6',4,5,10,10);R(g,'#d6d1c4',11,5,3,10);R(g,'#2d6b8f',4,3,10,3);R(g,'#245a9c',11,3,3,3);R(g,'#3fc1b0',5,9,8,3)},
+ tubG:g=>{R(g,'#7fb069',4,5,10,10);R(g,'#5f9a52',11,5,3,10);R(g,'#2e7d32',4,3,10,3);R(g,'#f6e9d0',5,9,8,3)},
+ bar:g=>{lineW(g,[3,12],[14,6],4,'#8a5426');lineW(g,[3,12],[8,9],4,'#f2b84b');pts(g,'#5e3517',[[11,7],[13,6]])},
+ bottle:g=>{R(g,'#3fc1b0',6,2,6,2);R(g,'#c7cde0',7,4,4,2);R(g,'#ff6b57',5,6,8,10);R(g,'#ffb3a7',6,7,1,8);R(g,'#f6e9d0',6,10,6,2)},
+ shaker:g=>{R(g,'#26232e',5,2,8,3);R(g,'#c7cde0',5,5,8,11);R(g,'#eef1f5',6,6,1,9);R(g,'#f6e9d0',6,10,6,5)},
+ roller:g=>{ell(g,'#3fc1b0',9,9,7,4);ell(g,'#2c998b',3,9,2,4);pts(g,'#7fe0d2',[[6,7],[9,6],[12,7],[8,10],[11,11]])},
+ dumbbells:g=>{R(g,'#3d3a4f',2,5,3,9);R(g,'#3d3a4f',13,5,3,9);R(g,'#5b5873',5,6,2,7);R(g,'#5b5873',11,6,2,7);R(g,'#c7cde0',7,9,4,1)},
+ bands:g=>{ringE(g,'#ff6b57',6,9,4,6);ringE(g,'#3fc1b0',11,9,4,6)},
+ kettlebell:g=>{ringE(g,'#3d3a4f',9,5,4,3);disc(g,'#3d3a4f',9,11,5);R(g,'#5b5873',6,9,2,3)},
+ mat:g=>{R(g,'#7b6fb0',4,6,12,8);ell(g,'#a79fcf',4,10,2,4);R(g,'#5b4a63',7,6,1,8)},
+ rope:g=>{R(g,'#ff6b57',2,3,2,5);R(g,'#ff6b57',14,3,2,5);for(let t=0;t<=12;t++)R(g,'#26232e',3+t,8+Math.round(Math.sin(t/12*Math.PI)*7),1,1)},
+ pullbar:g=>{R(g,'#c7cde0',1,7,16,2);R(g,'#26232e',1,5,2,6);R(g,'#26232e',15,5,2,6);R(g,'#3d3a4f',5,7,2,2);R(g,'#3d3a4f',11,7,2,2)},
+ belt:g=>{R(g,'#8d6e63',1,7,16,5);R(g,'#6d4f45',1,7,16,1);R(g,'#c7cde0',7,6,4,7);R(g,'#8d6e63',8,8,2,3)},
+ wraps:g=>{ringE(g,'#3fc1b0',9,9,6,4);R(g,'#f6e9d0',12,12,4,2)},
+ gloves2:g=>{R(g,'#26232e',5,4,8,9);pts(g,'#3d3a4f',[[6,3],[8,3],[10,3],[12,3]]);R(g,'#ff6b57',5,11,8,2);R(g,'#3d3a4f',4,8,1,3)}});
+function shopSheet(){let cat='PROTEIN';sheet('GEAR SHOP',redraw=>[
+  h('p',{class:'note'},'As an Amazon Associate, IronBit earns from qualifying purchases. Links open Amazon in your browser at no extra cost to you.'),
+  h('span',{class:'small'},'Store for '+(P.city||'your city')+': amazon.'+amzTld()),
+  h('div',{class:'seg'},Object.keys(SHOP).map(c=>h('button',{'aria-pressed':String(c===cat),onclick:()=>{cat=c;redraw()}},c))),
+  h('div',{class:'list'},SHOP[cat].map(([ic,n,q,tip])=>h('div',{class:'post'},h('div',{class:'row nowrap'},foodIcon(ic,3),h('div',{class:'grow',style:'display:flex;flex-direction:column;gap:4px'},h('h3',{},n.toUpperCase()),h('span',{class:'small'},tip))),
+    h('a',{class:'btn alt',href:amzUrl(q),target:'_blank',rel:'noopener sponsored'},'VIEW ON AMAZON')))),
+  h('p',{class:'note'},'Supplements add to a good diet; they don\'t replace it. Check with a doctor first if you have a health condition.'),adSlot()])}
+
 /* ================= nav + boot ================= */
-const TABS=[['home','HOME','house'],['train','TRAIN','dumb'],['fuel','FUEL','leg'],['club','CLUB','club'],['map','GYMS','pin'],['me','ME','head']];
+const TABS=[['home','HOME','house'],['train','TRAIN','dumb'],['fuel','FUEL','leg'],['plus','','plus'],['club','CLUB','club'],['map','GYMS','pin'],['me','ME','head']];
 const nav=document.getElementById('nav');
-function render(keep){if(!P)return;const y=scr.scrollTop;scr.replaceChildren(...SCREENS[tab]().filter(Boolean));scr.scrollTop=keep?y:0;
-  nav.replaceChildren(...TABS.map(([id,label,ic])=>h('button',{'aria-current':id===tab?'page':'false',onclick:()=>{if(id==='train')trainView='main';tab=id;render()}},px(ic,3),label)))}
+function render(keep){if(!P)return;const y=scr.scrollTop;scr.replaceChildren(...SCREENS[tab]().filter(Boolean));scr.scrollTop=keep?y:0;if(!keep){scr.classList.remove('anim');void scr.offsetWidth;scr.classList.add('anim')}
+  nav.replaceChildren(...TABS.map(([id,label,ic])=>id==='plus'?h('button',{class:'plus','aria-label':'Quick actions','aria-expanded':'false',onclick:fabMenu},px('plus',4)):h('button',{'aria-current':id===tab?'page':'false',onclick:()=>{closeFab();if(id==='train')trainView='main';tab=id;render()}},px(ic,3),label)))}
 /* Android back button hook: returns true when it handled the press */
-window.ibBack=()=>{const m=APP.querySelector('.modal');if(m){m.remove();return true}const o=APP.querySelectorAll('.overlay');if(o.length&&P){o[o.length-1].remove();render();return true}
+window.ibBack=()=>{if(APP.querySelector('.fab')){closeFab();return true}const m=APP.querySelector('.modal');if(m){m.remove();return true}const o=APP.querySelectorAll('.overlay');if(o.length&&P){o[o.length-1].remove();render();return true}
   if(P&&tab!=='home'){tab='home';render();return true}return false};
 document.getElementById('logoIcon').append(px('dumb',2));
 document.getElementById('gear').append(px('gear',3));
+document.getElementById('modeBtn').addEventListener('click',toggleMode);
+try{matchMedia('(prefers-color-scheme: dark)').addEventListener('change',()=>{if(SET.modeAuto){applyTheme();refreshModeIcons()}})}catch(e){}
 document.getElementById('gear').addEventListener('click',()=>{tab='settings';render()});
-applyTheme();save();
+applyTheme();refreshModeIcons();save();
 if(!P)onboard('intro',false);else{render();if(!META.rated&&META.launches>=META.rateNext)setTimeout(rateModal,1500)}
 </script>
 

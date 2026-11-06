@@ -1,4 +1,4 @@
-# IronBit (Android) · v0.3
+# IronBit (Android) · v0.4
 
 Pixel-art gym app. Training, food, muscle map, calendar and gym maps run offline from bundled files in `app/src/main/assets/`. The club, leaderboard and ideas use demo data until the online version is added.
 
@@ -18,5 +18,6 @@ Open the folder in Android Studio and press Run, or run `gradle assembleDebug` w
 
 - Replace the sample gym list and prices with real data.
 - Connect the club, leaderboard and ideas to an online backend (e.g. Firebase).
+- Add your Amazon Associates tag (`AFF_TAG` in `index.html`) and Amazon's affiliate disclosure stays on the shop page.
 - Set the real donation flow (Google Play may require tips to go through Play Billing).
 - Build a signed release bundle (`gradle bundleRelease`) with your own upload key.
