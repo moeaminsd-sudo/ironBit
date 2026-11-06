@@ -266,6 +266,10 @@ public class MainActivity extends Activity {
     }
 
     private void openExternal(Uri u) {
+        if ("mailto".equals(u.getScheme())) {   // bug reports + feature ideas open the email app
+            try { startActivity(Intent.createChooser(new Intent(Intent.ACTION_SENDTO, u), "Send with")); } catch (Exception ignored) {}
+            return;
+        }
         Uri target = u;
         if ("play.google.com".equals(u.getHost()) && u.getQueryParameter("id") != null)
             target = Uri.parse("market://details?id=" + u.getQueryParameter("id"));
