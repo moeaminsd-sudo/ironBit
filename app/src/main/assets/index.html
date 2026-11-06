@@ -221,6 +221,24 @@ nav button.plus.open{transform:rotate(45deg)}
 .loader main{justify-content:center;align-items:center;text-align:center;gap:16px}
 .loader .bar{width:80%;height:18px}
 .loader .bar i{transition:width .15s steps(3)}
+.stepper{display:flex;align-items:stretch;min-width:0}
+.stepper>input{text-align:center;border-left:0;border-right:0;flex:1;min-width:0}
+.stp{min-width:46px;min-height:44px;flex:none;display:grid;place-items:center;background:var(--panel2);border:2px solid var(--line);font-family:var(--display);font-size:calc(14px*var(--fz)*var(--dz));color:var(--fg);padding:0 6px;touch-action:manipulation;user-select:none;-webkit-user-select:none}
+.stp:active{background:var(--a1);color:var(--bg)}
+.seg.big button{flex:1;padding:12px 8px}
+.cslide{display:flex;gap:8px;overflow-x:auto;scroll-snap-type:x mandatory;flex:1;min-width:0;padding:8px;background:var(--bg);border:2px solid var(--line);border-left:0;border-right:0;scrollbar-width:none}
+.cslide::-webkit-scrollbar{display:none}
+.cflag{scroll-snap-align:center;flex:none;display:flex;flex-direction:column;align-items:center;gap:5px;padding:6px;background:var(--panel2);border:2px solid var(--line);opacity:.5;color:var(--fg);transition:transform .2s,opacity .2s}
+.cflag.on{opacity:1;border-color:var(--a1);transform:scale(1.06)}
+.sel{position:relative}.sel select{appearance:none;-webkit-appearance:none;padding-right:36px}
+.sel::after{content:"▼";position:absolute;right:12px;top:50%;transform:translateY(-50%);color:var(--a1);pointer-events:none;font-size:12px}
+.stage.view canvas{width:72%;margin:12px auto 4px}
+.cd main{justify-content:center;align-items:center;gap:18px;text-align:center}
+.cdn{font-family:var(--display);font-size:calc(72px*var(--fz)*var(--dz));color:var(--a1);text-shadow:6px 6px 0 var(--a2);line-height:1}
+.cdn.bump{animation:pop .5s cubic-bezier(.2,1.6,.4,1)}
+.pname{font-family:var(--display);font-size:calc(18px*var(--fz)*var(--dz));color:var(--fg);white-space:nowrap;overflow:hidden;line-height:1.4;text-shadow:2px 2px 0 var(--a2);max-width:100%}
+header{padding-top:calc(10px + var(--safe-top,0px))!important}
+@media (prefers-reduced-motion:reduce){.cdn.bump{animation:none}}
 @media (prefers-reduced-motion:reduce){main.anim>*,.overlay,.modal,.modal>.box,.fabb,.bigl,.lnode.cur,.fab{animation:none}}
 </style>
 <style>
@@ -266,9 +284,9 @@ function lum(hex){const n=parseInt(hex.slice(1),16);return((n>>16)*.299+(n>>8&25
 
 /* ================= state (on-device only) ================= */
 const DEF_SET={mode:matchMedia('(prefers-color-scheme: light)').matches?'light':'dark',pal:'iron',accent:null,fz:1,crt:false,sfx:true,vol:.5,
-  timerBeep:true,vib:true,rest:60,speed:1,units:'kg',lang:'en',testFast:false,pro:false,modeAuto:true,font:'classic',sfxPack:'retro',unlockAll:false};
+  timerBeep:true,vib:true,rest:60,speed:1,units:'kg',lang:'en',testFast:false,pro:false,hap:2,countdown:3,modeAuto:true,font:'classic',sfxPack:'retro',unlockAll:false};
 let P=store.get('profile',null);
-let SET={...DEF_SET,...store.get('settings',{})};
+let SET={...DEF_SET,...store.get('settings',{})};{const raw=store.get('settings',{});if(raw.vib===false&&raw.hap===undefined)SET.hap=0}
 let ST={xp:0,streak:0,workouts:0,protein:0,pDate:today(),log:[],sched:{},mood:null,...store.get('stats',{})};
 if(P){P.city=P.city||'Dubai';P.custom=P.custom||[];P.myGyms=P.myGyms||{}}
 let META={launches:0,rated:false,rateNext:3,donateHide:'',...store.get('meta',{})};
@@ -306,13 +324,13 @@ function tone(f,d,type,when=0){if(!SET.sfx)return;try{AC=AC||new(window.AudioCon
   play(pk==='chip'?f*2:f,type||{retro:'square',arcade:'sawtooth',chip:'triangle',legend:'square'}[pk],pk==='arcade'?.7:1);if(pk==='legend'&&!type)play(f*1.5,'triangle',.5)}catch(e){}}
 const SFX={tap:()=>tone(520,.04),coin:()=>{tone(988,.07);tone(1319,.22,null,.07)},done:()=>[523,659,784,1047].forEach((f,i)=>tone(f,.16,null,i*.1)),
   beep:()=>{if(SET.timerBeep){tone(880,.14);tone(880,.14,null,.22);tone(1175,.3,null,.44)}},lvl:()=>[523,659,784,1047,1319,1568].forEach((f,i)=>tone(f,.2,null,i*.09))};
-const buzz=ms=>{if(SET.vib)try{navigator.vibrate&&navigator.vibrate(ms)}catch(e){}};
-document.addEventListener('click',e=>{if(e.target.closest('button'))SFX.tap()},true);
+const buzz=ms=>haptic(ms>=200?'level':ms>=60?'success':ms>=25?'click':'tap');
+document.addEventListener('click',e=>{if(e.target.closest('button,a.btn')){SFX.tap();haptic('tap')}},true);
 
 /* ================= pixel drawing ================= */
 const OL='#24161f';
 function mk(w,hh){const c=document.createElement('canvas');c.width=w;c.height=hh;const g=c.getContext('2d');return[c,g]}
-function R(g,c,x,y,w=1,hh=1){g.fillStyle=c;g.fillRect(Math.floor(x),Math.floor(y),w,hh)}
+function R(g,c,x,y,w=1,hh=1){if(c===null){g.clearRect(Math.floor(x),Math.floor(y),w,hh);return}g.fillStyle=c;g.fillRect(Math.floor(x),Math.floor(y),w,hh)}
 function pts(g,c,l){l.forEach(([x,y])=>R(g,c,x,y))}
 function disc(g,c,cx,cy,r){cx=Math.round(cx);cy=Math.round(cy);const n=Math.ceil(r)+1;for(let y=-n;y<=n;y++)for(let x=-n;x<=n;x++)if(x*x+y*y<=r*r+r*.8)R(g,c,cx+x,cy+y)}
 function ell(g,c,cx,cy,rx,ry){for(let y=-ry;y<=ry;y++)for(let x=-rx;x<=rx;x++)if(x*x/(rx*rx+.6)+y*y/(ry*ry+.6)<=1)R(g,c,cx+x,cy+y)}
@@ -355,7 +373,7 @@ const SPR={
  cape:["RRRRR","RRRRR","RRRRR","RR.RR"],
  aura:["Y.Y.Y",".YYY.","YYWYY",".YYY.","Y.Y.Y"]
 };
-function px(name,s=3){const rows=SPR[name],hh=rows.length,w=Math.max(...rows.map(r=>r.length));const[c,g]=mk(w,hh);
+function px(name,s=3){if(UIC[name]){const[c,g]=mk(18,18);UIC[name](g);outline(c);return show(c,Math.max(1,Math.round(s*.6)))}const rows=SPR[name],hh=rows.length,w=Math.max(...rows.map(r=>r.length));const[c,g]=mk(w,hh);
   rows.forEach((r,j)=>[...r].forEach((ch,i)=>{if(PAL[ch])R(g,PAL[ch],i,j)}));return show(c,s)}
 
 /* ================= flags ================= */
@@ -777,7 +795,7 @@ function badges(f){const b=[];if(f.p*4/f.k>=.3)b.push(['HIGH PROTEIN','']);if(f.
 function foodModal(id){const f=FOOD[id];let gr=f.sg;const body=h('div',{class:'list'});let m;
   const draw=()=>{const t=totals([[id,gr]]);body.replaceChildren(
     h('div',{class:'row nowrap'},foodIcon(id,5),h('div',{class:'grow',style:'display:flex;flex-direction:column;gap:6px'},h('h2',{},f.n.toUpperCase()),h('span',{class:'label'},f.cat),badges(f))),
-    h('div',{class:'row nowrap'},h('label',{class:'field',for:'fgr'},h('span',{class:'label'},'AMOUNT (G)'),h('input',{id:'fgr',type:'number',inputmode:'numeric',min:1,max:2000,value:gr,onchange:e=>{gr=clamp(+e.target.value||1,1,2000);draw()}})),
+    h('div',{class:'row nowrap'},h('div',{class:'grow'},stepper('fgr','AMOUNT (G)',gr,1,2000,5,v=>{gr=v;clearTimeout(window._fg);window._fg=setTimeout(draw,450)})),
       h('div',{class:'seg',style:'align-self:flex-end'},[.5,1,2].map(x=>h('button',{'aria-pressed':String(gr===Math.round(f.sg*x)),onclick:()=>{gr=Math.round(f.sg*x);draw()}},x+'×')))),
     h('span',{class:'small'},`1 serving = ${f.sl} (${f.sg} g)`),
     nutri(t,gr+' g'),splitBar(t),
@@ -825,7 +843,7 @@ function cityGyms(city){const[,cur,base,coast,areas]=CITIES[city]||CITIES.Other,
 
 /* ================= screens ================= */
 const scr=document.getElementById('screen');let tab='home',fuelTab='targets';
-function avatarRow(size=2){return h('div',{class:'flagline'},h('h2',{},(P.name||'PLAYER').toUpperCase()),flag(P.country,size),h('span',{class:'tag s'},(FL[P.country]||FL.XX)[1]))}
+function avatarRow(){return h('div',{style:'display:flex;flex-direction:column;gap:6px;min-width:0;width:100%'},h('div',{class:'pname fit'},(P.name||'PLAYER').toUpperCase()),h('div',{class:'flagline'},flag(P.country,2),h('span',{class:'tag s'},(FL[P.country]||FL.XX)[1])))}
 const SCREENS={
  home(){const ti=todayIdx(),rid=planFor(today()),r=rid&&allR()[rid],target=calc().pro,l=lvl(),an=player('curl',0,{speed:.7});
   const showDonate=META.launches%4===0&&META.donateHide!==today();
@@ -837,6 +855,7 @@ const SCREENS={
      h('div',{class:'stat'},px('flame',3),h('span',{class:'num'},ST.streak),h('span',{class:'label'},'STREAK')),
      h('div',{class:'stat'},px('star',3),h('span',{class:'num'},ST.xp),h('span',{class:'label'},'TOTAL XP')),
      h('div',{class:'stat'},px('dumb',3),h('span',{class:'num'},ST.workouts),h('span',{class:'label'},'WORKOUTS'))),
+   P.incomplete?h('button',{class:'opt',style:'border-color:var(--a2)',onclick:()=>onboard('info',true)},px('bolt',3),h('span',{class:'grow'},'Finish your profile so your plan and protein target fit you'),h('span',{class:'tag c'},'SETUP')):null,
    h('div',{class:'tools'},h('button',{class:'tile',onclick:tipsSheet},px('bolt',4),'TIPS & TRICKS'),h('button',{class:'tile',onclick:shopSheet},foodIcon('dumbbells',3),'GEAR SHOP'),h('button',{class:'tile',onclick:openLevelMap},px('star',4),'LEVEL MAP')),
    showDonate&&h('div',{class:'box',style:'border-color:var(--a2)'},h('div',{class:'row nowrap'},px('heart',3),h('span',{class:'grow'},'IronBit is free with no ads. If it helps you, you can buy the developer a karak.')),
      h('div',{class:'row'},h('button',{class:'btn',onclick:donateModal},'DONATE'),h('button',{class:'btn ghost',onclick:()=>{META.donateHide=today();save();render()}},'NOT NOW'))),
@@ -877,10 +896,8 @@ const FUEL={
   return[h('div',{class:'row spread'},h('h2',{},'PLATE CALCULATOR'),h('span',{class:'tag'},PLATE.length+' ITEMS')),
    h('div',{class:'list'},PLATE.length?PLATE.map(([id,gr],i)=>h('div',{class:'item',style:'flex-wrap:wrap'},foodIcon(id,2),
      h('span',{class:'grow'},h('span',{},FOOD[id].n),h('span',{class:'small'},Math.round(FOOD[id].k*gr/100)+' kcal · '+r1(FOOD[id].p*gr/100)+' g protein')),
-     h('div',{class:'row nowrap',style:'gap:6px;width:100%;justify-content:flex-end'},h('span',{class:'label grow'},'GRAMS'),h('button',{class:'btn ghost',style:'padding:8px','aria-label':'Less',onclick:()=>{PLATE[i][1]=Math.max(5,gr-10);save();render()}},'−'),
-       h('input',{id:'pg'+i,type:'number',inputmode:'numeric','aria-label':'Grams',style:'width:84px;text-align:center',value:gr,onchange:e=>{PLATE[i][1]=clamp(+e.target.value||1,1,3000);save();render()}}),
-       h('button',{class:'btn ghost',style:'padding:8px','aria-label':'More',onclick:()=>{PLATE[i][1]=gr+10;save();render()}},'+'),
-       h('button',{class:'btn ghost',style:'padding:8px','aria-label':'Remove',onclick:()=>{PLATE.splice(i,1);save();render()}},'✕')))):h('span',{class:'small'},'Your plate is empty. Add foods to see the totals.')),
+     h('div',{class:'row nowrap',style:'gap:6px;width:100%;justify-content:flex-end'},h('span',{class:'label'},'GRAMS'),h('div',{class:'grow'},stepper('pg'+i,null,gr,1,3000,10,v=>{PLATE[i][1]=v;save();clearTimeout(window._pt);window._pt=setTimeout(()=>render(true),450)})),
+       h('button',{class:'stp','aria-label':'Remove',onclick:()=>{PLATE.splice(i,1);save();render()}},'✕')))):h('span',{class:'small'},'Your plate is empty. Add foods to see the totals.')),
    h('button',{class:'btn alt',onclick:()=>pickFood(id=>{PLATE.push([id,FOOD[id].sg]);save();render()})},'+ ADD FOOD'),
    PLATE.length&&h('div',{class:'box'},h('span',{class:'label'},'THIS PLATE VS YOUR DAY'),
      h('div',{class:'row spread small'},h('span',{},'Protein'),h('span',{},`${Math.round(t.p)} / ${c.pro} g`)),h('div',{class:'bar t'},h('i',{style:`width:${Math.min(100,t.p/c.pro*100)}%`})),
@@ -968,8 +985,9 @@ function settingsScreen(){
    h('div',{class:'box'},h('span',{class:'label'},'SOUND & FEEL'),tg('sfx','Sound effects'),
      h('div',{class:'srow'},h('span',{},'Sound pack'),h('div',{class:'seg'},[['retro','RETRO'],['arcade','ARCADE'],['chip','CHIP'],['legend','LEGEND']].map(([v,t])=>{const ok=unlocked('sfx',v);return h('button',{'aria-pressed':String((SET.sfxPack||'retro')===v),class:ok?null:'locked',onclick:()=>{if(!ok){toast('UNLOCKS AT LVL '+lockLvl('sfx',v));return}SET.sfxPack=v;save();SFX.lvl();render(true)}},ok?t:t+' L'+lockLvl('sfx',v))}))),
      h('div',{class:'srow'},h('label',{for:'vol'},'Volume'),h('input',{id:'vol',type:'range',min:0,max:1,step:.1,value:SET.vol,style:'width:140px',onchange:e=>{SET.vol=+e.target.value;save();SFX.coin()}})),
-     tg('timerBeep','Rest timer beep'),tg('vib','Vibration')),
+     tg('timerBeep','Rest timer beep'),h('div',{class:'srow'},h('span',{},'Haptics'),h('div',{class:'seg'},[[0,'OFF'],[1,'LIGHT'],[2,'MED'],[3,'STRONG']].map(([v,t])=>h('button',{'aria-pressed':String(SET.hap===v),onclick:()=>{SET.hap=v;save();haptic('success');render(true)}},t))))),
    h('div',{class:'box'},h('span',{class:'label'},'TRAINING'),segR('rest','Rest timer',[[30,'30S'],[60,'60S'],[90,'90S'],[120,'2M']]),
+     h('div',{class:'srow'},h('span',{},'Start countdown (sec)'),h('div',{style:'width:150px'},stepper('cdn',null,SET.countdown??3,0,10,1,v=>{SET.countdown=v;save()}))),
      segR('speed','Coach speed',[[.5,'.5×'],[1,'1×'],[1.5,'1.5×'],[2,'2×']]),segR('units','Weight units',[['kg','KG'],['lb','LB']])),
    h('div',{class:'box'},h('span',{class:'label'},'PROTOTYPE TESTING'),tg('testFast','Fast session timer (20×)'),tg('pro','Preview Pro (hides ads)'),tg('unlockAll','Unlock all rewards'),h('span',{class:'small'},'These switches only exist in the test build.')),
    h('div',{class:'box'},h('span',{class:'label'},'LANGUAGE'),h('div',{class:'srow'},h('span',{},'App language'),h('div',{class:'seg'},h('button',{'aria-pressed':'true'},'EN'),h('button',{'aria-pressed':'false',onclick:()=>toast('ARABIC COMING SOON')},'عربي')))),
@@ -978,9 +996,10 @@ function settingsScreen(){
      h('button',{class:'opt',onclick:donateModal},px('heart',3),h('span',{class:'grow'},'Donate to the developer')),
      h('button',{class:'opt',onclick:tipsSheet},px('bolt',3),h('span',{class:'grow'},'Tips & tricks')),
      h('button',{class:'opt',onclick:shopSheet},foodIcon('dumbbells',2),h('span',{class:'grow'},'Gear shop')),
+     h('button',{class:'opt',onclick:changelogModal},px('note',3),h('span',{class:'grow'},'Changelog')),
      h('button',{class:'opt',onclick:aboutModal},px('dumb',3),h('span',{class:'grow'},'About IronBit')),
      h('button',{class:'opt',onclick:()=>onboard('intro',true)},px('flame',3),h('span',{class:'grow'},'Replay the intro'))),
-   resetBtn,h('span',{class:'small',style:'text-align:center'},'IronBit v0.4 · prototype · Get fit, bit by bit.')]}
+   resetBtn,h('span',{class:'small',style:'text-align:center'},'IronBit v0.5 · prototype · Get fit, bit by bit.')]}
 
 /* ---- dialogs ---- */
 const STORE_URL='https://play.google.com/store/apps/details?id=com.ironbit.app';
@@ -996,7 +1015,7 @@ function donateModal(){let m;m=modal(h('div',{class:'row nowrap'},px('heart',4),
 function aboutModal(){let m;m=modal(h('div',{class:'row nowrap'},px('dumb',4),h('h2',{},'ABOUT IRONBIT')),
   h('p',{},'IronBit is a pixel-art gym companion. Training plans, a coach that looks like you, a muscle map, nutrition facts, a club to share progress, and a map of gyms in your city.'),
   h('div',{class:'list'},[['Internet needed','ONLY FOR CLUB'],['Account needed','NO'],['Ads','NONE'],['Your data','STAYS ON PHONE'],['Price','FREE']].map(([a,b])=>h('div',{class:'srow'},h('span',{},a),h('span',{class:'tag'},b)))),
-  h('span',{class:'tag s',style:'align-self:flex-start'},'GET FIT, BIT BY BIT.'),h('span',{class:'label'},'FOLLOW IRONBIT · COMING SOON'),h('div',{class:'socials'},['WEB','FB','IG','X','TT','GH'].map(x=>h('span',{class:'soc',title:x+' (coming soon)'},x))),h('span',{class:'small'},'Version 0.4 prototype. Fonts: Press Start 2P, VT323, Silkscreen, Pixelify Sans, DotGothic16, Jersey 10 (SIL Open Font License).'),h('button',{class:'btn ghost',onclick:()=>m.remove()},'CLOSE'))}
+  h('span',{class:'tag s',style:'align-self:flex-start'},'GET FIT, BIT BY BIT.'),h('span',{class:'label'},'FOLLOW IRONBIT · COMING SOON'),h('div',{class:'socials'},['WEB','FB','IG','X','TT','GH'].map(x=>h('span',{class:'soc',title:x+' (coming soon)'},x))),h('span',{class:'small'},'Version 0.5 prototype. Fonts: Press Start 2P, VT323, Silkscreen, Pixelify Sans, DotGothic16, Jersey 10 (SIL Open Font License).'),h('button',{class:'btn ghost',onclick:()=>m.remove()},'CLOSE'))}
 
 /* ================= routines: helpers ================= */
 const DIFF={'Bench press':3,'Deadlift':3,'Back squat':3,'Overhead press':3,'Barbell row':3,'Romanian deadlift':3,
@@ -1009,7 +1028,7 @@ function backRow(view){return h('button',{class:'btn ghost',style:'align-self:fl
 function exPreview(n){const[ak,mus,cues]=EX[n],pl=player(ak,0,{speed:SET.speed});let m;
   const pb=h('button',{class:'play','aria-label':'Pause',onclick:()=>{const on=pl.toggle();pb.textContent=on?'❚❚':'▶'}},pl.playing?'❚❚':'▶');
   const sp=h('div',{class:'seg'},[.5,1,1.5,2].map(s=>h('button',{'aria-pressed':String(s===SET.speed),onclick:e=>{pl.setSpeed(s);[...sp.children].forEach(b=>b.setAttribute('aria-pressed',String(b===e.currentTarget)))}},s+'×')));
-  m=modal(h('h2',{},n.toUpperCase()),h('span',{class:'label'},'TARGETS: '+mus+' · '+stars(diffOf(n))),h('div',{class:'stage',style:'max-width:280px;width:100%;align-self:center'},pl.el),h('div',{class:'ctrl'},pb,sp),
+  m=modal(h('h2',{},n.toUpperCase()),h('span',{class:'label'},'TARGETS: '+mus+' · '+stars(diffOf(n))),h('div',{class:'stage view',style:'max-width:300px;width:100%;align-self:center'},pl.el),h('div',{class:'ctrl'},pb,sp),
     ...cues.map((c,i)=>h('div',{class:'row nowrap',style:'align-items:flex-start'},h('span',{class:'tag'},i+1),h('span',{},c))),
     h('button',{class:'btn alt',onclick:()=>{m.remove();if(!draft)draft=newDraft();draft.ex.push([n,3,'10']);tab='train';trainView='builder';render();toast('ADDED TO ROUTINE BUILDER')}},'+ ADD TO MY ROUTINE'),
     h('button',{class:'btn ghost',onclick:()=>m.remove()},'CLOSE'))}
@@ -1100,12 +1119,12 @@ function builderView(){if(!draft)draft=newDraft();const d=draft;let filt='ALL';c
     h('button',{class:'go',onclick:()=>exPreview(n),'aria-label':'Watch '+n},px('dumb',2),h('span',{class:'grow',style:'display:flex;flex-direction:column;gap:3px'},h('span',{},n),h('span',{class:'small'},EX[n][1]+' · '+stars(diffOf(n))))),
     h('button',{class:'btn alt',style:'padding:8px',onclick:()=>{d.ex.push([n,3,'10']);render(true);toast('ADDED')}},'+ ADD'))));
   const sel=h('select',{id:'mf',onchange:e=>{filt=e.target.value;drawLib()}},h('option',{value:'ALL'},'All muscles'),Object.entries(MUSCLES).map(([k,M])=>h('option',{value:k},M.n.charAt(0)+M.n.slice(1).toLowerCase())));
-  drawLib();const nb=(t,lab,fn)=>h('button',{class:'btn ghost',style:'padding:8px','aria-label':lab,onclick:fn},t);
+  drawLib();const nb=(t,lab,fn)=>h('button',{class:'stp','aria-label':lab,onclick:fn},t);
   return[backRow('main'),h('h2',{},d.id?'EDIT ROUTINE':'ROUTINE BUILDER'),
    h('label',{class:'field',for:'rn'},h('span',{class:'label'},'NAME'),h('input',{id:'rn',maxlength:18,value:d.name,oninput:e=>d.name=e.target.value})),
    h('div',{class:'box'},h('div',{class:'row spread'},h('span',{class:'label'},'YOUR EXERCISES'),h('span',{class:'tag s'},d.ex.length?'DIFFICULTY '+stars(rDiff(d)):'EMPTY')),
      d.ex.length?d.ex.map((e,i)=>h('div',{class:'item',style:'flex-wrap:wrap'},h('span',{class:'grow'},h('span',{},(i+1)+'. '+e[0]),h('span',{class:'small'},EX[e[0]][1])),
-       h('div',{class:'row nowrap',style:'gap:4px;width:100%'},h('span',{class:'label'},'SETS'),nb('−','Fewer sets',()=>{e[1]=Math.max(1,e[1]-1);render(true)}),h('span',{class:'num',style:'font-size:11px;min-width:16px;text-align:center'},e[1]),nb('+','More sets',()=>{e[1]=Math.min(8,e[1]+1);render(true)}),
+       h('div',{class:'row nowrap',style:'gap:4px;width:100%'},h('span',{class:'label'},'SETS'),h('div',{style:'width:128px;flex:none'},stepper('rs'+i,null,e[1],1,8,1,v=>{e[1]=v})),
          h('span',{class:'label',style:'margin-left:6px'},'REPS'),h('input',{id:'rr'+i,style:'width:60px',value:e[2],maxlength:4,'aria-label':'Reps',onchange:ev=>{e[2]=ev.target.value||'10'}}),
          h('span',{class:'grow'}),nb('▲','Move up',()=>{if(i>0){[d.ex[i-1],d.ex[i]]=[d.ex[i],d.ex[i-1]];render(true)}}),nb('✕','Remove',()=>{d.ex.splice(i,1);render(true)})))):h('span',{class:'small'},'Add exercises from the list below, or start from the muscle map.')),
    h('span',{class:'label'},'REPEAT ON (OPTIONAL)'),h('div',{class:'seg'},DAYS.map((dn,i)=>h('button',{'aria-pressed':String(d.days.includes(i)),onclick:()=>{d.days=d.days.includes(i)?d.days.filter(x=>x!==i):[...d.days,i];render(true)}},dn))),
@@ -1137,7 +1156,7 @@ function calendarView(){const base=calMonth?new Date(calMonth+'-01T12:00'):new D
      h('div',{class:'stat'},h('span',{class:'num'},done.reduce((a,l)=>a+l.xp,0)),h('span',{class:'label'},'XP THIS MONTH')))]}
 
 /* ================= workout session ================= */
-function openWorkout(rid){const r=allR()[rid];if(!r)return;closeFab();loadingScreen(()=>startSession(rid),r.name)}
+function openWorkout(rid){const r=allR()[rid];if(!r)return;closeFab();loadingScreen(()=>countdown(()=>startSession(rid)),r.name)}
 function startSession(rid){const r=allR()[rid];if(!r)return;let idx=0,restT=null;
   const nSets=e=>r.custom?e[1]:setsFor(e[1]),done=r.ex.map(e=>Array(nSets(e)).fill(false)),diff=rDiff(r),speedUp=SET.testFast?20:1;
   const total=r.ex.reduce((a,e)=>a+nSets(e)*(45+SET.rest),0);let left=total,paused=false,pending=0,claimed=false,speed=SET.speed;
@@ -1166,12 +1185,12 @@ function startSession(rid){const r=allR()[rid];if(!r)return;let idx=0,restT=null
     function startRest(){clearInterval(restT);let t=SET.rest;restT=setInterval(()=>{if(!restNum.isConnected){clearInterval(restT);return}if(paused)return;t=Math.max(0,t-speedUp);
       restNum.textContent=t;restBar.style.width=((SET.rest-t)/SET.rest*100)+'%';if(t<=0){clearInterval(restT);SFX.beep();buzz(250);toast('REST OVER · GO!')}},1000)}
     body.replaceChildren(
-      h('div',{class:'stage'},pl.el),h('div',{class:'ctrl'},playBtn,h('span',{class:'label'},'SPEED'),speeds),
+      h('div',{class:'stage view'},pl.el),h('div',{class:'ctrl'},playBtn,h('span',{class:'label'},'SPEED'),speeds),
       h('div',{class:'row spread'},h('h2',{},`${idx+1}/${r.ex.length} · ${name.toUpperCase()}`),h('span',{class:'tag s'},sets.length+' × '+reps)),
       h('span',{class:'label'},'TARGETS: '+muscle+' · '+stars(ed)+' · '+(10*ed)+' XP PER SET'),
       h('div',{class:'box'},h('span',{class:'label'},'FORM CUES'),...cues.map((c,i)=>h('div',{class:'row nowrap',style:'align-items:flex-start'},h('span',{class:'tag'},i+1),h('span',{},c)))),
       h('div',{class:'box',style:'border-color:var(--a3)'},h('span',{class:'label'},'PRO TIP'),h('p',{},exTip(name))),
-      h('div',{class:'sets'},sets.map((d,i)=>h('button',{class:'set','aria-pressed':String(d),onclick:()=>{sets[i]=!d;pending+=d?-10*ed:10*ed;if(!d){SFX.coin();startRest()}upd();draw()}},'SET '+(i+1)))),
+      h('div',{class:'sets'},sets.map((d,i)=>h('button',{class:'set','aria-pressed':String(d),onclick:()=>{sets[i]=!d;pending+=d?-10*ed:10*ed;if(!d){SFX.coin();haptic('click');startRest()}upd();draw()}},'SET '+(i+1)))),
       h('div',{class:'box'},h('div',{class:'row spread'},h('span',{class:'label'},'REST TIMER'),restNum),h('div',{class:'bar t'},restBar)),
       h('div',{class:'row nowrap'},h('button',{class:'btn ghost',disabled:idx===0,onclick:()=>{idx--;draw()}},'◀ PREV'),h('button',{class:'btn alt grow',disabled:idx===r.ex.length-1,onclick:()=>{idx++;draw()}},'NEXT ▶')),
       h('div',{class:'box',style:left===0?'border-color:var(--a1)':''},h('div',{class:'row spread'},h('span',{class:'label'},'SESSION TIMER · '+stars(diff)),h('span',{class:'small',id:'sst'},left>0?fmt(left)+' left':'Done')),
@@ -1293,15 +1312,16 @@ function adSlot(){return SET.pro?null:h('div',{class:'ad'},h('span',{class:'labe
 const COUNTRY_LIST=Object.entries(FL).filter(([c])=>c!=='XX').sort((a,b)=>a[1][0].localeCompare(b[1][0])).concat([['XX',FL.XX]]);
 function onboard(start,edit,ctab0){
   const ov=h('div',{class:'overlay'});APP.append(ov);
-  const D=P?JSON.parse(JSON.stringify(P)):{name:'',age:25,sex:'m',height:172,weight:72,country:'AE',city:'Dubai',custom:[],myGyms:{},goal:{type:'muscle',level:'beginner',days:3,mins:60,equip:'gym',target:null},char:defChar('m')};
+  const D=P?JSON.parse(JSON.stringify(P)):{name:'',dob:(new Date().getFullYear()-25)+'-01-01',age:25,sex:'m',height:172,weight:72,country:'AE',city:'Dubai',custom:[],myGyms:{},goal:{type:'muscle',level:'beginner',days:3,mins:60,equip:'gym',target:null},char:defChar('m')};
   const steps=['intro','info','hello','goal','char','done'];let step=start,slide=0;
-  const finish=()=>{P=D;save();ov.remove();render();if(!edit)toast('WELCOME, '+(P.name||'PLAYER').toUpperCase()+'!')};
+  const skipAll=()=>{D.incomplete=!D.name.trim();if(D.incomplete)D.name='Player';haptic('click');finish()};
+  const finish=()=>{if(edit&&step==='info'&&D.name.trim()&&D.name!=='Player')D.incomplete=false;P=D;save();ov.remove();render();if(!edit)toast('WELCOME, '+(P.name||'PLAYER').toUpperCase()+'!')};
   const next=()=>{if(edit){if(step==='intro'){ov.remove();return}finish();return}const i=steps.indexOf(step);if(i===steps.length-1)finish();else{step=steps[i+1];draw()}};
   const back=()=>{if(edit){ov.remove();return}const i=steps.indexOf(step);if(i>1){step=steps[i-1];draw()}};
-  const shell=(title,body,cta,ok=true)=>{const i=steps.indexOf(step);ov.replaceChildren(
+  const shell=(title,body,cta,ok=true,skip=false)=>{const i=steps.indexOf(step);ov.replaceChildren(
     h('header',{},(edit||i>1)?h('button',{class:'btn ghost',style:'padding:8px 10px',onclick:back,'aria-label':edit?'Close':'Back'},edit?'✕':'◀'):px('dumb',2),h('span',{class:'logo grow',style:'font-size:10px'},title),!edit?h('span',{class:'chip'},`STEP ${i}/4`):null,modeToggle()),
     h('main',{class:'anim'},...body),
-    h('div',{style:'padding:12px 14px;background:var(--panel);border-top:4px solid var(--line)'},h('button',{class:'btn wide',disabled:!ok,onclick:next},cta)))};
+    h('div',{style:'padding:12px 14px;display:flex;gap:10px;background:var(--panel);border-top:4px solid var(--line)'},(!edit&&skip)?h('button',{class:'btn ghost',onclick:skipAll},'SKIP FOR NOW'):null,h('button',{class:'btn wide grow',id:'cta',disabled:!ok,onclick:next},cta)))};
   const st=k=>h('div',{class:'stage',style:'width:62%;align-self:center'},player(k,0,{getChar:()=>D.char,getProf:()=>D}).el);
   const SLIDES=[
     ()=>[st('idle'),h('h1',{},'WELCOME TO IRONBIT'),h('span',{class:'tag s',style:'align-self:flex-start'},'GET FIT, BIT BY BIT.'),h('p',{},'Your pocket gym coach. Training, food and progress, all in pixel art. The core app works without internet.')],
@@ -1319,20 +1339,22 @@ function onboard(start,edit,ctab0){
           h('div',{class:'dots'},SLIDES.map((_,i)=>h('i',{class:i===slide?'on':''}))),
           h('div',{class:'row nowrap'},slide>0?h('button',{class:'btn ghost',onclick:()=>{slide--;draw()},'aria-label':'Previous'},'◀'):null,
             h('button',{class:'btn grow',onclick:()=>{if(last)skip();else{slide++;draw()}}},last?(edit?'DONE':'LET\'S GO'):'NEXT ▶'))));return}
-    if(step==='info'){const prev=h('div',{class:'flagline'},flag(D.country,3),h('span',{class:'tag s'},FL[D.country][1]));
-      const okName=()=>D.name.trim().length>0,wIn=SET.units==='lb'?Math.round(D.weight*2.2046):D.weight;
-      const num=(id,label,val,min,max,set)=>h('label',{class:'field',for:id},h('span',{class:'label'},label),h('input',{id,type:'number',inputmode:'numeric',min,max,value:val,onchange:e=>{set(clamp(+e.target.value||min,min,max))}}));
-      shell(edit?'MY INFO':'ABOUT YOU',[h('h2',{},'TELL US ABOUT YOU'),h('span',{class:'small'},'No sign-up. This stays on your phone and shapes your plan, your character and your gym map.'),
-        h('label',{class:'field',for:'nm'},h('span',{class:'label'},'NAME'),h('input',{id:'nm',maxlength:14,value:D.name,placeholder:'Your name',autocomplete:'given-name',oninput:e=>{D.name=e.target.value;ov.querySelector('.wide').disabled=!okName()}})),
-        h('div',{class:'row nowrap'},num('ag','AGE',D.age,13,90,v=>D.age=v),h('div',{class:'field'},h('span',{class:'label'},'SEX'),h('div',{class:'seg'},[['m','M'],['f','F']].map(([v,t])=>h('button',{'aria-pressed':String(D.sex===v),
-          onclick:()=>{if(D.sex!==v){D.sex=v;if(!edit)D.char=defChar(v);fixHead(D.char,v)}draw()}},t))))),
-        h('div',{class:'row nowrap'},num('ht','HEIGHT CM',D.height,120,230,v=>D.height=v),num('wt','WEIGHT '+SET.units.toUpperCase(),wIn,SET.units==='lb'?66:30,SET.units==='lb'?550:250,v=>D.weight=SET.units==='lb'?Math.round(v/2.2046*10)/10:v)),
-        h('label',{class:'field',for:'ct'},h('span',{class:'label'},'NATIONALITY'),h('select',{id:'ct',onchange:e=>{D.country=e.target.value;prev.replaceChildren(flag(D.country,3),h('span',{class:'tag s'},FL[D.country][1]))}},
-          COUNTRY_LIST.map(([c,[n]])=>{const o=h('option',{value:c},n);if(c===D.country)o.selected=true;return o}))),
-        h('div',{class:'row'},h('span',{class:'label'},'SHOWN ON YOUR PROFILE AS'),prev),
+    if(step==='info'){const okName=()=>D.name.trim().length>0,lb=SET.units==='lb';
+      if(!D.dob)D.dob=(new Date().getFullYear()-(D.age||25))+'-01-01';
+      const ageTag=h('span',{class:'tag s'},'AGE '+ageFrom(D.dob));
+      const setDob=v=>{D.dob=v;D.age=ageFrom(v);dobIn.value=fmtDob(v);ageTag.textContent='AGE '+D.age};
+      const dobIn=h('input',{id:'dob',inputmode:'numeric',placeholder:'DD/MM/YYYY',value:fmtDob(D.dob),'aria-label':'Birthday, day month year',onchange:e=>{const v=parseDob(e.target.value);if(v)setDob(v);else{toast('USE DD/MM/YYYY');e.target.value=fmtDob(D.dob)}}});
+      shell(edit?'MY INFO':'ABOUT YOU',[h('h2',{},'TELL US ABOUT YOU'),h('span',{class:'small'},'No sign-up. This stays on your phone and shapes your plan, character and gym map. You can skip and finish it later.'),
+        h('label',{class:'field',for:'nm'},h('span',{class:'label'},'NAME'),h('input',{id:'nm',maxlength:14,value:D.name==='Player'?'':D.name,placeholder:'Your name',autocomplete:'given-name',oninput:e=>{D.name=e.target.value;const c=ov.querySelector('#cta');if(c)c.disabled=!okName()}})),
+        h('div',{class:'field'},h('div',{class:'row spread nowrap'},h('span',{class:'label'},'BIRTHDAY'),ageTag),h('div',{class:'stepper'},dobIn,h('button',{class:'stp','aria-label':'Open calendar',onclick:()=>datePicker(D.dob,setDob)},px('cal',3)))),
+        h('div',{class:'field'},h('span',{class:'label'},'SEX'),h('div',{class:'seg big'},[['m','MALE'],['f','FEMALE']].map(([v,t])=>h('button',{'aria-pressed':String(D.sex===v),
+          onclick:()=>{if(D.sex!==v){D.sex=v;if(!edit)D.char=defChar(v);fixHead(D.char,v)}draw()}},t)))),
+        stepper('ht','HEIGHT (CM)',D.height,120,230,1,v=>D.height=v),
+        stepper('wt','WEIGHT ('+SET.units.toUpperCase()+')',lb?Math.round(D.weight*2.2046):D.weight,lb?66:30,lb?550:250,lb?1:.5,v=>D.weight=lb?Math.round(v/2.2046*10)/10:v),
+        countrySlider(D.country,c=>{D.country=c}),
         h('p',{class:'note'},'Heads up: some outfits you unlock as you level up are traditional clothes and kits from your country.'),
-        h('label',{class:'field',for:'cy'},h('span',{class:'label'},'WHERE YOU LIVE (FOR THE GYM MAP)'),h('select',{id:'cy',onchange:e=>{D.city=e.target.value}},
-          Object.keys(CITIES).map(c=>{const o=h('option',{value:c},c==='Other'?'Other city':c);if(c===D.city)o.selected=true;return o})))],edit?'SAVE':'NEXT ▶',okName());return}
+        h('label',{class:'field',for:'cy'},h('span',{class:'label'},'WHERE YOU LIVE (FOR THE GYM MAP)'),h('div',{class:'sel'},h('select',{id:'cy',onchange:e=>{D.city=e.target.value}},
+          Object.keys(CITIES).map(c=>{const o=h('option',{value:c},c==='Other'?'Other city':c);if(c===D.city)o.selected=true;return o}))))],edit?'SAVE':'NEXT ▶',okName()||edit,true);return}
     if(step==='hello'){ov.replaceChildren(h('header',{},px('dumb',2),h('span',{class:'logo grow',style:'font-size:10px'},'YOUR PLAN'),h('span',{class:'chip'},'STEP 2/4'),modeToggle()),
         h('main',{class:'anim',style:'justify-content:center;gap:18px'},st('idle'),h('h1',{},'LET\'S PERSONALIZE YOUR GOALS TOGETHER'),
           h('p',{},`Nice to meet you, ${D.name.trim()||'champ'}. Answer a few quick questions and IronBit builds your weekly plan, your protein target and your XP path.`)),
@@ -1346,7 +1368,7 @@ function onboard(start,edit,ctab0){
         h('span',{class:'label'},'SESSION LENGTH'),seg('mins',[[30,'30M'],[45,'45M'],[60,'60M'],[90,'90M']]),
         h('span',{class:'label'},'WHERE YOU TRAIN'),seg('equip',[['gym','FULL GYM'],['db','DUMBBELLS'],['none','NO EQUIPMENT']]),
         h('label',{class:'field',for:'tw'},h('span',{class:'label'},'TARGET WEIGHT '+SET.units.toUpperCase()+' (OPTIONAL)'),h('input',{id:'tw',type:'number',inputmode:'numeric',placeholder:'e.g. '+(SET.units==='lb'?Math.round(D.weight*2.2):Math.round(D.weight)),
-          value:G.target?(SET.units==='lb'?Math.round(G.target*2.2046):G.target):'',onchange:e=>{const v=+e.target.value;G.target=v?(SET.units==='lb'?Math.round(v/2.2046*10)/10:v):null}}))],edit?'SAVE':'NEXT ▶');return}
+          value:G.target?(SET.units==='lb'?Math.round(G.target*2.2046):G.target):'',onchange:e=>{const v=+e.target.value;G.target=v?(SET.units==='lb'?Math.round(v/2.2046*10)/10:v):null}}))],edit?'SAVE':'NEXT ▶',true,true);return}
     if(step==='char')charStep();if(step==='done')doneStep()}
   let ctab=ctab0||'body';
   function charStep(){const C=D.char;
@@ -1365,7 +1387,7 @@ function onboard(start,edit,ctab0){
       h('div',{class:'row nowrap',style:'align-items:flex-end;justify-content:center'},front,side),
       h('div',{class:'row nowrap'},h('button',{class:'btn ghost grow',onclick:()=>{D.char=sanitizeChar(randChar(D.sex),D.sex);charStep()}},'RANDOM'),h('button',{class:'btn ghost grow',onclick:()=>{D.char=defChar(D.sex);charStep()}},'RESET')),
       h('div',{class:'tabs',role:'tablist'},[['body','BODY'],['hair','HAIR'],['outfit','OUTFIT'],['gear','GEAR']].map(([k,t])=>h('button',{role:'tab','aria-selected':String(ctab===k),onclick:()=>{ctab=k;charStep()}},t))),
-      ...panes[ctab]()],edit?'SAVE':'ALMOST DONE ▶')}
+      ...panes[ctab]()],edit?'SAVE':'ALMOST DONE ▶',true,true)}
   function doneStep(){const keep=P;P=D;const c=calc(),w=weekPlan(),R=allR(),nr=REWARDS[0];P=keep;
     ov.replaceChildren(h('header',{},px('star',3),h('span',{class:'logo grow',style:'font-size:10px'},'ALL SET'),modeToggle()),
       h('main',{class:'anim',style:'gap:14px'},h('div',{class:'row nowrap',style:'justify-content:center;align-items:flex-end'},h('div',{class:'stage',style:'padding:6px 8px 0'},show(drawFront(D,D.char,'great'),4)),h('div',{class:'stage',style:'width:140px'},player('curl',0,{getChar:()=>D.char,getProf:()=>D}).el)),
@@ -1475,6 +1497,7 @@ function meScreen(){const pr=lvlProg(),c=calc(),C=effChar(P,P.char),has=a=>C.acc
    h('div',{class:'row nowrap',style:'align-items:center'},h('div',{class:'pfp'},headIcon(P,P.char,4,mood)),
      h('div',{class:'grow',style:'display:flex;flex-direction:column;gap:7px'},avatarRow(2),h('span',{class:'small'},`${P.city||''} · ${P.age} yrs · ${P.height} cm · ${fmtW(P.weight)}`),
        h('div',{class:'row nowrap'},h('span',{class:'tag s'},'LVL '+pr.L),h('span',{class:'label'},rank())),h('div',{class:'bar'},h('i',{style:`width:${pr.pct}%`})))),
+   P.incomplete?h('button',{class:'opt',style:'border-color:var(--a2)',onclick:()=>onboard('info',true)},px('bolt',3),h('span',{class:'grow'},'Finish your profile so your plan and protein target fit you'),h('span',{class:'tag c'},'SETUP')):null,
    moodBox(),
    h('div',{class:'box'},h('div',{class:'row spread'},h('span',{class:'label'},'EQUIPMENT'),h('span',{class:'small'},'Tap a slot to change it')),
      h('div',{class:'gearg'},
@@ -1588,21 +1611,104 @@ function shopSheet(){let cat='PROTEIN';sheet('GEAR SHOP',redraw=>[
     h('a',{class:'btn alt',href:amzUrl(q),target:'_blank',rel:'noopener sponsored'},'VIEW ON AMAZON')))),
   h('p',{class:'note'},'Supplements add to a good diet; they don\'t replace it. Check with a doctor first if you have a health condition.'),adSlot()])}
 
+/* ================= v0.5: detailed icons, haptics, steppers, pickers ================= */
+function poly(g,c,P){let x0=99,y0=99,x1=0,y1=0;P.forEach(([x,y])=>{x0=Math.min(x0,x);y0=Math.min(y0,y);x1=Math.max(x1,x);y1=Math.max(y1,y)});
+  for(let y=Math.floor(y0);y<=Math.ceil(y1);y++)for(let x=Math.floor(x0);x<=Math.ceil(x1);x++){const qx=x+.5,qy=y+.5;let ins=false;
+    for(let i=0,j=P.length-1;i<P.length;j=i++){const[xi,yi]=P[i],[xj,yj]=P[j];if(((yi>qy)!==(yj>qy))&&(qx<(xj-xi)*(qy-yi)/(yj-yi)+xi))ins=!ins}if(ins)R(g,c,x,y)}}
+const starPts=(cx,cy,ro,ri)=>Array.from({length:10},(_,i)=>{const a=-Math.PI/2+i*Math.PI/5,r=i%2?ri:ro;return[cx+Math.cos(a)*r,cy+Math.sin(a)*r]});
+const UIC={
+ house:g=>{R(g,'#8a5a44',12,3,2,5);poly(g,'#e0533f',[[1,9.5],[9,1.5],[17,9.5]]);poly(g,'#b8402f',[[9,1.5],[17,9.5],[9,9.5]]);R(g,'#f3e6cf',3,9,12,7);R(g,'#d9c7a8',12,9,3,7);
+   R(g,'#8a5226',7,11,4,5);R(g,'#b06a3a',7,11,1,5);R(g,'#f2b84b',10,13,1,1);R(g,'#3fc1b0',4,10,2,2);R(g,'#bff0e8',4,10,1,1)},
+ dumb:g=>{R(g,'#2c998b',1,4,3,10);R(g,'#3fc1b0',1,4,2,10);R(g,'#7fe0d2',1,5,1,4);R(g,'#2c998b',14,4,3,10);R(g,'#3fc1b0',14,4,2,10);R(g,'#7fe0d2',14,5,1,4);
+   R(g,'#3fc1b0',4,6,1,6);R(g,'#3fc1b0',13,6,1,6);R(g,'#5b5873',5,7,1,4);R(g,'#5b5873',12,7,1,4);R(g,'#c7cde0',6,8,6,2);R(g,'#8a93a8',6,9,6,1)},
+ leg:g=>{lineW(g,[10,10],[14,14],2,'#f6f3ec');disc(g,'#f6f3ec',15,13,1.3);disc(g,'#f6f3ec',13,15,1.3);disc(g,'#c97a3a',7,7,5.2);disc(g,'#a35f28',8,8,3.6);disc(g,'#c97a3a',7,7,3.4);disc(g,'#e8a35f',5,5,1.8);pts(g,'#8a4a1c',[[9,4],[4,9],[10,8]])},
+ club:g=>{R(g,'#3fc1b0',7,2,10,7);R(g,'#2c998b',7,8,10,1);poly(g,'#3fc1b0',[[13,9],[16,12],[16,9]]);R(g,'#f6f3ec',1,6,11,8);R(g,'#d9d2c3',1,13,11,1);poly(g,'#f6f3ec',[[2,14],[2,17],[6,14]]);
+   R(g,'#5b5873',3,9,2,2);R(g,'#5b5873',6,9,2,2);R(g,'#5b5873',9,9,2,2)},
+ pin:g=>{disc(g,'#e0533f',9,7,5.6);poly(g,'#e0533f',[[4.2,9.5],[13.8,9.5],[9,17]]);poly(g,'#b8402f',[[9,9.5],[13.8,9.5],[9,17]]);disc(g,'#ff9a8a',6.6,4.6,1.2);disc(g,'#f6f3ec',9,7,2.3)},
+ pinOn:g=>{disc(g,'#f2b84b',9,7,5.6);poly(g,'#f2b84b',[[4.2,9.5],[13.8,9.5],[9,17]]);poly(g,'#c98a1f',[[9,9.5],[13.8,9.5],[9,17]]);disc(g,'#ffe08a',6.6,4.6,1.2);disc(g,'#3d3a4f',9,7,2.3)},
+ plus:g=>{R(g,'#ffffff',7,2,4,14);R(g,'#ffffff',2,7,14,4);R(g,'#e8e2d4',7,14,4,2);R(g,'#e8e2d4',14,9,2,2)},
+ gear:g=>{for(let k=0;k<8;k++){const a=k*Math.PI/4;R(g,'#9aa3b5',Math.round(9+Math.cos(a)*6.4-1.5),Math.round(9+Math.sin(a)*6.4-1.5),3,3)}disc(g,'#9aa3b5',9,9,5.4);disc(g,'#c7cde0',8,8,3.6);disc(g,'#9aa3b5',9,9,3);disc(g,null,9,9,1.8)},
+ sun:g=>{for(let k=0;k<8;k++){const a=k*Math.PI/4;lineW(g,[9+Math.cos(a)*6.2,9+Math.sin(a)*6.2],[9+Math.cos(a)*7.6,9+Math.sin(a)*7.6],1,'#f29e1f')}disc(g,'#f2b84b',9,9,4.6);disc(g,'#ffe08a',7.6,7.6,1.6)},
+ moon:g=>{disc(g,'#3d3a6b',8,9,6.6);disc(g,'#5b5890',7,8,3);disc(g,null,12,6,5.4);pts(g,'#f2b84b',[[14,12],[15,3]]);R(g,'#f2b84b',13,15,1,1)},
+ star:g=>{poly(g,'#f2b84b',starPts(9,9.6,8.4,3.6));poly(g,'#d9961c',[[9,9.6],[17.4,7],[13.5,17]]);pts(g,'#ffe08a',[[8,4],[8,5],[6,8]])},
+ flame:g=>{poly(g,'#e0533f',[[9,0.5],[14,6],[15.5,11],[13.5,15.5],[9,17.2],[4.5,15.5],[2.5,11],[4,6.5],[7,9]]);poly(g,'#f29e1f',[[9,5],[12.4,10],[12.4,13.6],[9,15.6],[5.6,13.6],[5.8,10.4],[7.6,11.6]]);poly(g,'#ffe08a',[[9,9.6],[10.8,12.4],[9,14.8],[7.2,12.6]])},
+ bolt:g=>{poly(g,'#f2b84b',[[11.5,0.5],[3.5,10],[8.2,10],[5.8,17.5],[14.5,7],[9.8,7],[12.6,0.5]]);lineW(g,[10.6,2],[6,8.6],1,'#ffe08a')},
+ heart:g=>{disc(g,'#e0533f',5.8,6.6,3.6);disc(g,'#e0533f',12.2,6.6,3.6);poly(g,'#e0533f',[[2.2,7.8],[15.8,7.8],[9,15.8]]);poly(g,'#b8402f',[[9,15.8],[15.8,7.8],[12,12]]);disc(g,'#ff9a8a',4.8,5.4,1.2)},
+ cal:g=>{R(g,'#f6f3ec',2,4,14,12);R(g,'#d9d2c3',2,15,14,1);R(g,'#e0533f',2,4,14,4);R(g,'#b8402f',2,7,14,1);R(g,'#5b5873',5,2,2,4);R(g,'#5b5873',11,2,2,4);
+   for(let r=0;r<3;r++)for(let c=0;c<4;c++)R(g,r===1&&c===2?'#3fc1b0':'#8a93a8',4+c*3,9+r*2,2,1)},
+ cam:g=>{R(g,'#3d3a4f',4,3,5,2);R(g,'#3d3a4f',1,5,16,11);R(g,'#5b5873',1,5,16,1);disc(g,'#c7cde0',9,10,4);disc(g,'#2d6b8f',9,10,2.6);R(g,'#bff0e8',8,9,1,1);R(g,'#f2b84b',13,6,2,2)},
+ lock:g=>{disc(g,'#9aa3b5',9,7,4.6);disc(g,null,9,7,2.6);R(g,null,4,7,10,3);R(g,'#f2b84b',3,8,12,9);R(g,'#c98a1f',12,8,3,9);R(g,'#ffe08a',4,9,1,5);R(g,'#3b2a1a',8,11,2,3)},
+ note:g=>{R(g,'#3fc1b0',11,2,2,11);poly(g,'#3fc1b0',[[12,2],[17,4],[17,7],[13,5.5]]);ell(g,'#3fc1b0',8,13,3,2);R(g,'#7fe0d2',6,12,2,1)},
+ shirt:g=>{poly(g,'#ff6b57',[[4,3],[7,2],[11,2],[14,3],[17,7],[14,9.5],[13,8.5],[13,16],[5,16],[5,8.5],[4,9.5],[1,7]]);R(g,'#c0392b',7,2,4,2);R(g,'#e0533f',11,9,2,7)},
+ hat:g=>{poly(g,'#f2b84b',[[3,12],[3,8],[5,5],[9,4],[13,5],[15,8],[15,12]]);R(g,'#c98a1f',8,11,9,2);R(g,'#ffe08a',6,6,2,2);R(g,'#c98a1f',8,3,2,1)},
+ crown:g=>{poly(g,'#f2b84b',[[2,14],[2,5],[6,9],[9,3],[12,9],[16,5],[16,14]]);R(g,'#c98a1f',2,12,14,2);pts(g,'#e0533f',[[5,11],[9,10],[13,11]]);pts(g,'#ffe08a',[[3,7],[9,5]])}
+};
+/* haptics: native bridge in the APK, vibrate() fallback elsewhere */
+function haptic(kind='tap'){const lv=SET.hap;if(!lv)return;try{if(window.IronBitNative&&IronBitNative.haptic){IronBitNative.haptic(kind,lv);return}
+  if(navigator.vibrate){const base={tap:8,tick:5,click:15,success:[18,60,28],level:[20,40,20,40,60]}[kind]||8,k=[0,.6,1,1.6][lv];navigator.vibrate(Array.isArray(base)?base.map((v,i)=>i%2?v:Math.round(v*k)):Math.round(base*k))}}catch(e){}}
+/* number stepper with hold-to-repeat */
+function stepper(id,label,val,min,max,step,set){const inp=h('input',{id,type:'number',inputmode:'decimal',min,max,step,value:val,'aria-label':label||id,onchange:e=>{const v=clamp(+e.target.value||min,min,max);e.target.value=v;set(v)}});
+  const bump=d=>{const v=clamp(Math.round(((+inp.value||min)+d*step)*10)/10,min,max);inp.value=v;set(v);haptic('tick')};
+  const b=(t,d)=>{let tm=0,iv=0;const stop=()=>{clearTimeout(tm);clearInterval(iv)};return h('button',{class:'stp','aria-label':(d<0?'Decrease ':'Increase ')+(label||''),onclick:()=>bump(d),
+    onpointerdown:()=>{stop();tm=setTimeout(()=>{iv=setInterval(()=>{if(!inp.isConnected){stop();return}bump(d)},90)},420)},onpointerup:stop,onpointerleave:stop,onpointercancel:stop},t)};
+  const box=h('div',{class:'stepper'},b('−',-1),inp,b('+',1));return label?h('div',{class:'field'},h('span',{class:'label'},label),box):box}
+/* birthday */
+const ageFrom=iso=>{const b=new Date(iso+'T12:00'),n=new Date();let a=n.getFullYear()-b.getFullYear();if(n.getMonth()<b.getMonth()||(n.getMonth()===b.getMonth()&&n.getDate()<b.getDate()))a--;return a};
+const fmtDob=iso=>iso?iso.slice(8,10)+'/'+iso.slice(5,7)+'/'+iso.slice(0,4):'';
+function parseDob(t){const m=String(t).trim().match(/^(\d{1,2})[\/.\- ](\d{1,2})[\/.\- ](\d{4})$/);if(!m)return null;const d=+m[1],mo=+m[2],y=+m[3],dt=new Date(y,mo-1,d);
+  if(dt.getMonth()!==mo-1||dt.getDate()!==d)return null;const iso=dstr(dt),a=ageFrom(iso);return a>=10&&a<=100?iso:null}
+function datePicker(init,onPick){const d0=init?new Date(init+'T12:00'):new Date(2000,0,1);let y=d0.getFullYear(),mo=d0.getMonth(),day=d0.getDate(),m;const body=h('div',{class:'list'}),MON=['JAN','FEB','MAR','APR','MAY','JUN','JUL','AUG','SEP','OCT','NOV','DEC'];
+  const yb=(t,dy,lab)=>h('button',{class:'stp','aria-label':lab,onclick:()=>{y=clamp(y+dy,new Date().getFullYear()-100,new Date().getFullYear()-10);draw()}},t);
+  function draw(){const dim=new Date(y,mo+1,0).getDate();day=Math.min(day,dim);const st=(new Date(y,mo,1).getDay()+6)%7,iso=dstr(new Date(y,mo,day));
+    body.replaceChildren(h('h2',{},'PICK YOUR BIRTHDAY'),
+      h('div',{class:'stepper'},yb('«',-10,'Back 10 years'),yb('‹',-1,'Previous year'),h('div',{class:'num',style:'flex:1;display:grid;place-items:center;background:var(--bg);border:2px solid var(--line);border-left:0;border-right:0'},y),yb('›',1,'Next year'),yb('»',10,'Forward 10 years')),
+      h('div',{class:'grid4',style:'grid-template-columns:repeat(6,1fr);gap:4px'},MON.map((n,i)=>h('button',{class:'tile','aria-pressed':String(i===mo),style:i===mo?'background:var(--a1);color:var(--bg);border-color:var(--a1)':'',onclick:()=>{mo=i;draw()}},n))),
+      h('div',{class:'cal'},DAYS.map(dd=>h('span',{class:'wd'},dd.slice(0,2))),Array.from({length:st},()=>h('span',{})),Array.from({length:dim},(_,i)=>h('button',{class:i+1===day?'sel today':'',onclick:()=>{day=i+1;draw()}},String(i+1)))),
+      h('div',{class:'row spread'},h('span',{class:'small'},fmtDob(iso)),h('span',{class:'tag s'},'AGE '+ageFrom(iso))),
+      h('div',{class:'row nowrap'},h('button',{class:'btn ghost grow',onclick:()=>m.remove()},'CANCEL'),h('button',{class:'btn grow',onclick:()=>{m.remove();onPick(iso);haptic('click')}},'CONFIRM')))}
+  draw();m=modal(body)}
+/* pixel country slider */
+function countrySlider(cur,onPick){const track=h('div',{class:'cslide',role:'listbox','aria-label':'Nationality'}),name=h('span',{class:'small'},(FL[cur]||FL.XX)[0]);
+  const pickC=(c,smooth=true)=>{cur=c;[...track.children].forEach(b=>{const on=b.dataset.c===c;b.classList.toggle('on',on);b.setAttribute('aria-selected',String(on))});name.textContent=FL[c][0];onPick(c);
+    const el=track.querySelector('.on');if(el)track.scrollTo({left:el.offsetLeft-track.clientWidth/2+el.clientWidth/2,behavior:smooth?'smooth':'auto'});haptic('tick')};
+  COUNTRY_LIST.forEach(([c,[,code]])=>track.append(h('button',{class:'cflag'+(c===cur?' on':''),role:'option','aria-selected':String(c===cur),'data-c':c,'aria-label':FL[c][0],onclick:()=>pickC(c)},flag(c,3),h('span',{class:'label'},code))));
+  const arrow=(t,d)=>h('button',{class:'stp','aria-label':d<0?'Previous country':'Next country',onclick:()=>{const i=COUNTRY_LIST.findIndex(x=>x[0]===cur);pickC(COUNTRY_LIST[(i+d+COUNTRY_LIST.length)%COUNTRY_LIST.length][0])}},t);
+  requestAnimationFrame(()=>{const el=track.querySelector('.on');if(el)track.scrollLeft=el.offsetLeft-track.clientWidth/2+el.clientWidth/2});
+  return h('div',{class:'field'},h('span',{class:'label'},'NATIONALITY'),h('div',{class:'stepper'},arrow('◀',-1),track,arrow('▶',1)),name)}
+/* pre-session countdown */
+function countdown(next){const n=SET.countdown??3;if(!n){next();return}const ov=h('div',{class:'overlay cd'});APP.append(ov);let k=n,t=0;const num=h('div',{class:'cdn bump'},k);
+  const bump=()=>{num.classList.remove('bump');void num.offsetWidth;num.classList.add('bump')};
+  ov.append(h('main',{},h('span',{class:'label'},'GET READY'),num,h('span',{class:'small'},'Session timer starts on GO'),h('button',{class:'btn ghost',onclick:()=>{clearInterval(t);ov.remove();next()}},'SKIP')));
+  tone(660,.12);haptic('tick');t=setInterval(()=>{if(!ov.isConnected){clearInterval(t);return}k--;if(k<=0){clearInterval(t);num.textContent='GO!';bump();tone(1047,.3);haptic('success');setTimeout(()=>{ov.remove();next()},650);return}
+    num.textContent=k;bump();tone(660,.12);haptic('tick')},1000)}
+/* single-line names that shrink to fit */
+function fitAll(){document.querySelectorAll('.fit').forEach(el=>{el.style.fontSize='';let fs=parseFloat(getComputedStyle(el).fontSize);while(el.scrollWidth>el.clientWidth+1&&fs>7){fs-=.5;el.style.fontSize=fs+'px'}})}
+/* changelog */
+const VERSION='0.5';
+const CHANGELOG=[['0.5',['Full-screen app with no status bar','Haptic feedback with Off / Light / Medium / Strong in Settings','Sharper, more detailed icons','Big +/− buttons for height, weight, grams and sets (hold to repeat)','Birthday picker with a pixel calendar, or type it in','Pixel flag slider for nationality','3-2-1-GO countdown before sessions (0–10 s in Settings)','Smaller, centered coach in the training view','Skip the setup and finish your profile later','Bigger single-line name with flag and code underneath','This changelog']],
+ ['0.4',['Dark grey / off-white default theme that follows your phone, with a toggle on every screen','Page transitions, All Set screen and XP explainer','Levels, level-up animation, level map and 13 unlockables','Mood check-in, equipment page, quick-action + button','Loading screen with jokes and tips, Tips & Tricks, Gear Shop, font styles']],
+ ['0.3',['Muscle map, routine builder and calendar','Session timer XP rules and leaderboard','Club with posts, dumbbell likes, comments and pixel camera','Ideas, Pro preview and gym maps for many cities']],
+ ['0.2',['Onboarding, custom pixel character, nutrition facts, plate calculator and settings']]];
+function changelogModal(){let m;m=modal(h('h2',{},'WHAT\'S NEW'),...CHANGELOG.map(([v,items],i)=>h('div',{class:'box',style:i?'':'border-color:var(--a1)'},h('div',{class:'row spread'},h('h3',{},'VERSION '+v),i?null:h('span',{class:'tag s'},'LATEST')),
+  ...items.map(t=>h('div',{class:'row nowrap',style:'align-items:flex-start'},px(i?'dumb':'star',2),h('span',{},t))))),h('button',{class:'btn',onclick:()=>m.remove()},'LET\'S GO'))}
+
 /* ================= nav + boot ================= */
 const TABS=[['home','HOME','house'],['train','TRAIN','dumb'],['fuel','FUEL','leg'],['plus','','plus'],['club','CLUB','club'],['map','GYMS','pin'],['me','ME','head']];
 const nav=document.getElementById('nav');
-function render(keep){if(!P)return;const y=scr.scrollTop;scr.replaceChildren(...SCREENS[tab]().filter(Boolean));scr.scrollTop=keep?y:0;if(!keep){scr.classList.remove('anim');void scr.offsetWidth;scr.classList.add('anim')}
-  nav.replaceChildren(...TABS.map(([id,label,ic])=>id==='plus'?h('button',{class:'plus','aria-label':'Quick actions','aria-expanded':'false',onclick:fabMenu},px('plus',4)):h('button',{'aria-current':id===tab?'page':'false',onclick:()=>{closeFab();if(id==='train')trainView='main';tab=id;render()}},px(ic,3),label)))}
+function render(keep){if(!P)return;const y=scr.scrollTop;scr.replaceChildren(...SCREENS[tab]().filter(Boolean));scr.scrollTop=keep?y:0;if(!keep){scr.classList.remove('anim');void scr.offsetWidth;scr.classList.add('anim')}requestAnimationFrame(fitAll);
+  nav.replaceChildren(...TABS.map(([id,label,ic])=>id==='plus'?h('button',{class:'plus','aria-label':'Quick actions','aria-expanded':'false',onclick:fabMenu},px('plus',4)):h('button',{'aria-current':id===tab?'page':'false',onclick:()=>{closeFab();if(id==='train')trainView='main';tab=id;render()}},id==='me'?headIcon(P,P.char,2,todayMood()):px(ic,3),label)))}
 /* Android back button hook: returns true when it handled the press */
 window.ibBack=()=>{if(APP.querySelector('.fab')){closeFab();return true}const m=APP.querySelector('.modal');if(m){m.remove();return true}const o=APP.querySelectorAll('.overlay');if(o.length&&P){o[o.length-1].remove();render();return true}
   if(P&&tab!=='home'){tab='home';render();return true}return false};
 document.getElementById('logoIcon').append(px('dumb',2));
-document.getElementById('gear').append(px('gear',3));
+document.getElementById('gear').append(px('gear',2));
 document.getElementById('modeBtn').addEventListener('click',toggleMode);
 try{matchMedia('(prefers-color-scheme: dark)').addEventListener('change',()=>{if(SET.modeAuto){applyTheme();refreshModeIcons()}})}catch(e){}
 document.getElementById('gear').addEventListener('click',()=>{tab='settings';render()});
 applyTheme();refreshModeIcons();save();
-if(!P)onboard('intro',false);else{render();if(!META.rated&&META.launches>=META.rateNext)setTimeout(rateModal,1500)}
+if(P){if(!P.dob)P.dob=(new Date().getFullYear()-(P.age||25))+'-01-01';P.age=ageFrom(P.dob)}
+const showLog=P&&META.ver!==VERSION;META.ver=VERSION;save();
+if(!P)onboard('intro',false);else{render();if(showLog)setTimeout(changelogModal,900);else if(!META.rated&&META.launches>=META.rateNext)setTimeout(rateModal,1500)}
 </script>
 
 </body>

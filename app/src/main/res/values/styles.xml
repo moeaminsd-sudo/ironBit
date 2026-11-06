@@ -4,6 +4,7 @@
         <item name="android:windowBackground">@color/night</item>
         <item name="android:statusBarColor">@color/night</item>
         <item name="android:navigationBarColor">@color/night</item>
+        <item name="android:windowFullscreen">true</item>
     </style>
     <color name="night">#1A1433</color>
 </resources>
