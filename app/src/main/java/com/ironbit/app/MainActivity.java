@@ -4,7 +4,18 @@ import android.Manifest;
 import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.content.ActivityNotFoundException;
+import android.content.ComponentName;
+import android.content.Context;
 import android.content.Intent;
+import android.media.MediaMetadata;
+import android.media.session.MediaController;
+import android.media.session.MediaSessionManager;
+import android.media.session.PlaybackState;
+import android.provider.Settings;
+import android.os.SystemClock;
+import android.view.KeyEvent;
+import org.json.JSONObject;
+import java.util.List;
 import android.content.pm.PackageManager;
 import android.net.Uri;
 import android.os.Build;
@@ -152,6 +163,86 @@ public class MainActivity extends Activity {
                 }
                 v.vibrate(e);
             } else v.vibrate(level * 8L);
+        }
+
+        private boolean hasAccess() {
+            String flat = Settings.Secure.getString(getContentResolver(), "enabled_notification_listeners");
+            return flat != null && flat.contains(getPackageName());
+        }
+
+        private MediaController active() {
+            if (!hasAccess()) return null;
+            try {
+                MediaSessionManager m = (MediaSessionManager) getSystemService(Context.MEDIA_SESSION_SERVICE);
+                List<MediaController> list = m.getActiveSessions(new ComponentName(MainActivity.this, MusicListener.class));
+                if (list == null || list.isEmpty()) return null;
+                for (MediaController c : list) {
+                    PlaybackState st = c.getPlaybackState();
+                    if (st != null && st.getState() == PlaybackState.STATE_PLAYING) return c;
+                }
+                return list.get(0);
+            } catch (Exception e) { return null; }
+        }
+
+        @JavascriptInterface
+        public String musicState() {
+            JSONObject o = new JSONObject();
+            try {
+                o.put("access", hasAccess());
+                MediaController c = active();
+                if (c != null) {
+                    MediaMetadata md = c.getMetadata();
+                    if (md != null) {
+                        o.put("title", md.getString(MediaMetadata.METADATA_KEY_TITLE));
+                        String ar = md.getString(MediaMetadata.METADATA_KEY_ARTIST);
+                        o.put("artist", ar != null ? ar : "");
+                    }
+                    PlaybackState st = c.getPlaybackState();
+                    o.put("playing", st != null && st.getState() == PlaybackState.STATE_PLAYING);
+                    String app = c.getPackageName();
+                    try { app = getPackageManager().getApplicationLabel(getPackageManager().getApplicationInfo(app, 0)).toString(); } catch (Exception ignored) {}
+                    o.put("app", app);
+                }
+            } catch (Exception ignored) {}
+            return o.toString();
+        }
+
+        @JavascriptInterface
+        public void musicCmd(String cmd) {
+            MediaController c = active();
+            if (c != null) {
+                MediaController.TransportControls t = c.getTransportControls();
+                PlaybackState st = c.getPlaybackState();
+                boolean playing = st != null && st.getState() == PlaybackState.STATE_PLAYING;
+                switch (cmd) {
+                    case "prev": t.skipToPrevious(); break;
+                    case "next": t.skipToNext(); break;
+                    default: if (playing) t.pause(); else t.play();
+                }
+                return;
+            }
+            // No session visible: send a media key so the last music app reacts.
+            int code = "prev".equals(cmd) ? KeyEvent.KEYCODE_MEDIA_PREVIOUS : "next".equals(cmd) ? KeyEvent.KEYCODE_MEDIA_NEXT : KeyEvent.KEYCODE_MEDIA_PLAY_PAUSE;
+            android.media.AudioManager am = (android.media.AudioManager) getSystemService(Context.AUDIO_SERVICE);
+            long now = SystemClock.uptimeMillis();
+            am.dispatchMediaKeyEvent(new KeyEvent(now, now, KeyEvent.ACTION_DOWN, code, 0));
+            am.dispatchMediaKeyEvent(new KeyEvent(now, now, KeyEvent.ACTION_UP, code, 0));
+        }
+
+        @JavascriptInterface
+        public void musicAccess() {
+            runOnUiThread(() -> {
+                try { startActivity(new Intent(Settings.ACTION_NOTIFICATION_LISTENER_SETTINGS)); } catch (Exception ignored) {}
+            });
+        }
+
+        @JavascriptInterface
+        public void openSpotify() {
+            runOnUiThread(() -> {
+                Intent i = getPackageManager().getLaunchIntentForPackage("com.spotify.music");
+                if (i == null) i = new Intent(Intent.ACTION_VIEW, Uri.parse("https://play.google.com/store/apps/details?id=com.spotify.music"));
+                try { startActivity(i); } catch (Exception ignored) {}
+            });
         }
     }
 
