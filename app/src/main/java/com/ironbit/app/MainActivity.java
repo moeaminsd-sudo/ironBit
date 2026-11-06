@@ -44,7 +44,8 @@ import androidx.webkit.WebViewAssetLoader;
 /** Hosts the IronBit UI from bundled assets over a local https origin (needed for the camera). */
 public class MainActivity extends Activity {
     private static final String HOST = "appassets.androidplatform.net";
-    private static final int REQ_CAMERA = 7, REQ_FILE = 8;
+    private static final int REQ_CAMERA = 7, REQ_FILE = 8, REQ_SAVE = 9, REQ_NOTIF = 10;
+    private String pendingSave;
     private WebView web;
     private PermissionRequest pendingCamera;
     private ValueCallback<Uri[]> fileCallback;
@@ -99,8 +100,11 @@ public class MainActivity extends Activity {
                 fileCallback = cb;
                 Intent pick = new Intent(Intent.ACTION_GET_CONTENT);
                 pick.addCategory(Intent.CATEGORY_OPENABLE);
-                pick.setType("image/*");
-                try { startActivityForResult(Intent.createChooser(pick, "Choose a photo"), REQ_FILE); }
+                String[] acc = params.getAcceptTypes();
+                boolean json = false;
+                for (String t : acc) if (t != null && (t.contains("json") || t.equals(".json"))) json = true;
+                pick.setType(json ? "*/*" : "image/*");   // backups are .json, photos are images
+                try { startActivityForResult(Intent.createChooser(pick, json ? "Choose an IronBit backup" : "Choose a photo"), REQ_FILE); }
                 catch (ActivityNotFoundException e) { fileCallback = null; return false; }
                 return true;
             }
@@ -237,6 +241,25 @@ public class MainActivity extends Activity {
         }
 
         @JavascriptInterface
+        public void saveFile(String name, String text) {
+            pendingSave = text;
+            runOnUiThread(() -> {
+                Intent i = new Intent(Intent.ACTION_CREATE_DOCUMENT).addCategory(Intent.CATEGORY_OPENABLE)
+                        .setType("application/json").putExtra(Intent.EXTRA_TITLE, name);
+                try { startActivityForResult(i, REQ_SAVE); } catch (Exception e) { pendingSave = null; }
+            });
+        }
+
+        @JavascriptInterface
+        public void wizardSchedule(String json) { WizardReceiver.schedule(MainActivity.this, json); }
+
+        @JavascriptInterface
+        public void notifPermission() {
+            if (Build.VERSION.SDK_INT >= 33 && checkSelfPermission(Manifest.permission.POST_NOTIFICATIONS) != PackageManager.PERMISSION_GRANTED)
+                runOnUiThread(() -> requestPermissions(new String[]{Manifest.permission.POST_NOTIFICATIONS}, REQ_NOTIF));
+        }
+
+        @JavascriptInterface
         public void openSpotify() {
             runOnUiThread(() -> {
                 Intent i = getPackageManager().getLaunchIntentForPackage("com.spotify.music");
@@ -262,6 +285,17 @@ public class MainActivity extends Activity {
         if (code == REQ_FILE && fileCallback != null) {
             fileCallback.onReceiveValue(WebChromeClient.FileChooserParams.parseResult(result, data));
             fileCallback = null;
+        }
+        if (code == REQ_SAVE) {   // write the exported backup to the file the user picked
+            boolean ok = false;
+            if (result == RESULT_OK && data != null && data.getData() != null && pendingSave != null) {
+                try (java.io.OutputStream os = getContentResolver().openOutputStream(data.getData())) {
+                    os.write(pendingSave.getBytes(java.nio.charset.StandardCharsets.UTF_8));
+                    ok = true;
+                } catch (Exception ignored) {}
+            }
+            pendingSave = null;
+            web.evaluateJavascript("window.ibSaved&&ibSaved(" + ok + ")", null);
         }
     }
 

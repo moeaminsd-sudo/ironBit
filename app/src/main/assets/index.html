@@ -255,7 +255,7 @@ header{padding-top:calc(10px + var(--safe-top,0px))!important}
 @media (prefers-reduced-motion:reduce){main.anim>*,.overlay,.modal,.modal>.box,.fabb,.bigl,.lnode.cur,.fab{animation:none}}
 main.slr>*{animation:slr .28s ease-out both}main.sll>*{animation:sll .28s ease-out both}@keyframes slr{from{transform:translateX(40px);opacity:0}}@keyframes sll{from{transform:translateX(-40px);opacity:0}}
 /* v0.7 */
-@media (max-width:389px){#hdr>.logo{visibility:hidden;min-width:0}}
+
 .pkb{position:absolute;left:0;right:0;bottom:0;z-index:60;background:var(--panel);border-top:4px solid var(--line);padding:8px 5px calc(8px + env(safe-area-inset-bottom,0px));display:flex;flex-direction:column;gap:6px;animation:kbup .16s ease-out;touch-action:manipulation;user-select:none;-webkit-user-select:none}
 @keyframes kbup{from{transform:translateY(100%)}}
 .pkb .kr{display:flex;gap:4px;justify-content:center}
@@ -304,6 +304,55 @@ main.slr>*{animation:slr .28s ease-out both}main.sll>*{animation:sll .28s ease-o
 .ttip{position:absolute;left:12px;right:12px;display:flex;flex-direction:column;gap:8px;border-color:var(--a1);box-shadow:0 6px 0 rgba(0,0,0,.4)}
 .genbtn{display:flex;align-items:center;gap:10px;justify-content:center}
 @media (prefers-reduced-motion:reduce){.pkb,.chest.shake,.coint.pulse,.thole{animation:none;transition:none}}
+/* v0.8 */
+#hdr .brand{flex:1;min-width:0;display:flex;flex-direction:column;gap:4px;align-items:flex-start}
+#hdr .brow{display:flex;align-items:center;gap:6px}
+#hdr .brand .xptop{padding:3px 5px;max-width:100%}
+.chestfs{position:absolute;inset:0;z-index:95;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:16px;padding:24px 18px;background:#120d1f;color:#f6e9d0;overflow:hidden}
+.chestfs .rays{position:absolute;inset:-50%;background:repeating-conic-gradient(from 0deg,rgba(255,224,138,.10) 0 10deg,transparent 10deg 20deg);animation:spin 18s linear infinite}
+.chestfs.k-vault{background:#2a1a05}.chestfs.k-crate{background:#1f140a}.chestfs.k-locker{background:#0b1a2a}.chestfs.k-bag{background:#230b0b}
+.chestfs .ctop{position:relative;display:flex;flex-direction:column;align-items:center;gap:8px;text-align:center}
+.chestfs .ctop h2{color:#ffe08a}.chestfs .label{color:#cfc8bb}
+.cbox{position:relative;background:none;border:none;padding:0;cursor:pointer;display:flex;align-items:center;justify-content:center;min-height:200px}
+.cbox canvas{transition:width .18s cubic-bezier(.2,1.6,.4,1),height .18s cubic-bezier(.2,1.6,.4,1);image-rendering:pixelated}
+.cbox.shake{animation:shake .3s}
+.chestfs.flash::after{content:'';position:absolute;inset:0;background:#fff;animation:fadeo .6s forwards;pointer-events:none}
+@keyframes fadeo{to{opacity:0}}@keyframes spin{to{transform:rotate(360deg)}}
+.cfx{position:absolute;inset:0;width:100%;height:100%;pointer-events:none;image-rendering:pixelated}
+.cloot{position:relative;display:flex;flex-direction:column;gap:6px;width:100%;max-width:340px}
+.cloot .item{background:rgba(255,255,255,.08);border-color:rgba(255,224,138,.5);color:#f6e9d0}
+.pop{animation:pop .45s cubic-bezier(.2,1.6,.4,1)}
+.chestfs .btn{position:relative;max-width:340px}
+.stat.tap{cursor:pointer}.clockbar .clkb{background:none;border:none;padding:0;color:inherit;font:inherit;text-align:left;display:flex;flex-direction:column;gap:6px;cursor:pointer}
+.sthead{display:flex;flex-direction:row;align-items:center;gap:14px;border-color:var(--a2)}
+.sline{position:relative;display:flex;flex-direction:column;gap:10px;padding-left:8px}
+.sline::before{content:'';position:absolute;left:25px;top:10px;bottom:10px;width:4px;background:var(--a3)}
+.snode{position:relative;display:flex;align-items:center;gap:12px}
+.snode .sdot{flex:none;width:38px;height:38px;display:flex;align-items:center;justify-content:center;background:var(--panel);border:3px solid var(--a3);z-index:1}
+.snode.rest .sdot{border-color:var(--line);width:28px;height:28px;margin-left:5px}.snode.today .sdot{border-style:dashed;border-color:var(--a1)}
+.snode.last .sdot{width:46px;height:46px;margin-left:-4px;border-color:var(--a2);background:var(--bg)}
+.snode.rest .label,.snode.rest .small{opacity:.6}
+.chartw{display:flex;flex-direction:column;gap:4px}.pxchart{width:100%!important;height:auto!important;image-rendering:pixelated}
+.clabs{display:grid;font-family:var(--display);font-size:calc(6px*var(--dz));color:var(--dim);text-align:center}
+.item.dim{opacity:.6}
+.rcard .tag{font-size:calc(6px*var(--dz))}
+.filt summary{cursor:pointer;list-style:none;padding:2px 0}.filt[open]{gap:10px}
+.mpeek{position:absolute;left:0;bottom:84px;z-index:70;display:flex;align-items:flex-end;gap:4px;transform:translate(-110%,40%) rotate(-12deg);transition:transform .55s cubic-bezier(.2,1.4,.4,1);pointer-events:none}
+.mpeek.in{transform:translate(0,0) rotate(0)}
+.mbub{background:var(--panel);border:3px solid var(--a1);padding:8px 10px;font-family:var(--display);font-size:calc(8px*var(--dz));margin-bottom:90px;box-shadow:3px 3px 0 var(--outer)}
+.stage.scene canvas.mwiz,.mwiz{position:absolute;left:2%;bottom:5%;top:auto;width:31%!important;height:auto!important;image-rendering:pixelated;animation:mwin .6s cubic-bezier(.2,1.4,.4,1)}
+.mwiz.out{animation:mwout .5s forwards}
+@keyframes mwin{from{transform:translateX(-120%)}}@keyframes mwout{to{transform:translateX(-140%)}}
+.mtalk{border-color:var(--a1);animation:pop .4s cubic-bezier(.2,1.6,.4,1)}
+.kk .kg{width:28px;height:28px;image-rendering:pixelated}
+.pkb.emo .kk{max-width:none;height:40px}.pkb.emo .kk .kg{width:30px;height:30px}
+.pkb.sz-s .kk{height:38px}.pkb.sz-l .kk{height:52px}.pkb.sz-l .kk .kg{width:32px;height:32px}
+.pkb.skin-retro{background:#061006;border-color:#1f7a3a}.pkb.skin-retro .kk{background:#0b1a0b;color:#33ff66;border-color:#1f7a3a;box-shadow:0 3px 0 #0f3d1d}
+.pkb.skin-neon{background:#120b26;border-color:#ff5ac8}.pkb.skin-neon .kk{background:#1a1433;color:#ff9ff0;border-color:#ff5ac8;box-shadow:0 3px 0 #5ae0ff}
+.pkb.skin-wood{background:#4a2a14;border-color:#2b170a}.pkb.skin-wood .kk{background:#e6c38c;color:#3b2414;border-color:#6b3d1f;box-shadow:0 3px 0 #6b3d1f}
+.pkb.skin-gold{background:#5a3606;border-color:#b8680a}.pkb.skin-gold .kk{background:linear-gradient(#ffe08a,#f2b84b);color:#3b2414;border-color:#b8680a;box-shadow:0 3px 0 #7a4408}
+.pkb[class*=skin-] .kk.kdone{background:var(--a2);color:var(--onA)}
+@media (prefers-reduced-motion:reduce){.chestfs .rays,.mwiz,.mpeek{animation:none;transition:none}}
 </style>
 <style>
 @font-face{font-family:"Press Start 2P";src:url(fonts/PressStart2P.woff2) format("woff2");font-display:block}
@@ -317,8 +366,7 @@ body{padding:0!important}.app{max-width:none!important;box-shadow:none!important
 
 <div class="app" id="app">
   <header id="hdr">
-    <span id="logoIcon"></span><span class="logo grow" style="font-size:11px">IRONBIT</span>
-    <button class="xptop" id="xpTop" hidden></button>
+    <div class="brand"><div class="brow"><span id="logoIcon"></span><span class="logo" style="font-size:11px">IRONBIT</span></div><button class="xptop" id="xpTop" hidden></button></div>
     <button class="coint" id="coinTop" hidden></button>
     <button class="icon-btn modeT" id="modeBtn" aria-label="Switch light or dark mode"></button>
     <button class="icon-btn" id="gear" aria-label="Settings"></button>
@@ -347,7 +395,7 @@ function lum(hex){const n=parseInt(hex.slice(1),16);return((n>>16)*.299+(n>>8&25
 
 /* ================= state (on-device only) ================= */
 const DEF_SET={mode:matchMedia('(prefers-color-scheme: light)').matches?'light':'dark',pal:'iron',accent:null,fz:1,crt:false,sfx:true,vol:.5,
-  timerBeep:true,vib:true,rest:60,speed:1,units:'kg',lang:'en',testFast:false,pro:false,hap:2,countdown:3,modeAuto:true,font:'classic',sfxPack:'retro',unlockAll:false,pkb:true,events:true,evOff:[],evFx:true,evPreview:null};
+  timerBeep:true,vib:true,rest:60,speed:1,units:'kg',lang:'en',testFast:false,pro:false,hap:2,countdown:3,modeAuto:true,font:'classic',sfxPack:'retro',unlockAll:false,pkb:true,kbSize:'m',kbSound:true,kbHap:true,kbSkin:'classic',wizard:true,wizNotif:true,events:true,evOff:[],evFx:true,evPreview:null};
 let P=store.get('profile',null);
 let SET={...DEF_SET,...store.get('settings',{})};{const raw=store.get('settings',{});if(raw.vib===false&&raw.hap===undefined)SET.hap=0}
 let ST={xp:0,streak:0,workouts:0,protein:0,pDate:today(),log:[],sched:{},mood:null,...store.get('stats',{})};
@@ -914,20 +962,20 @@ function cityGyms(city){const[,cur,base,coast,areas]=CITIES[city]||CITIES.Other,
 const scr=document.getElementById('screen');let tab='home',fuelTab='targets';
 function avatarRow(){return h('div',{style:'display:flex;flex-direction:column;gap:6px;min-width:0;width:100%'},h('div',{class:'pname fit'},(P.name||'PLAYER').toUpperCase()),h('div',{class:'flagline'},flag(P.country,2),h('span',{class:'tag s'},(FL[P.country]||FL.XX)[1])))}
 const SCREENS={
- home(){const ti=todayIdx(),rid=planFor(today()),r=rid&&allR()[rid],target=calc().pro,now=new Date(),bd=isBday();
+ home(){syncStreak();if(!ST.plog)ST.plog={};ST.plog[today()]=ST.protein;const ti=todayIdx(),rid=planFor(today()),r=rid&&allR()[rid],target=calc().pro,now=new Date(),bd=isBday();
   const showDonate=META.launches%4===0&&META.donateHide!==today();
   if(bd){balloons();const yr=now.getFullYear();if(META.bdayGift!==yr){META.bdayGift=yr;save();setTimeout(()=>gainXP(100),1400)}}
   return[
-   h('div',{class:'clockbar'},h('div',{style:'display:flex;flex-direction:column;gap:6px'},h('span',{class:'clk','data-clock':'t'},now.toLocaleTimeString('en',{hour:'2-digit',minute:'2-digit'})),
+   h('div',{class:'clockbar'},h('button',{class:'clkb','aria-label':'Open calendar',onclick:()=>{tab='train';trainView='calendar';calSel=today();render()}},h('span',{class:'clk','data-clock':'t'},now.toLocaleTimeString('en',{hour:'2-digit',minute:'2-digit'})),
        h('span',{class:'label','data-clock':'d'},now.toLocaleDateString('en',{weekday:'short',day:'numeric',month:'short'}).toUpperCase())),
      h('div',{class:'grow',style:'display:flex;flex-direction:column;gap:6px;align-items:flex-end;text-align:right;min-width:0'},h('span',{class:'label'},'TODAY\'S PLAN'),
        h('button',{class:'tag'+(r?' s':''),style:'cursor:pointer',onclick:()=>r?openWorkout(rid):(tab='train',render())},r?r.name+' · '+r.ex.length+' MOVES ▶':'REST DAY'))),
    bd?h('div',{class:'box bday'},h('h2',{},'HAPPY BIRTHDAY, '+(P.name||'CHAMP').toUpperCase()+'!'),h('span',{class:'small'},'Have a great day. Here is 100 XP from IronBit, and cake counts as carbs today.')):null,
    eventBox(),homeScene(),
    h('div',{class:'stats'},
-     h('div',{class:'stat'},px('flame',3),h('span',{class:'num'},ST.streak),h('span',{class:'label'},'STREAK')),
-     h('div',{class:'stat'},px('star',3),h('span',{class:'num'},'LV '+lvl()),h('span',{class:'label'},rank())),
-     h('div',{class:'stat'},px('dumb',3),h('span',{class:'num'},ST.workouts),h('span',{class:'label'},'WORKOUTS'))),
+     h('button',{class:'stat tap',onclick:streakPage,'aria-label':'Streak: '+ST.streak+'. Open streak page'},px('flame',3),h('span',{class:'num'},ST.streak),h('span',{class:'label'},'STREAK')),
+     h('button',{class:'stat tap',onclick:openLevelMap,'aria-label':'Level '+lvl()+'. Open level map'},px('star',3),h('span',{class:'num'},'LV '+lvl()),h('span',{class:'label'},rank())),
+     h('button',{class:'stat tap',onclick:statsPage,'aria-label':ST.workouts+' workouts. Open stats'},px('dumb',3),h('span',{class:'num'},ST.workouts),h('span',{class:'label'},'WORKOUTS'))),
    P.incomplete?h('button',{class:'opt',style:'border-color:var(--a2)',onclick:()=>onboard('info',true)},px('bolt',3),h('span',{class:'grow'},'Finish your profile so your plan and protein target fit you'),h('span',{class:'tag c'},'SETUP')):null,
    r?h('div',{class:'box'},h('div',{class:'row spread'},h('span',{class:'label'},'TODAY\'S WORKOUT · '+DAYS[ti]),h('span',{class:'tag s'},'+XP')),
        h('h3',{},`${r.name} · ${r.ex.length} MOVES`),h('span',{class:'small'},r.ex.map(e=>e[0]).join(', ')),
@@ -942,7 +990,7 @@ const SCREENS={
    showDonate&&h('div',{class:'box',style:'border-color:var(--a2)'},h('div',{class:'row nowrap'},px('heart',3),h('span',{class:'grow'},'IronBit is free. If it helps you, you can buy the developer a karak.')),
      h('div',{class:'row'},h('button',{class:'btn',onclick:donateModal},'DONATE'),h('button',{class:'btn ghost',onclick:()=>{META.donateHide=today();save();render(true)}},'NOT NOW')))]},
  train:()=>trainScreen(),
- fuel(){const tabs=[['targets','TARGET'],['foods','FOODS'],['plate','PLATE'],['meals','MEALS']];
+ fuel(){const tabs=[['targets','TARGET'],['foods','FOODS'],['recipes','RECIPES'],['plate','PLATE'],['meals','MEALS']];
   return[h('div',{class:'tabs',role:'tablist'},tabs.map(([id,t])=>h('button',{role:'tab','aria-selected':String(fuelTab===id),onclick:()=>{fuelTab=id;render()}},t))),...FUEL[fuelTab]()]},
  map:mapScreen,club:()=>clubScreen(),
  me:()=>meScreen(),
@@ -1047,7 +1095,8 @@ function settingsScreen(){
        h('span',{class:'row nowrap',style:'gap:0'},[t.bg,t.panel2,t.a1,t.a2,t.a3].map(c=>h('i',{style:`width:16px;height:22px;background:${c};display:block`}))),h('span',{class:'grow'},p.name),ok?null:h('span',{class:'tag'},'LVL '+lockLvl('pal',id)))})),
      h('div',{class:'field'},h('span',{},'Custom accent color'),h('div',{class:'sw'},['#ff6b57','#e84393','#c0392b','#ff9f1c','#f2b84b','#ffd54a','#7fb069','#3fb950','#2e7d32','#3fc1b0','#05d9e8','#2d6b8f','#4a7bd9','#7b6fb0','#8e44ad','#8d6e63','#9aa3b5','#f6f3ec'].map(col=>h('button',{'aria-label':'Accent '+col,'aria-pressed':String(SET.accent===col),style:`background:${col}`,onclick:()=>{SET.accent=col;save();applyTheme();render(true)}}))),
        SET.accent?h('button',{class:'btn ghost',style:'align-self:flex-start;padding:8px',onclick:()=>{SET.accent=null;save();applyTheme();render(true)}},'RESET TO THEME COLOR'):null),
-     segR('fz','Text size',[[.9,'S'],[1,'M'],[1.15,'L']]),tg('crt','Retro scanlines'),tg('pkb','Pixel keyboard')),
+     segR('fz','Text size',[[.9,'S'],[1,'M'],[1.15,'L']]),tg('crt','Retro scanlines')),
+   kbSettings(),
    h('div',{class:'box'},h('span',{class:'label'},'EVENT THEMES'),h('p',{class:'note'},'IronBit dresses up for holidays and your national day. Tap PREVIEW to try one now.'),tg('events','Event themes'),tg('evFx','Falling snow, bats and sparkles'),
      ...Object.entries(EVENTS).map(([id,E])=>h('div',{class:'srow'},h('span',{class:'row nowrap',style:'gap:8px'},eventIcon(id,2),h('span',{},id==='national'?'National day'+(NATDAY[P.country]?'':' (not set for your country yet)'):E.n.charAt(0)+E.n.slice(1).toLowerCase())),
        h('div',{class:'row nowrap',style:'gap:6px'},h('button',{class:'btn ghost',style:'padding:6px 8px',onclick:()=>{SET.evPreview=SET.evPreview===id?null:id;save();applyTheme();tab='home';render()}},SET.evPreview===id?'STOP':'PREVIEW'),
@@ -1076,6 +1125,11 @@ function settingsScreen(){
      h('button',{class:'opt',onclick:aboutModal},px('dumb',3),h('span',{class:'grow'},'About IronBit')),
      h('button',{class:'opt',onclick:()=>onboard('intro',true)},px('flame',3),h('span',{class:'grow'},'Replay the intro')),
      h('button',{class:'opt',onclick:()=>{tab='home';render();setTimeout(startTour,250)}},px('star',3),h('span',{class:'grow'},'Replay the app tips'))),
+   h('div',{class:'box'},h('span',{class:'label'},'MERLIFT THE WIZARD'),h('div',{class:'row nowrap'},show(drawWizard('flex',0),2),h('span',{class:'grow small'},'The most jacked wizard ever seen visits now and then with stats, tips and terrible jokes.')),tg('wizard','Merlift visits',wizardSchedule),tg('wizNotif','Merlift notifications',()=>{if(SET.wizNotif&&window.IronBitNative&&IronBitNative.notifPermission)IronBitNative.notifPermission();wizardSchedule()}),
+     h('button',{class:'btn ghost',onclick:()=>{tab='home';render();setTimeout(()=>maybeMerlift(true),600)}},'SUMMON MERLIFT NOW')),
+   h('div',{class:'box'},h('span',{class:'label'},'YOUR DATA'),h('span',{class:'small'},'Save everything (profile, workouts, notes, coins, settings) to one backup file. Restore it on any phone.'),
+     h('div',{class:'row nowrap'},h('button',{class:'btn alt grow',onclick:exportData},'EXPORT BACKUP'),h('button',{class:'btn ghost grow',onclick:importData},'IMPORT BACKUP'))),
+   accountBox(),
    h('div',{class:'box'},h('span',{class:'label'},'HELP IRONBIT GROW'),
      h('button',{class:'opt',onclick:()=>feedbackModal('bug')},px('gear',3),h('span',{class:'grow'},'Report a bug'),h('span',{class:'tag'},'EMAIL')),
      h('button',{class:'opt',onclick:()=>feedbackModal('idea')},px('bolt',3),h('span',{class:'grow'},'Suggest a feature'),h('span',{class:'tag'},'EMAIL'))),
@@ -1322,7 +1376,7 @@ function postCard(p){const u=p.me?P:demoUser(p.u),liked=!!CLUB.liked[p.id],cmBox
   const dbBtn=h('button',{'aria-pressed':String(liked),'aria-label':'Give a dumbbell',onclick:()=>{const on=!CLUB.liked[p.id];CLUB.liked[p.id]=on;saveClub();dbBtn.setAttribute('aria-pressed',String(on));dbBtn.lastChild.textContent=p.likes+(on?1:0);if(on){SFX.coin();buzz(20)}}},px('dumb',2),h('span',{},p.likes+(liked?1:0)));
   return h('div',{class:'post'},h('div',{class:'row nowrap'},headIcon(u,u.char,2),h('div',{class:'grow',style:'display:flex;flex-direction:column;gap:4px'},h('div',{class:'flagline'},h('h3',{},(u.name||'YOU').toUpperCase()),flag(u.country,1)),h('span',{class:'small'},ago(p.time))),
       p.me?h('button',{class:'btn ghost',style:'padding:6px 8px','aria-label':'Delete post',onclick:()=>{CLUB.posts=CLUB.posts.filter(x=>x!==p);saveClub();render(true)}},'✕')
-        :h('button',{class:'btn ghost',style:'padding:6px 8px','aria-label':'Report post',onclick:()=>toast('REPORTED. THANKS!')},'REPORT')),
+        :h('div',{class:'row nowrap',style:'gap:6px'},followBtn(p.u,true),h('button',{class:'btn ghost',style:'padding:6px 8px','aria-label':'Report post',onclick:()=>toast('REPORTED. THANKS!')},'⚑'))),
     p.t?h('p',{},p.t):null,p.img?h('img',{src:p.img==='scene'?sceneImg():p.img,alt:'Pixel photo'}):null,h('div',{class:'acts'},dbBtn,cmBtn),cmBox)}
 const weekKey=d=>{const t=new Date(d);t.setDate(t.getDate()-(t.getDay()+6)%7);return dstr(t)};
 function ideasView(){const sc=i=>i.votes+(CLUB.voted[i.id]?1:0),ideas=[...CLUB.ideas].sort((a,b)=>sc(b)-sc(a));
@@ -1482,9 +1536,9 @@ function toggleMode(){SET.modeAuto=false;SET.mode=curMode()==='dark'?'light':'da
 function refreshModeIcons(){document.querySelectorAll('.modeT').forEach(b=>{b.replaceChildren(px(curMode()==='dark'?'sun':'moon',2));b.setAttribute('aria-label',curMode()==='dark'?'Switch to light mode':'Switch to dark mode')})}
 function modeToggle(){return h('button',{class:'icon-btn modeT','aria-label':curMode()==='dark'?'Switch to light mode':'Switch to dark mode',onclick:toggleMode},px(curMode()==='dark'?'sun':'moon',2))}
 function xpAt(L){return 50*L*(L-1)}
-function lvl(){let L=1;while(ST.xp>=xpAt(L+1)&&L<99)L++;return L}
+function lvl(){let L=1;while(ST.xp>=xpAt(L+1)&&L<120)L++;return L}
 function lvlProg(){const L=lvl(),a=xpAt(L),b=xpAt(L+1);return{L,cur:ST.xp-a,need:b-a,pct:Math.min(100,(ST.xp-a)/(b-a)*100)}}
-const RANK_AT=[[1,'ROOKIE'],[3,'IRON ROOKIE'],[5,'BRAWLER'],[8,'IRON KNIGHT'],[12,'GLADIATOR'],[18,'TITAN'],[25,'LEGEND'],[30,'IRON GOD']];
+const RANK_AT=[[1,'ROOKIE'],[3,'IRON ROOKIE'],[5,'BRAWLER'],[8,'IRON KNIGHT'],[12,'GLADIATOR'],[18,'TITAN'],[25,'LEGEND'],[30,'IRON GOD'],[40,'DEMIGOD'],[50,'OLYMPIAN'],[65,'COLOSSUS'],[80,'IMMORTAL'],[100,'ETERNAL'],[120,'MERLIFT\'S EQUAL']];
 function rank(){const L=lvl();return RANK_AT.filter(r=>r[0]<=L).pop()[1]}
 const UNLOCK={top:{tracksuit:3,kit:5,trad:8,armor:15},head:{bandana:4,crown:30},acc:{cape:18,aura:20},pal:{arcade:7,legend:10},sfx:{arcade:2,chip:12,legend:25}};
 function lockLvl(k,id){return(UNLOCK[k]||{})[id]||0}
@@ -1506,7 +1560,7 @@ const TRAD={SD:{m:['kandura','#f6f3ec','imma'],f:['kandura','#e84393','hijab']},
 function effChar(pr,C){if(C.top!=='kit'&&C.top!=='trad')return C;const o={...C},cc=(pr&&pr.country)||'XX',sex=(pr&&pr.sex)||'m';
   if(C.top==='trad'&&TRAD[cc]){const[t,col,hd]=TRAD[cc][sex];o.top=t;o.topC=col;if(hd&&C.head==='none'){o.head=hd;o.headC=hd==='hijab'?shade(col,-.15):'#f6f3ec'}return o}
   const fc=flagCols(cc);o.top='tee';o.topC=C.top==='trad'?'#f2c14e':fc[0];o.kit2=fc.find(x=>x!==o.topC)||'#ffffff';return o}
-function rewardIcon(r){const[,k,id]=r;if(k==='pal'){const t=PALS[id].dark;return h('span',{class:'row nowrap',style:'gap:0;flex:none'},[t.bg,t.a1,t.a2,t.a3].map(c=>h('i',{style:`width:6px;height:14px;display:block;background:${c}`})))}
+function rewardIcon(r){const[,k,id]=r;if(k==='kb')return kbIcon(2,id);if(k==='pal'){const t=PALS[id].dark;return h('span',{class:'row nowrap',style:'gap:0;flex:none'},[t.bg,t.a1,t.a2,t.a3].map(c=>h('i',{style:`width:6px;height:14px;display:block;background:${c}`})))}
   return px(k==='top'?'shirt':k==='head'?(id==='crown'?'crown':'hat'):k==='acc'?id:'note',2)}
 function gainXP(n){if(!n)return;const b=lvl();ST.xp+=n;save();updXpTop();SFX.coin();buzz(25);toast('+'+n+' XP');const a=lvl();if(a>b)setTimeout(()=>levelUp(a),600)}
 function levelUp(L){SFX.lvl();buzz(200);const rw=REWARDS.filter(r=>r[0]===L),[cv,g]=mk(120,160);cv.className='burst';cv.setAttribute('aria-hidden','true');
@@ -1525,12 +1579,13 @@ function xpHelp(){let m;m=modal(xpRules(),h('button',{class:'btn',onclick:()=>{m
 function sheet(title,build){const ov=h('div',{class:'overlay'}),body=h('main',{class:'anim'});APP.append(ov);const close=()=>ov.remove();
   ov.append(h('header',{},h('button',{class:'btn ghost',style:'padding:8px 10px','aria-label':'Back',onclick:close},'◀'),h('span',{class:'logo grow',style:'font-size:10px'},title),modeToggle()),body);
   const redraw=()=>body.replaceChildren(...build(redraw,close).flat().filter(Boolean));redraw();return ov}
-function openLevelMap(){sheet('LEVEL MAP',()=>{const L=lvl(),N=30,H=N*64+40,wrap=h('div',{class:'lmap',style:`height:${H}px`}),NS='http://www.w3.org/2000/svg',svg=document.createElementNS(NS,'svg');
+function openLevelMap(){sheet('LEVEL MAP',()=>{const L=lvl(),N=120,H=N*64+40,wrap=h('div',{class:'lmap',style:`height:${H}px`}),NS='http://www.w3.org/2000/svg',svg=document.createElementNS(NS,'svg');
   svg.setAttribute('viewBox',`0 0 100 ${H}`);svg.setAttribute('preserveAspectRatio','none');const pos=i=>({x:50+Math.sin(i*.8)*30,y:H-30-(i-1)*64});
   const line=(from,to,col,dash)=>{const pl=document.createElementNS(NS,'polyline'),pp=[];for(let i=from;i<=to;i++){const p=pos(i);pp.push(p.x+','+p.y)}pl.setAttribute('points',pp.join(' '));pl.style.fill='none';pl.style.stroke=col;pl.setAttribute('stroke-width','6');pl.setAttribute('vector-effect','non-scaling-stroke');if(dash)pl.setAttribute('stroke-dasharray','6 6');svg.append(pl)};
   line(1,N,'var(--line)',true);if(L>1)line(1,Math.min(L,N),'var(--a3)',false);wrap.append(svg);
   for(let i=1;i<=N;i++){const p=pos(i),rw=REWARDS.find(r=>r[0]===i),st=i<L?'done':i===L?'cur':'todo';
     wrap.append(h('div',{class:'lnode '+st,style:`left:${p.x}%;top:${p.y}px`,'aria-label':'Level '+i+(st==='cur'?', you are here':'')},i===L?headIcon(P,P.char,2,todayMood()):h('span',{},i)));
+    if(!rw&&i%5===0){const ck=i%10===0?'vault':'crate';wrap.append(h('div',{class:'lrew'+(i<=L?' got':''),style:`top:${p.y}px;${p.x>50?'right:'+(100-p.x+9)+'%':'left:'+(p.x+9)+'%'}`},show(chestCanvas(ck,i<=L),1),h('span',{class:'label'},(i<=L?'':'LVL '+i+' · ')+CHEST_INFO[ck][0])))}
     if(rw)wrap.append(h('div',{class:'lrew'+(i<=L?' got':''),style:`top:${p.y}px;${p.x>50?'right:'+(100-p.x+9)+'%':'left:'+(p.x+9)+'%'}`},rewardIcon(rw),h('span',{class:'label'},(i<=L?'':'LVL '+i+' · ')+rw[3])))}
   setTimeout(()=>{const cur=wrap.querySelector('.lnode.cur');cur&&cur.scrollIntoView({block:'center'})},80);
   const pr=lvlProg(),nr=nextReward();
@@ -1584,6 +1639,8 @@ function meScreen(){const pr=lvlProg(),c=calc(),C=effChar(P,P.char),has=a=>C.acc
      h('span',{class:'label'},'ACCESSORIES'),
      h('div',{class:'inv'},['glasses','earbuds','chain','gloves','cape','aura'].map(a=>h('button',{class:'islot'+(has(a)?' on':''),'aria-label':a+(has(a)?' equipped':''),onclick:()=>onboard('char',true,'gear')},px(a,2),h('span',{class:'label'},a.toUpperCase()))))),
    h('div',{class:'row nowrap'},h('button',{class:'btn alt grow',onclick:openLevelMap},'LEVEL MAP'),h('button',{class:'btn ghost grow',onclick:()=>onboard('char',true)},'EDIT LOOK')),
+   h('div',{class:'tools'},h('button',{class:'tile',onclick:statsPage},px('star',4),'MY STATS'),h('button',{class:'tile',onclick:notesPage},px('note',4),'NOTES'),h('button',{class:'tile',onclick:streakPage},px('flame',4),'STREAK')),
+   h('button',{class:'opt',onclick:()=>followPage('following')},px('club',3),h('span',{class:'grow',style:'display:flex;flex-direction:column;gap:4px'},h('span',{},'Following '+Object.keys(CLUB.follow).length+' · Followers '+CLUB.followers.length),h('span',{class:'small'},'Find and follow other players')),h('span',{class:'tag'},'PEOPLE')),
    h('button',{class:'opt',onclick:itemShop},coinIcon(3),h('span',{class:'grow',style:'display:flex;flex-direction:column;gap:4px'},h('span',{},'Item shop'),h('span',{class:'small'},'Chests, outfits, themes and room decor')),h('span',{class:'tag s'},(ST.coins||0)+' COINS')),
    h('button',{class:'opt',onclick:()=>{tab='club';clubTab='board';lbTab='league';render()}},LG.ko?px('crown',3):lgBadge(LG.lg,2),h('span',{class:'grow',style:'display:flex;flex-direction:column;gap:4px'},h('span',{},LG.ko?'Knockout · '+KO[LG.ko][0]:'League '+lgNum(LG.lg)+' · '+lgName(LG.lg)),h('span',{class:'small'},'Trophies: '+(LG.cups.gold+LG.cups.silver+LG.cups.bronze))),h('span',{class:'tag'},'LEAGUE')),
    h('div',{class:'box'},h('div',{class:'row spread'},h('span',{class:'label'},'COLLECTION'),h('span',{class:'small'},REWARDS.filter(r=>unlocked(r[1],r[2])).length+' / '+REWARDS.length)),
@@ -1762,8 +1819,8 @@ function countdown(next){const n=SET.countdown??3;if(!n){next();return}const ov=
 /* single-line names that shrink to fit */
 function fitAll(){document.querySelectorAll('.fit').forEach(el=>{el.style.fontSize='';let fs=parseFloat(getComputedStyle(el).fontSize);while(el.scrollWidth>el.clientWidth+1&&fs>7){fs-=.5;el.style.fontSize=fs+'px'}})}
 /* changelog */
-const VERSION='0.7';
-const CHANGELOG=[['0.7',['Leagues: 10 leagues, top 20 move up each month, a 3-round knockout at the top','Weekly and all-time leaderboards with the best players','Routine generator: answer 7 questions, get a weekly plan','Coins, chests and an item shop for outfits, themes and room decor','Pixel keyboard for every text box, with an Arabic layout','Every country, searchable, plus a city list with weather for each','Event themes: New Year, Halloween, Ramadan, Eid, national days and more','App tips on first launch, replayable from Settings','Report a bug and suggest a feature from Settings and About','Your job and weekend shape the home scenes: work, study, walks','Swipe through the welcome pages','Character editor previews are the same size']],['0.6',['Your face in a square frame on the ME tab','Home avatar faces you and lives your day: sleeps, works, eats, drinks water, waves, winks and replays your last workout','Clock, date and today\'s plan at the top of Home','Daily briefing: plan, weather, food and a joke or fact (also on the Me page)','Birthday balloons and a 100 XP gift','Workout finish celebration: muscles worked, summary, and XP that flies into the new XP bar','Stronger look every 5 levels and before/after weigh-in transformations','Front, side and back views for exercises','Targeted muscles shown on the exercise animation','Music controls for Spotify and other apps during workouts (Android app)','Pixel accent color picker, green + button, cleaner mood picker','Ready for your custom art: drop PNGs into the art folder']],
+const VERSION='0.8';
+const CHANGELOG=[['0.8',['Merlift, the most jacked wizard ever seen, visits with stats, tips and jokes (and rare phone notifications)','4 chests: Gym Bag, Locker, Power Rack Crate and the legendary Golden Dumbbell Vault, opened full screen','120 levels with chest rewards every 5 levels','Streak page with a flame on your latest workout','My Stats: workouts, training days, weight and protein charts','Notes with a shopping list that can\'t be deleted','112 recipes: search by name or ingredient, filter by protein, calories and time, add ingredients to your list','Follow other players; following and followers on the Me page','Buy coins (opens with the Play Store release)','Export and import a full backup','Keyboard: pixel Arabic letters, pixel emojis, sizes, sounds, haptics and unlockable skins','XP bar now sits under the IronBit logo','Tap the clock for the calendar, the level for the level map','Walks now show your avatar from the side']],['0.7',['Leagues: 10 leagues, top 20 move up each month, a 3-round knockout at the top','Weekly and all-time leaderboards with the best players','Routine generator: answer 7 questions, get a weekly plan','Coins, chests and an item shop for outfits, themes and room decor','Pixel keyboard for every text box, with an Arabic layout','Every country, searchable, plus a city list with weather for each','Event themes: New Year, Halloween, Ramadan, Eid, national days and more','App tips on first launch, replayable from Settings','Report a bug and suggest a feature from Settings and About','Your job and weekend shape the home scenes: work, study, walks','Swipe through the welcome pages','Character editor previews are the same size']],['0.6',['Your face in a square frame on the ME tab','Home avatar faces you and lives your day: sleeps, works, eats, drinks water, waves, winks and replays your last workout','Clock, date and today\'s plan at the top of Home','Daily briefing: plan, weather, food and a joke or fact (also on the Me page)','Birthday balloons and a 100 XP gift','Workout finish celebration: muscles worked, summary, and XP that flies into the new XP bar','Stronger look every 5 levels and before/after weigh-in transformations','Front, side and back views for exercises','Targeted muscles shown on the exercise animation','Music controls for Spotify and other apps during workouts (Android app)','Pixel accent color picker, green + button, cleaner mood picker','Ready for your custom art: drop PNGs into the art folder']],
  ['0.5',['Full-screen app with no status bar','Haptic feedback with Off / Light / Medium / Strong in Settings','Sharper, more detailed icons','Big +/− buttons for height, weight, grams and sets (hold to repeat)','Birthday picker with a pixel calendar, or type it in','Pixel flag slider for nationality','3-2-1-GO countdown before sessions (0–10 s in Settings)','Smaller, centered coach in the training view','Skip the setup and finish your profile later','Bigger single-line name with flag and code underneath','This changelog']],
  ['0.4',['Dark grey / off-white default theme that follows your phone, with a toggle on every screen','Page transitions, All Set screen and XP explainer','Levels, level-up animation, level map and 13 unlockables','Mood check-in, equipment page, quick-action + button','Loading screen with jokes and tips, Tips & Tricks, Gear Shop, font styles']],
  ['0.3',['Muscle map, routine builder and calendar','Session timer XP rules and leaderboard','Club with posts, dumbbell likes, comments and pixel camera','Ideas, Pro preview and gym maps for many cities']],
@@ -1808,6 +1865,7 @@ const FP={
  farmer:{prop:'db',f:[{sq:0,ua:4,fa:3},{sq:.08,ua:5,fa:4}]},
  idle:{f:[{ua:6,fa:8},{ua:9,fa:16}]}};
 for(const k in FP)FP[k].dur=(ANIM[k]||{}).dur||2000;
+const SIDEWALK={ax:'hip',hx:26,ay:'feet',dur:1000,f:[{torso:182,thigh:24,shin:6,thigh2:-22,shin2:-40,uarm:-24,farm:-8,uarm2:22,farm2:40},{torso:182,thigh:-22,shin:-40,thigh2:24,shin2:6,uarm:22,farm:40,uarm2:-24,farm2:-8}]};
 const SCN={walk:{f:[{ua:[-14,14],fa:[-8,8]},{ua:[14,-14],fa:[8,-8]}],dur:900},cheer:{f:[{ua:150,fa:165},{ua:168,fa:178}],dur:700},wave:{f:[{ua:[6,135],fa:[8,172]},{ua:[6,135],fa:[8,120]}],dur:650},
  eat:{f:[{ua:[6,8],fa:[8,-25]},{ua:[6,-60],fa:[8,-155]}],dur:1700},type:{f:[{ua:[-20,-20],fa:[-60,-60],fl:[.5,.5]},{ua:[-18,-23],fa:[-66,-54],fl:[.5,.5]}],dur:260}};
 function drawFrontPose(pr,C0,pose,A,o={}){
@@ -1863,7 +1921,7 @@ function pickScene(){const hr=new Date().getHours(),D=dayOf(),asleep=D.sleep>D.w
   let k;do{k=pick(o)}while(k===lastScene&&new Set(o).size>1);lastScene=k;return k}
 function homeScene(force){const kind=force||(renderKeep&&curScene)||pickScene();if(!force)curScene=kind;const W=96,H=56,[c,g]=mk(W,H);g.imageSmoothingEnabled=false;c.setAttribute('role','img');
   const [ek,exName,rName]=lastExKey(),night=kind==='sleep',FX=['smile','blink','wink','surprised','smile','blink'];
-  const cap={train:rName?'REPLAYING '+rName:'WARMING UP',sleep:'SLEEPING · ZZZ',office:dayOf().job==='remote'?'WORKING FROM HOME':'AT WORK',study:'STUDYING',shop:'AT THE SHOP',clinic:'ON SHIFT',field:'ON THE ROAD',walk:isWeekendToday()?'WEEKEND WALK':'ON THE WAY',eat:'SNACK TIME',drink:'HYDRATING',face:'HEY THERE!',wave:'HI, '+(P.name||'CHAMP').toUpperCase()+'!'}[kind];
+  const cap={train:rName?'REPLAYING '+rName:'WARMING UP',sleep:'SLEEPING · ZZZ',office:dayOf().job==='remote'?'WORKING FROM HOME':'AT WORK',study:'STUDYING',shop:'AT THE SHOP',clinic:'ON SHIFT',field:'ON THE ROAD',walk:isWeekendToday()?'WEEKEND WALK':'ON THE WAY',eat:'SNACK TIME',drink:'HYDRATING',face:'HEY THERE!',listen:'LISTENING TO MERLIFT',wave:'HI, '+(P.name||'CHAMP').toUpperCase()+'!'}[kind];
   c.setAttribute('aria-label','Your avatar: '+cap.toLowerCase());
   const wall=night?'#232046':tok('panel2'),floor=night?'#1a1733':tok('line');
   const out=kind==='walk'||kind==='field';
@@ -1888,6 +1946,8 @@ function homeScene(force){const kind=force||(renderKeep&&curScene)||pickScene();
       R(g,OL,30,25+br,52,13);R(g,tok('a3'),31,26+br,50,11);for(let x=33;x<80;x+=6)R(g,shade(tok('a3'),-.2),x,27+br,3,9);R(g,'#f6f3ec',31,26+br,50,2);
       for(let k=0;k<3;k++){const p=((t/1400)+k/3)%1,x=Math.round(20+p*14+k),y=Math.round(22-p*18),col=`rgba(246,233,208,${1-p})`;R(g,col,x,y,4,1);R(g,col,x+2,y+1,1,1);R(g,col,x+1,y+2,1,1);R(g,col,x,y+3,4,1)}}
     else if(kind==='face'){const f=FX[Math.floor(t/1300)%FX.length],img=drawFront(P,P.char,null,{face:f}),d=img.dims;g.drawImage(img,d.cx-10,d.hT-6,20,22,25,1,46,51)}
+    else if(kind==='walk'){scroll=t/30;const A=SIDEWALK,ph=(1-Math.cos(2*Math.PI*t/A.dur))/2;g.drawImage(drawSide(P,P.char,lerpPose(A.f[0],A.f[1],ph),A),22,3)}
+    else if(kind==='listen'){const A=FP.idle,ph=(1-Math.cos(2*Math.PI*t/(A.dur||2000)))/2,f=Math.floor(t/2600)%4===3?'blink':(Math.floor(t/4000)%3===2?'surprised':'smile');g.drawImage(drawFrontPose(P,P.char,lerpAny(A.f[0],A.f[1],ph),A,{face:f,mood:'great'}),46,3)}
     else{if(out)scroll=t/30;const A=kind==='train'?FP[ek]:kind==='office'||kind==='study'?SCN.type:kind==='walk'?SCN.walk:kind==='wave'||kind==='shop'||kind==='clinic'||kind==='field'?SCN.wave:SCN.eat,dur=A.dur||2000,ph=(1-Math.cos(2*Math.PI*t/dur))/2;
       const face=(kind==='eat'||kind==='drink')&&ph>.7?(Math.floor(t/180)%2?'chew':null):(kind==='wave'&&Math.floor(t/2600)%3===2?'wink':null);
       const img=drawFrontPose(P,P.char,lerpAny(A.f[0],A.f[1],ph),A,{face,mood:kind==='wave'?'great':todayMood()});g.drawImage(img,kind==='field'?14:22,kind==='walk'?3+Math.round(Math.abs(Math.sin(t/220))*-1):3);
@@ -1911,7 +1971,7 @@ function muscleIdsFor(names){return Object.keys(MUSCLES).filter(id=>MUSCLES[id].
 function celebrate(sm){const ov=h('div',{class:'overlay celeb'});ov.style.top=(document.getElementById('hdr').offsetHeight)+'px';APP.append(ov);haptic('success');
   const[c,g]=mk(64,60);c.className='celebfig';c.setAttribute('role','img');c.setAttribute('aria-label','Your avatar celebrating');
   const total=sm.rows.reduce((a,r)=>a+r[1],0),rows=sm.rows.map(([l,x])=>{const n=h('span',{class:'tag s'},'+'+x+' XP');return[h('div',{class:'srow'},h('span',{},l),n),n,x]});
-  const coins=10+Math.round(total/10),chest=ST.workouts<=1||Math.random()<.3?(Math.random()<.2?'silver':'wood'):null,totEl=h('span',{class:'num'},total),btn=h('button',{class:'btn wide'},'FINISH');
+  const coins=10+Math.round(total/10),rr=Math.random(),chest=ST.workouts<=1||rr<.3?(rr<.01?'vault':rr<.06?'crate':rr<.15?'locker':'bag'):null,totEl=h('span',{class:'num'},total),btn=h('button',{class:'btn wide'},'FINISH');
   ov.append(h('main',{class:'anim'},h('div',{class:'cfig'},c),h('h1',{style:'text-align:center;color:#fff;text-shadow:3px 3px 0 rgba(0,0,0,.35)'},'WORKOUT COMPLETE!'),
     h('div',{class:'row nowrap',style:'justify-content:center;gap:16px'},show(drawBody('front',sm.muscles,false),2),show(drawBody('back',sm.muscles,false),2)),
     h('div',{class:'row',style:'justify-content:center;gap:6px'},sm.muscles.map(id=>h('span',{class:'tag',style:'background:#fff;color:#1a1433;border-color:#fff'},MUSCLES[id].n))),
@@ -1926,7 +1986,7 @@ function celebrate(sm){const ov=h('div',{class:'overlay celeb'});ov.style.top=(d
     requestAnimationFrame(()=>requestAnimationFrame(()=>{f.style.transform=`translate(${to.left-from.left+20}px,${to.top-from.top}px) scale(.55)`;f.style.opacity='.3'}));
     setTimeout(()=>{f.remove();const[b,a2]=addXPRaw(total);addCoins(coins,true);SFX.coin();haptic('success');const x=document.getElementById('xpTop');x.classList.remove('pulse');void x.offsetWidth;x.classList.add('pulse');
       setTimeout(()=>{ov.remove();render();const after=()=>{if(a2>b)levelUp(a2);else if(ST.workouts===1&&!META.rated)setTimeout(rateModal,900)};if(chest)openChest(chest,'WORKOUT BONUS',after);else after()},650)},800)}}
-function afterLevel(L){openChest(L%5===0?'gold':'silver','LEVEL '+L+' REWARD',()=>{if(tierAt(L)>tierAt(L-1))transformModal(P,P,'YOU GOT STRONGER!','Level '+L+': your avatar shows the work.',tierAt(L-1),tierAt(L))})}
+function afterLevel(L){openChest(L%10===0?'vault':L%5===0?'crate':'bag','LEVEL '+L+' REWARD',()=>{if(tierAt(L)>tierAt(L-1))transformModal(P,P,'YOU GOT STRONGER!','Level '+L+': your avatar shows the work.',tierAt(L-1),tierAt(L))})}
 function transformModal(a,b,title,sub,aT,bT){const st=h('div',{class:'stage tf'},show(drawFront(a,a.char,null,{tier:aT}),4)),lab=h('span',{class:'label'},'BEFORE');let m;
   m=modal(h('div',{class:'lvlup'},h('span',{class:'label'},'TRANSFORMATION'),st,lab,h('h2',{},title),h('span',{class:'small'},sub),h('button',{class:'btn wide',onclick:()=>{m.remove();render(true)}},'NICE!')));m.classList.add('center');
   setTimeout(()=>{if(!st.isConnected)return;st.classList.add('flash');SFX.lvl();haptic('level');setTimeout(()=>{st.replaceChildren(show(drawFront(b,b.char,'great',{tier:bT}),4));lab.textContent='AFTER'},260)},1100)}
@@ -2196,14 +2256,15 @@ function kbOpen(el){if(KB.inp!==el){KB.inp=el;KB.v0=el.value}if(el.dataset.im==n
   requestAnimationFrame(()=>{if(!KB.el||!el.isConnected)return;const r=el.getBoundingClientRect(),k=KB.el.getBoundingClientRect();if(r.bottom>k.top-8||r.top<60)el.scrollIntoView({block:'center',behavior:'smooth'})})}
 function kbClose(){const el=KB.inp;KB.inp=null;if(KB.el)KB.el.remove();KB.el=null;APP.classList.remove('kbon');if(el&&el.value!==KB.v0)el.dispatchEvent(new Event('change',{bubbles:true}))}
 function kbDraw(){const L=KBL[KB.mode],ar=KB.mode==='ar';if(!KB.el){KB.el=h('div',{class:'pkb',role:'group','aria-label':'Pixel keyboard'});KB.el.addEventListener('pointerdown',e=>e.preventDefault());KB.el.addEventListener('mousedown',e=>e.preventDefault());APP.append(KB.el)}
-  const lab={SHIFT:'⇧',BK:'⌫',NUM:'?123',ABC:'ABC',LANG:KB.lang==='en'?'ع':'EN',SPACE:KB.lang==='ar'&&KB.mode!=='num'?'مسافة':'SPACE',DONE:'DONE',DOT:kbDot()},aria={SHIFT:'Shift',BK:'Delete',NUM:'Numbers and symbols',ABC:'Letters',LANG:KB.lang==='en'?'Arabic keyboard':'English keyboard',SPACE:'Space',DONE:'Done',DOT:'Decimal point'};
-  KB.el.className='pkb'+(KB.mode==='pad'?' pad':'')+(ar?' ar':'');
+  const lab={EMO:'☺',SHIFT:'⇧',BK:'⌫',NUM:'?123',ABC:'ABC',LANG:KB.lang==='en'?'ع':'EN',SPACE:KB.lang==='ar'&&KB.mode!=='num'?'مسافة':'SPACE',DONE:'DONE',DOT:kbDot()},aria={EMO:'Emojis',SHIFT:'Shift',BK:'Delete',NUM:'Numbers and symbols',ABC:'Letters',LANG:KB.lang==='en'?'Arabic keyboard':'English keyboard',SPACE:'Space',DONE:'Done',DOT:'Decimal point'};
+  KB.el.className='pkb'+(KB.mode==='pad'?' pad':'')+(ar?' ar':'')+(KB.mode==='emo'?' emo':'')+' sz-'+(SET.kbSize||'m')+((SET.kbSkin&&SET.kbSkin!=='classic'&&unlocked('kb',SET.kbSkin))?' skin-'+SET.kbSkin:'');
   KB.el.replaceChildren(...L.map(row=>h('div',{class:'kr'},row.map(k=>{const sp=lab[k]!=null,t=sp?lab[k]:(KB.shift?k.toUpperCase():k);
-    const b=h('button',{type:'button',class:'kk'+(sp?' sp k'+k.toLowerCase():'')+(k==='SHIFT'&&KB.shift?' on':''),'aria-label':aria[k]||t,'data-k':k},t);
+    const gl=kbGlyphFor(k),b=h('button',{type:'button',class:'kk'+(sp?' sp k'+k.toLowerCase():'')+(k==='SHIFT'&&KB.shift?' on':''),'aria-label':aria[k]||t,'data-k':k},gl||t);
     b.addEventListener('pointerdown',e=>{e.preventDefault();kbKey(k);b.classList.add('dn');setTimeout(()=>b.classList.remove('dn'),90);if(k==='BK'){clearInterval(KB.rep);const t0=setTimeout(()=>{KB.rep=setInterval(()=>kbKey('BK'),70)},420);const stop=()=>{clearTimeout(t0);clearInterval(KB.rep);b.removeEventListener('pointerup',stop);b.removeEventListener('pointerleave',stop)};b.addEventListener('pointerup',stop);b.addEventListener('pointerleave',stop)}});
     return b}))))}
 function kbDot(){const el=KB.inp;if(!el)return'.';return el.id==='dob'||(el.placeholder||'').includes('DD/')?'/':'.'}
-function kbKey(k){const el=KB.inp;if(!el)return;haptic('tick');tone(KB.mode==='pad'?660:740,.02);
+function kbKey(k){const el=KB.inp;if(!el)return;if(SET.kbHap!==false)haptic('tick');if(SET.kbSound!==false)tone(KB.mode==='pad'?660:740,.02);
+  if(k==='EMO'){KB.mode='emo';kbDraw();return}
   if(k==='DONE'){el.blur();kbClose();return}
   if(k==='SHIFT'){KB.shift=!KB.shift;kbDraw();return}
   if(k==='NUM'){KB.mode='num';kbDraw();return}if(k==='ABC'){KB.mode=KB.lang;kbDraw();return}
@@ -2265,7 +2326,7 @@ function addCoins(n,silent){ST.coins=(ST.coins||0)+n;save();updCoinTop();if(!sil
 /* ---- owned cosmetics (bought in the shop or found in chests) ---- */
 const owns=(k,id)=>(ST.owned||[]).includes(k+':'+id);
 function grant(k,id){ST.owned=[...new Set([...(ST.owned||[]),k+':'+id])];save()}
-const ITEMNAME=(k,id)=>k==='pal'?PALS[id].name:k==='sfx'?id.toUpperCase()+' SOUND PACK':(LABELS[id]||id.toUpperCase());
+const ITEMNAME=(k,id)=>k==='kb'?(KB_SKINS.find(x=>x[0]===id)||[0,id])[1]+' KEYBOARD':k==='pal'?PALS[id].name:k==='sfx'?id.toUpperCase()+' SOUND PACK':(LABELS[id]||id.toUpperCase());
 function lockedItems(){const o=[];for(const[k,m]of Object.entries(UNLOCK))for(const[id,L]of Object.entries(m))if(!unlocked(k,id))o.push([k,id,L]);return o}
 
 /* ---- decorations for the home room ---- */
@@ -2280,40 +2341,20 @@ function drawDecor(g,id,night){
 
 /* ---- chests ---- */
 const CHESTS={wood:['WOODEN CHEST','#a0662f','#6b3d1f',[20,45]],silver:['SILVER CHEST','#c0c7d6','#6d7380',[50,110]],gold:['GOLDEN CHEST','#f2b84b','#b8680a',[120,260]]};
-function chestCanvas(kind,open){const[cc,g]=mk(24,22),[,col,dk]=CHESTS[kind];
-  if(open){R(g,dk,3,2,18,5);R(g,col,4,3,16,3);g.fillStyle='rgba(255,236,150,.85)';g.fillRect(5,7,14,4)}else{R(g,dk,2,4,20,7);R(g,col,3,5,18,5);R(g,shade(col,.3),3,5,18,1)}
-  R(g,dk,2,11,20,9);R(g,col,3,12,18,7);R(g,shade(col,-.2),3,17,18,2);R(g,'#26232e',10,9,4,5);R(g,'#f6e9d0',11,10,2,2);R(g,dk,2,11,20,1);outline(cc);return cc}
-function rollChest(kind){const[,,,cr]=CHESTS[kind],r=Math.random,out=[['coins',cr[0]+Math.floor(r()*(cr[1]-cr[0]))]];
-  const p=r(),lk=lockedItems(),dec=Object.keys(DECOR).filter(d=>!(ST.deco||[]).includes(d));
-  const itemOdds=kind==='gold'?.55:kind==='silver'?.35:.15;
-  if(p<itemOdds&&(lk.length||dec.length)){if(lk.length&&(r()<.6||!dec.length)){const[k,id]=lk[Math.floor(r()*lk.length)];out.push(['item',k,id])}else out.push(['deco',dec[Math.floor(r()*dec.length)]])}
-  else if(p<itemOdds+.35)out.push(['xp',kind==='gold'?150:kind==='silver'?70:30]);return out}
-function openChest(kind,why,then){const items=rollChest(kind),st=h('div',{class:'chest'},show(chestCanvas(kind,false),5)),hint=h('span',{class:'small'},'Tap the chest 3 times to open it');let taps=0,m,done=false;
-  const list=h('div',{class:'list',style:'width:100%'});
-  const reveal=()=>{done=true;st.replaceChildren(show(chestCanvas(kind,true),5));st.classList.add('flash');SFX.lvl();haptic('level');hint.remove();
-    items.forEach(([t,a,b],i)=>setTimeout(()=>{let row;
-      if(t==='coins'){addCoins(a,true);row=h('div',{class:'item'},coinIcon(3),h('span',{class:'grow'},a+' COINS'))}
-      if(t==='xp'){const[b0,a0]=addXPRaw(a);row=h('div',{class:'item'},px('star',3),h('span',{class:'grow'},'+'+a+' XP'));if(a0>b0)setTimeout(()=>levelUp(a0),900)}
-      if(t==='item'){grant(a,b);row=h('div',{class:'item'},rewardIcon([0,a,b]),h('span',{class:'grow'},ITEMNAME(a,b)),h('span',{class:'tag s'},'NEW'))}
-      if(t==='deco'){ST.deco=[...(ST.deco||[]),a];ST.decoOn=[...(ST.decoOn||[]),a];save();row=h('div',{class:'item'},px('house',3),h('span',{class:'grow'},DECOR[a][0]),h('span',{class:'tag s'},'ROOM'))}
-      SFX.coin();list.append(row);if(i===items.length-1)btn.disabled=false},500+i*420))};
-  const btn=h('button',{class:'btn wide',disabled:true,onclick:()=>{m.remove();render(true);then&&then()}},'COLLECT');
-  st.addEventListener('click',()=>{if(done)return;taps++;haptic('click');tone(300+taps*120,.06);st.classList.remove('shake');void st.offsetWidth;st.classList.add('shake');if(taps>=3)reveal()});
-  m=modal(h('div',{class:'lvlup'},h('span',{class:'label'},why||'YOU FOUND A CHEST'),h('h2',{},CHESTS[kind][0]),st,hint,list,btn));m.classList.add('center');m.addEventListener('click',e=>{if(e.target===m)e.stopImmediatePropagation()},true);return m}
-
-/* ---- item shop ---- */
 function itemShop(){let cat='CHESTS';sheet('ITEM SHOP',redraw=>{const coins=ST.coins||0;
   const buy=(price,fn)=>{if((ST.coins||0)<price){toast('NOT ENOUGH COINS');buzz(40);return}ST.coins-=price;save();updCoinTop();SFX.coin();haptic('success');fn();redraw()};
   const row=(icon,name,sub,price,fn,own)=>h('div',{class:'item'},icon,h('span',{class:'grow',style:'display:flex;flex-direction:column;gap:3px'},h('span',{},name),sub?h('span',{class:'small'},sub):null),
     own?h('span',{class:'tag'},own):h('button',{class:'btn alt',style:'padding:8px;display:flex;gap:6px;align-items:center',disabled:coins<price,onclick:fn},coinIcon(2),price));
-  const panes={CHESTS:()=>Object.entries(CHESTS).map(([k,[n,,,cr]])=>row(show(chestCanvas(k,false),2),n,cr[0]+'–'+cr[1]+' coins + a chance of XP, outfits or room decor',{wood:90,silver:220,gold:520}[k],()=>buy({wood:90,silver:220,gold:520}[k],()=>openChest(k,'BOUGHT IN THE SHOP')))),
-    OUTFITS:()=>{const all=[];for(const[k,m]of Object.entries(UNLOCK))if(k!=='pal'&&k!=='sfx')for(const[id,L]of Object.entries(m))all.push([k,id,L]);
+  const panes={CHESTS:()=>CHEST_KINDS.map(k=>{const[n,,,cr,,price,tier]=CHEST_INFO[k];return row(show(chestCanvas(k,false),2),n,tier+' · '+cr[0]+'–'+cr[1]+' coins'+(k==='vault'?' + a guaranteed item + 300 XP':' + a chance of XP, outfits or decor'),price,()=>buy(price,()=>openChest(k,'BOUGHT IN THE SHOP')))}),
+    COINS:()=>[h('p',{class:'note'},'Coins unlock looks, chests and decor only. Nothing you buy makes you rank higher.'),...COIN_PACKS.map(([id,n,price,tag])=>h('button',{class:'item opt',onclick:()=>buyCoins(id)},coinIcon(3),h('span',{class:'grow',style:'display:flex;flex-direction:column;gap:3px'},h('span',{},n+' COINS'),tag?h('span',{class:'small'},tag):null),h('span',{class:'tag s'},price)))],
+    OUTFITS:()=>{const all=[];for(const[k,m]of Object.entries(UNLOCK))if(k!=='pal'&&k!=='sfx')for(const[id,L]of Object.entries(m))if(k!=='kb')all.push([k,id,L]);
       return all.map(([k,id,L])=>{const ok=unlocked(k,id),p=L*45;return row(rewardIcon([0,k,id]),ITEMNAME(k,id),ok?null:'Unlocks free at level '+L+', or buy it now',p,()=>buy(p,()=>{grant(k,id);toast(ITEMNAME(k,id)+' UNLOCKED')}),ok?'OWNED':null)})},
     DECOR:()=>[h('p',{class:'note'},'Decorations appear in the room on your home screen. Tap OWNED ones to show or hide them.'),
       ...Object.entries(DECOR).map(([id,[n,p]])=>{const own=(ST.deco||[]).includes(id),on=(ST.decoOn||[]).includes(id);return own?h('button',{class:'item opt','aria-pressed':String(on),onclick:()=>{ST.decoOn=on?ST.decoOn.filter(x=>x!==id):[...(ST.decoOn||[]),id];save();redraw()}},px('house',3),h('span',{class:'grow'},n),h('span',{class:'tag'+(on?' s':'')},on?'IN ROOM':'HIDDEN')):
         row(px('house',3),n,'For your home room',p,()=>buy(p,()=>{ST.deco=[...(ST.deco||[]),id];ST.decoOn=[...(ST.decoOn||[]),id];save();toast(n+' ADDED TO YOUR ROOM')}))})],
     THEMES:()=>[...Object.entries(UNLOCK.pal||{}).map(([id,L])=>{const ok=unlocked('pal',id),p=L*45;return row(rewardIcon([0,'pal',id]),PALS[id].name,ok?null:'Color theme · level '+L,p,()=>buy(p,()=>grant('pal',id)),ok?'OWNED':null)}),
-      ...Object.entries(UNLOCK.sfx||{}).map(([id,L])=>{const ok=unlocked('sfx',id),p=L*40;return row(px('note',3),ITEMNAME('sfx',id),ok?null:'Sound pack · level '+L,p,()=>buy(p,()=>grant('sfx',id)),ok?'OWNED':null)})]};
+      ...Object.entries(UNLOCK.sfx||{}).map(([id,L])=>{const ok=unlocked('sfx',id),p=L*40;return row(px('note',3),ITEMNAME('sfx',id),ok?null:'Sound pack · level '+L,p,()=>buy(p,()=>grant('sfx',id)),ok?'OWNED':null)}),
+      ...Object.entries(UNLOCK.kb).map(([id,L])=>{const ok=unlocked('kb',id),p=L*40;return row(kbIcon(3,id),ITEMNAME('kb',id),ok?null:'Keyboard skin · level '+L,p,()=>buy(p,()=>grant('kb',id)),ok?'OWNED':null)})]};
   return[h('div',{class:'box row nowrap',style:'gap:10px'},coinIcon(4),h('div',{class:'grow',style:'display:flex;flex-direction:column;gap:4px'},h('span',{class:'num'},coins+' COINS'),h('span',{class:'small'},'Earn coins from every finished workout, chests, leagues and level-ups.'))),
     h('div',{class:'seg'},Object.keys(panes).map(k=>h('button',{'aria-pressed':String(cat===k),onclick:()=>{cat=k;redraw()}},k))),h('div',{class:'list'},...panes[cat]())]})}
 
@@ -2343,7 +2384,7 @@ function standings(final){const ko=LG.ko,seed=ko?'ko'+ko+LG.kk:'lg'+LG.lg+LG.mk,
 let lgQueue=[];
 function checkLeague(force){const mkNow=monthKey(new Date()),wkNow=weekKey(new Date());let changed=false;
   if(LG.ko&&(LG.kk!==wkNow||force)){const rows=standings(!force),rank=rows.findIndex(r=>r.me)+1,[nm,,cut]=KO[LG.ko],my=rows[rank-1].pts;
-    if(LG.ko===1){const cup=rank===1?'gold':rank===2?'silver':rank===3?'bronze':null;if(cup&&my>0){LG.cups[cup]++;lgQueue.push(['cup',cup,rank])}else lgQueue.push(['koout',nm,rank]);LG.ko=0;LG.lg=9;LG.mk=mkNow}
+    if(LG.ko===1){const cup=rank===1?'gold':rank===2?'silver':rank===3?'bronze':null;LG.lastCup=cup;if(cup&&my>0){LG.cups[cup]++;lgQueue.push(['cup',cup,rank])}else lgQueue.push(['koout',nm,rank]);LG.ko=0;LG.lg=9;LG.mk=mkNow}
     else if(rank<=cut&&my>0){LG.ko--;LG.kk=wkNow;lgQueue.push(['koup',KO[LG.ko][0],rank])}
     else{lgQueue.push(['koout',nm,rank]);LG.ko=0;LG.lg=9;LG.mk=mkNow}changed=true}
   else if(!LG.ko&&(LG.mk!==mkNow||force)){const rows=standings(!force),rank=rows.findIndex(r=>r.me)+1,my=rows[rank-1].pts,old=LG.lg;
@@ -2359,7 +2400,7 @@ function showLeagueNews(){const n=lgQueue.shift();if(!n)return;const next=()=>se
     koup:()=>[px('crown',6),h('span',{class:'label'},'YOU FINISHED #'+rank),h('h2',{},'ON TO THE '+a+'!'),h('span',{class:'small'},'A new round starts this week.')],
     koout:()=>[lgBadge(9,5),h('span',{class:'label'},a+' · #'+rank),h('h2',{},'GREAT RUN!'),h('span',{class:'small'},'You return to League 1 · LEGEND. Make the top 20 this month to try again.')],
     cup:()=>[cupIcon(a,6),h('span',{class:'label'},'KNOCKOUT FINAL · #'+rank),h('h2',{},rank===1?'CHAMPION!':'ON THE PODIUM!'),h('span',{class:'small'},'Your trophy is on your profile. You return to League 1.')]}[t]();
-  const chest=t==='up'?'gold':t==='cup'?'gold':t==='koup'||t==='ko'?'silver':null;
+  const chest=t==='up'?'crate':t==='cup'?(a==='gold'?'vault':'crate'):t==='koup'||t==='ko'?'locker':null;
   m=modal(h('div',{class:'lvlup'},...body,h('button',{class:'btn wide',onclick:()=>{m.remove();if(chest)openChest(chest,'LEAGUE REWARD',next);else next()}},chest?'OPEN REWARD':'OK')));m.classList.add('center');SFX.lvl()}
 function cupIcon(kind,s=3){const[c,g]=mk(12,12),col={gold:'#f2b84b',silver:'#c0c7d6',bronze:'#c97a3a'}[kind];R(g,col,2,1,8,5);R(g,col,3,6,6,1);R(g,col,5,7,2,2);R(g,col,3,9,6,2);R(g,col,0,2,2,1);R(g,col,10,2,2,1);R(g,col,0,2,1,3);R(g,col,11,2,1,3);R(g,shade(col,.4),3,2,1,3);outline(c);return show(c,s)}
 function timeLeft(kind){const now=new Date(),end=kind==='m'?new Date(now.getFullYear(),now.getMonth()+1,1):new Date(new Date(weekKey(now)+'T00:00').getTime()+7*864e5),ms=end-now,d=Math.floor(ms/864e5),hh=Math.floor(ms/36e5)%24;return d>0?d+' DAYS LEFT':hh+' HOURS LEFT'}
@@ -2460,7 +2501,7 @@ function startTour(){if(tab!=='home'){tab='home';render()}let i=0;const ov=h('di
     tip.querySelector('.btn.grow').focus({preventScroll:true})};step()}
 
 /* ---- bug reports + feature ideas ---- */
-const SUPPORT_EMAIL='support@ironbit.app'; /* TODO: replace with the inbox you want reports sent to */
+const SUPPORT_EMAIL='moeaminsd@gmail.com';
 function deviceInfo(){const ua=navigator.userAgent,an=(ua.match(/Android [\d.]+/)||[''])[0],mdl=(ua.match(/Android [\d.]+; ([^;)]+)/)||[,''])[1];
   return['App: IronBit '+VERSION,an?'Phone: '+an+(mdl?' · '+mdl:''):'Platform: '+(navigator.platform||'web'),'Screen: '+screen.width+'×'+screen.height,'Language: '+navigator.language,'Theme: '+curMode()+' · '+SET.pal,'Level: '+lvl()].join('\n')}
 function feedbackModal(kind){const bug=kind==='bug';let cat=bug?'CRASH':'TRAINING',info=true,m;
@@ -2532,10 +2573,396 @@ function generatorWizard(){const G=P.goal,a={goal:G.type==='fit'?'endurance':G.t
         P.custom=[...mine,...plan.map((o,i)=>({id:'g'+Date.now()+i,name:o.name,ex:o.ex,days:o.days,custom:true,gen:true}))];Object.assign(P.goal,{days:a.days,mins:a.mins,equip:a.equip,level:a.level});save();ov.remove();trainView='main';render();SFX.done();toast('PLAN SAVED · '+total+' MOVES');haptic('success')}},'SAVE THIS PLAN ▶')))};
   draw()}
 
+
+/* ---- recipes: name|style|minutes|kcal|protein|carbs|fat|serves|icon|ingredients;...|steps;... (macros per serving, estimates) ---- */
+const RECIPES_RAW=`Chicken rice bowl|Meal prep|30|560|48|62|11|2|chicken|400 g chicken breast;160 g dry rice;1 cup broccoli;1 tbsp olive oil;1 tsp paprika;salt and pepper|Cook the rice;Season the chicken with paprika, salt and pepper;Pan-fry the chicken in oil 6 min per side, then slice;Steam the broccoli and serve everything in bowls
+Greek yogurt protein bowl|Breakfast|5|380|34|42|8|1|greek|250 g greek yogurt;1 banana;30 g oats;1 tbsp honey;10 g almonds|Spoon the yogurt into a bowl;Slice the banana on top;Add oats, almonds and honey
+Egg white omelette|Breakfast|10|260|32|8|10|1|egg|6 egg whites;1 whole egg;handful spinach;40 g feta;3 cherry tomatoes;1 tsp olive oil|Whisk the whites and egg;Wilt the spinach in oil;Pour in the eggs, add tomatoes and feta;Fold when set
+Overnight protein oats|Breakfast|5|450|35|55|10|1|oats|60 g oats;1 scoop whey;200 ml milk;1 tbsp chia seeds;handful berries|Mix oats, whey, milk and chia in a jar;Refrigerate overnight;Top with berries in the morning
+Shakshuka|Arabic|25|340|22|18|20|2|egg|5 eggs;1 can chopped tomatoes;1 onion;1 red pepper;2 garlic cloves;1 tsp cumin;1 tsp paprika;1 tbsp olive oil|Soften onion, pepper and garlic in oil;Add tomatoes and spices, simmer 10 min;Make wells and crack in the eggs;Cover and cook 6 min until whites set
+Foul medames|Sudanese|15|420|22|52|14|2|foul|2 cans fava beans;2 garlic cloves;1 lemon;2 tbsp olive oil;1 tsp cumin;1 tomato;1 boiled egg;salt|Heat the beans with a splash of water;Mash with garlic, cumin, lemon and salt;Top with oil, chopped tomato and egg
+Chicken shawarma plate|Arabic|35|540|52|38|18|2|shawarma|500 g chicken thighs;3 tbsp yogurt;1 tbsp shawarma spice;1 lemon;2 garlic cloves;2 khubz;salad vegetables;2 tbsp garlic sauce|Marinate chicken in yogurt, spice, lemon and garlic;Grill or pan-fry 12 min and slice;Serve with khubz, salad and garlic sauce
+Tuna pasta salad|Meal prep|20|520|40|58|12|2|salmon|2 cans tuna in water;160 g dry pasta;1 cup sweetcorn;1 cucumber;3 tbsp light mayo;1 lemon|Cook and cool the pasta;Drain the tuna;Mix pasta, tuna, corn, cucumber, mayo and lemon
+Beef chili|Meal prep|45|480|42|38|16|4|kofta|600 g lean ground beef;1 can kidney beans;1 can tomatoes;1 onion;1 red pepper;2 tsp chili powder;1 tsp cumin;2 garlic cloves|Brown the beef, drain fat;Add onion, pepper and garlic;Stir in tomatoes, beans and spices;Simmer 25 min
+Salmon sweet potato tray|Western|35|560|38|45|24|2|salmon|2 salmon fillets;2 sweet potatoes;1 cup green beans;1 tbsp olive oil;1 lemon;salt and pepper|Cube sweet potatoes, roast 15 min at 200°C;Add salmon and beans to the tray;Season, drizzle oil and roast 12 min more;Squeeze lemon over
+Protein pancakes|Breakfast|15|420|36|44|10|1|oats|1 banana;2 eggs;40 g oats;1 scoop whey;1/2 tsp baking powder;handful berries|Blend banana, eggs, oats, whey and baking powder;Cook small pancakes 2 min per side;Top with berries
+Lentil soup|Arabic|35|330|20|48|6|4|lentils|300 g red lentils;1 onion;1 carrot;1 tsp cumin;1.2 l stock;1 lemon;1 tbsp olive oil|Soften onion and carrot in oil;Add lentils, cumin and stock;Simmer 20 min and blend;Finish with lemon
+Kofta with tahini|Arabic|30|520|40|10|36|3|kofta|500 g lean minced beef;1 onion grated;handful parsley;1 tsp seven spice;3 tbsp tahini;1 lemon|Mix beef, onion, parsley and spice;Shape into fingers and grill 10 min;Whisk tahini with lemon and water;Serve kofta with tahini sauce
+Chicken machboos|Gulf|60|610|45|70|16|4|machboos|1 kg chicken pieces;400 g basmati rice;1 onion;2 tomatoes;2 tbsp machboos spice;1 dried lime;2 tbsp oil;1 l water|Brown the onion in oil, add chicken and spices;Add tomatoes, dried lime and water, simmer 25 min;Remove chicken, add rice to the broth and cook 20 min;Grill the chicken briefly and serve on the rice
+Grilled hammour with rice|Gulf|30|480|42|50|10|2|hammour|2 hammour fillets;160 g basmati rice;1 lemon;1 tsp turmeric;1 tsp cumin;2 garlic cloves;1 tbsp oil|Rub fish with spices, garlic and lemon;Cook the rice;Grill fish 4 min per side;Serve with lemon
+Egg fried rice with chicken|Asian|20|560|40|62|15|2|rice|300 g cooked rice;250 g chicken breast;3 eggs;1 cup peas and carrots;2 tbsp soy sauce;2 spring onions;1 tbsp oil|Stir-fry diced chicken until cooked;Push aside and scramble the eggs;Add rice, vegetables and soy sauce;Toss 3 min and top with spring onion
+Turkey burger|Western|20|450|40|34|16|2|kofta|400 g lean turkey mince;2 wholegrain buns;1 tomato;lettuce;1 tsp garlic powder;2 slices cheese|Season turkey and form 2 patties;Grill 5 min per side;Add cheese at the end;Build burgers with lettuce and tomato
+Cottage cheese pasta|Western|20|520|38|64|11|2|labneh|160 g dry pasta;250 g cottage cheese;1 cup tomato sauce;2 garlic cloves;handful spinach;30 g parmesan|Cook pasta;Blend cottage cheese with tomato sauce and garlic;Warm the sauce with spinach;Toss with pasta and parmesan
+Chicken fajita wraps|Mexican|25|480|42|40|15|2|chicken|400 g chicken breast;2 peppers;1 onion;1 tbsp fajita spice;4 small tortillas;4 tbsp greek yogurt;1 lime|Slice chicken and vegetables;Stir-fry with spice 10 min;Fill tortillas with chicken and veg;Top with yogurt and lime
+Steak and potatoes|Western|30|620|50|42|26|2|kofta|2 sirloin steaks (200 g each);500 g baby potatoes;1 cup asparagus;1 tbsp butter;2 garlic cloves;rosemary|Boil potatoes 12 min, then crisp in a pan;Sear steaks 3 min per side, rest 5 min;Cook asparagus in butter and garlic;Slice and serve
+Khubz chicken pizza|Arabic|15|430|38|40|12|1|khubz|1 khubz;100 g cooked chicken;3 tbsp tomato sauce;40 g light mozzarella;1/2 pepper;oregano|Spread sauce on khubz;Top with chicken, pepper and cheese;Bake 8 min at 220°C;Sprinkle oregano
+Peanut butter protein shake|Shake|5|520|42|48|18|1|pb|1 scoop whey;300 ml milk;1 banana;1 tbsp peanut butter;30 g oats;ice|Blend everything until smooth
+Mass gainer shake|Shake|5|880|50|110|24|1|tubG|2 scoops whey;400 ml whole milk;2 bananas;60 g oats;2 tbsp peanut butter;1 tbsp honey|Blend everything until smooth;Drink between meals
+Green recovery shake|Shake|5|320|32|36|5|1|whey|1 scoop whey;1 banana;handful spinach;250 ml almond milk;1 tbsp chia seeds|Blend until smooth
+Labneh breakfast plate|Arabic|10|420|28|30|20|1|labneh|150 g labneh;2 boiled eggs;1 khubz;cucumber;tomato;olives;1 tsp zaatar;1 tsp olive oil|Spread labneh on a plate;Drizzle oil and sprinkle zaatar;Serve with eggs, khubz and vegetables
+Chicken and chickpea curry|Indian|35|520|44|40|18|4|chicken|700 g chicken breast;1 can chickpeas;1 can light coconut milk;1 onion;2 tbsp curry paste;1 can tomatoes;handful spinach|Brown chicken pieces;Fry onion with curry paste;Add tomatoes, coconut milk and chickpeas;Simmer 15 min with chicken and spinach
+Dal with paneer|Indian|35|480|28|48|18|3|lentils|250 g yellow lentils;200 g paneer;1 onion;2 tomatoes;1 tsp turmeric;1 tsp garam masala;1 tsp cumin seeds;1 tbsp ghee|Boil lentils with turmeric 20 min;Fry cumin, onion and tomato in ghee;Add cubed paneer and garam masala;Stir into the dal and simmer 5 min
+Tandoori chicken|Indian|40|380|48|8|16|3|chicken|900 g chicken thighs;200 g yogurt;2 tbsp tandoori spice;1 lemon;2 garlic cloves;1 tsp ginger|Mix yogurt, spice, lemon, garlic and ginger;Marinate chicken at least 30 min;Bake at 220°C for 25 min;Char under the grill 3 min
+Chicken tikka skewers|Indian|30|340|44|8|14|2|chicken|500 g chicken breast;150 g yogurt;1 tbsp tikka spice;1 red onion;1 pepper;1 lemon|Marinate chicken in yogurt and spice;Thread on skewers with onion and pepper;Grill 12 min, turning;Squeeze lemon over
+Egg bhurji with roti|Indian|15|420|26|36|18|1|egg|4 eggs;1 small onion;1 tomato;1 green chili;1/2 tsp turmeric;2 roti;1 tsp oil|Fry onion, chili and tomato;Add turmeric and beaten eggs;Scramble until just set;Serve with roti
+Chicken adobo|Filipino|45|460|44|10|26|4|chicken|1 kg chicken thighs;80 ml soy sauce;80 ml vinegar;6 garlic cloves;3 bay leaves;1 tsp peppercorns|Simmer chicken with soy, vinegar, garlic, bay and pepper 30 min;Remove chicken and brown it in a pan;Reduce the sauce and pour over
+Beef and broccoli|Asian|20|460|42|22|22|2|kofta|350 g flank steak;2 cups broccoli;3 tbsp soy sauce;1 tbsp oyster sauce;1 tsp cornflour;2 garlic cloves;1 tbsp oil|Slice beef thin and toss in cornflour;Stir-fry beef 2 min, remove;Stir-fry broccoli and garlic;Return beef with sauces, toss 2 min
+Teriyaki salmon bowl|Asian|25|590|40|58|20|2|salmon|2 salmon fillets;160 g dry rice;3 tbsp teriyaki sauce;1 cucumber;1 avocado;sesame seeds|Cook rice;Pan-fry salmon 4 min per side, glaze with teriyaki;Slice cucumber and avocado;Assemble bowls and sprinkle sesame
+Shrimp stir-fry|Asian|15|380|36|30|12|2|salmon|400 g shrimp;2 cups mixed stir-fry vegetables;2 tbsp soy sauce;1 tsp ginger;1 garlic clove;150 g rice noodles;1 tbsp oil|Soak noodles;Stir-fry shrimp 3 min;Add vegetables, ginger and garlic;Toss with noodles and soy
+Chicken caesar salad|Western|20|420|44|14|20|2|chicken|400 g chicken breast;1 romaine lettuce;30 g parmesan;3 tbsp light caesar dressing;1 slice wholegrain bread|Grill and slice the chicken;Toast and cube the bread;Toss lettuce with dressing;Top with chicken, croutons and parmesan
+Quinoa black bean bowl|Vegetarian|25|480|22|70|12|2|lentils|150 g quinoa;1 can black beans;1 cup sweetcorn;1 avocado;1 lime;salsa|Cook quinoa;Warm beans and corn;Assemble bowls with avocado and salsa;Squeeze lime over
+Tofu scramble|Vegan|15|320|26|12|18|1|egg|250 g firm tofu;handful spinach;1/2 onion;1/2 tsp turmeric;1 tbsp nutritional yeast;1 tsp oil|Crumble tofu;Fry onion, add tofu and turmeric;Stir in spinach and yeast;Cook 5 min
+Chickpea spinach stew|Vegan|25|380|18|50|10|3|hummus|2 cans chickpeas;1 can tomatoes;2 handfuls spinach;1 onion;2 garlic cloves;1 tsp cumin;1 tsp paprika|Soften onion and garlic;Add spices, tomatoes and chickpeas;Simmer 15 min;Stir in spinach
+Hummus chicken wrap|Arabic|10|460|40|42|14|1|hummus|1 large tortilla;120 g grilled chicken;3 tbsp hummus;lettuce;tomato;pickles|Spread hummus on the tortilla;Add chicken, salad and pickles;Roll tightly and slice
+Falafel salad bowl|Arabic|15|480|20|52|20|1|falafel|5 falafel;1 cup lettuce;1 tomato;1 cucumber;2 tbsp tahini;1 lemon;handful parsley|Warm the falafel;Chop the salad;Top salad with falafel;Drizzle tahini and lemon
+Sudanese mullah with chicken|Sudanese|45|420|36|24|20|4|chicken|600 g chicken;2 onions;3 tomatoes;2 tbsp peanut butter;1 tsp cumin;1 tsp coriander;2 garlic cloves;1 tbsp oil|Brown the onions in oil;Add chicken, garlic and spices;Add tomatoes and water, simmer 20 min;Stir in peanut butter and cook 5 min
+Sudanese salata dakwa with fish|Sudanese|25|440|38|20|24|2|hammour|2 white fish fillets;2 tomatoes;1 onion;2 tbsp peanut butter;1 lemon;1 green chili;1 tsp cumin|Season and grill the fish;Chop tomato, onion and chili;Mix peanut butter with lemon and water;Toss the salad in the dressing and serve with fish
+Kisra with beef stew|Sudanese|60|560|40|56|18|4|kofta|600 g beef cubes;2 onions;3 tomatoes;1 tsp cumin;1 tsp coriander;4 kisra or flatbread;1 tbsp oil|Brown beef and onions;Add tomatoes and spices;Simmer covered 45 min;Serve with kisra
+Fatteh with chicken|Arabic|25|560|42|50|20|3|chicken|500 g cooked chicken;2 khubz;400 g yogurt;1 can chickpeas;2 garlic cloves;2 tbsp pine nuts;1 tbsp butter|Toast torn khubz until crispy;Layer bread, warm chickpeas and chicken;Mix yogurt with garlic and spoon over;Top with pine nuts fried in butter
+Mujaddara|Arabic|45|440|18|72|10|4|lentils|250 g brown lentils;200 g rice;3 onions;2 tbsp olive oil;1 tsp cumin|Boil lentils 15 min;Add rice and cumin, cook 18 min;Fry onions in oil until dark;Top rice with crispy onions
+Chicken kabsa|Gulf|60|600|44|68|16|4|machboos|1 kg chicken;400 g basmati rice;1 onion;2 tomatoes;2 tbsp kabsa spice;2 tbsp tomato paste;1 carrot;2 tbsp oil|Fry onion, add chicken and spices;Add tomatoes, paste, carrot and water, simmer 25 min;Remove chicken, cook rice in broth 20 min;Roast chicken 10 min and serve on rice
+Harees|Gulf|120|420|36|46|10|4|oats|300 g whole wheat;500 g chicken or lamb;1 tsp cinnamon;1 tbsp ghee;salt|Soak wheat overnight;Cook wheat and meat in water 1.5 h;Beat until smooth;Top with ghee and cinnamon
+Balaleet with eggs|Gulf|20|440|22|60|12|2|egg|150 g vermicelli;4 eggs;2 tbsp sugar;1/4 tsp saffron;1/2 tsp cardamom;1 tbsp butter|Boil vermicelli and drain;Toss with butter, sugar, saffron and cardamom;Make a thin omelette;Serve the omelette on top
+Karak protein latte|Shake|5|220|26|20|4|1|karak|1 cup strong karak tea;1 scoop vanilla whey;100 ml milk;pinch cardamom|Let the tea cool slightly;Blend with whey, milk and cardamom
+Date and oat energy bites|Snack|15|180|8|26|6|6|dates|150 g dates;80 g oats;1 scoop whey;2 tbsp peanut butter;1 tbsp cocoa|Blend dates into a paste;Mix in oats, whey, peanut butter and cocoa;Roll into 12 balls;Chill 30 min
+Protein brownies|Snack|30|160|12|18|5|8|bar|2 bananas;2 eggs;60 g oats;2 scoops chocolate whey;30 g cocoa;1 tsp baking powder|Blend everything;Pour into a lined tin;Bake 20 min at 180°C;Cut into 8 squares
+Cottage cheese pancakes|Breakfast|15|360|32|30|12|1|labneh|150 g cottage cheese;2 eggs;40 g oats;1/2 tsp cinnamon;honey|Blend cottage cheese, eggs, oats and cinnamon;Cook small pancakes;Drizzle honey
+Chicken pesto pasta|Western|25|620|48|64|18|2|chicken|160 g dry pasta;300 g chicken breast;2 tbsp pesto;cherry tomatoes;handful spinach;20 g parmesan|Cook pasta;Pan-fry sliced chicken;Toss pasta, chicken, pesto, tomatoes and spinach;Top with parmesan
+Lean beef bolognese|Meal prep|40|560|44|62|14|4|kofta|500 g lean beef mince;320 g dry spaghetti;1 can tomatoes;1 onion;1 carrot;2 garlic cloves;1 tsp oregano|Brown beef with onion, carrot and garlic;Add tomatoes and oregano, simmer 25 min;Cook spaghetti;Serve with sauce
+Chicken burrito bowl|Mexican|30|580|46|62|14|3|chicken|500 g chicken breast;200 g dry rice;1 can black beans;1 cup corn;salsa;1 lime;1 tsp chili;1 tsp cumin|Cook rice with lime;Season and grill chicken;Warm beans and corn;Assemble with salsa
+Baked chicken thighs and veg|Meal prep|45|520|40|30|26|4|chicken|1 kg chicken thighs;2 zucchini;2 peppers;1 red onion;2 tbsp olive oil;1 tbsp mixed herbs|Chop vegetables;Toss everything with oil and herbs;Roast 40 min at 200°C
+Garlic butter shrimp and rice|Western|20|520|38|56|14|2|rice|400 g shrimp;160 g dry rice;3 garlic cloves;1 tbsp butter;1 lemon;parsley|Cook rice;Sauté garlic in butter;Add shrimp, cook 3 min;Finish with lemon and parsley
+Tuna avocado toast|Breakfast|5|420|34|30|18|1|avocado|1 can tuna;1/2 avocado;2 slices sourdough;1 lemon;chili flakes|Toast the bread;Mash avocado with lemon;Top with tuna and chili
+Smoked salmon bagel|Breakfast|5|440|30|46|14|1|salmon|1 wholegrain bagel;80 g smoked salmon;2 tbsp light cream cheese;cucumber;capers|Toast the bagel;Spread cream cheese;Layer salmon, cucumber and capers
+Chicken noodle soup|Western|35|360|34|36|8|4|chicken|500 g chicken breast;150 g egg noodles;2 carrots;2 celery sticks;1 onion;1.5 l stock|Simmer chicken in stock 15 min, then shred;Add chopped vegetables, cook 10 min;Add noodles, cook 5 min
+Stuffed peppers|Meal prep|50|420|34|36|14|4|kofta|4 large peppers;400 g lean beef or turkey;150 g cooked rice;1 can tomatoes;1 onion;60 g cheese|Brown mince with onion;Mix with rice and half the tomatoes;Fill the peppers, pour remaining tomatoes around;Bake 35 min, add cheese for the last 5
+Egg muffins|Meal prep|25|90|8|2|5|12|egg|10 eggs;1 pepper;handful spinach;1/2 onion;50 g cheese|Chop the vegetables;Whisk eggs and mix everything;Pour into a 12-cup muffin tin;Bake 20 min at 180°C
+Chicken sausage hash|Breakfast|20|480|32|38|20|2|sweetpotato|4 chicken sausages;2 sweet potatoes;1 pepper;1 onion;2 eggs;1 tbsp oil|Cube and pan-fry sweet potato 10 min;Add sliced sausage, onion and pepper;Make 2 wells and fry the eggs
+Lamb kofta with yogurt|Arabic|30|540|38|12|38|3|kofta|500 g lamb mince;1 onion;parsley;1 tsp cumin;200 g yogurt;1 cucumber;1 garlic clove|Mix lamb, onion, parsley and cumin;Shape and grill 10 min;Mix yogurt, grated cucumber and garlic;Serve together
+Molokhia with chicken|Arabic|45|420|40|20|20|4|chicken|800 g chicken;400 g frozen molokhia;6 garlic cloves;1 tsp coriander;1.2 l stock;1 tbsp ghee|Boil chicken in stock 25 min;Add molokhia to the stock;Fry garlic and coriander in ghee and stir in;Serve with chicken and rice
+Chicken liver with onions|Arabic|20|320|34|10|16|2|chicken|400 g chicken livers;1 onion;2 garlic cloves;1 lemon;1 tsp pomegranate molasses;1 tbsp oil|Fry onions until soft;Add livers and garlic, cook 6 min;Finish with lemon and molasses
+Grilled halloumi salad|Vegetarian|15|440|26|16|30|2|labneh|200 g halloumi;1 cup quinoa cooked;cucumber;tomatoes;1 lemon;mint;1 tbsp olive oil|Slice and grill halloumi 2 min per side;Toss quinoa with chopped vegetables, lemon and oil;Top with halloumi and mint
+Beef shawarma bowl|Arabic|30|600|46|52|22|2|shawarma|400 g beef strips;1 tbsp shawarma spice;160 g rice;2 tbsp tahini;pickles;tomato;parsley|Marinate and sear the beef;Cook rice;Serve beef on rice with salad;Drizzle tahini
+Protein French toast|Breakfast|15|420|34|40|12|1|khubz|2 slices wholegrain bread;2 eggs;1/2 scoop whey;50 ml milk;1/2 tsp cinnamon;berries|Whisk eggs, whey, milk and cinnamon;Soak the bread;Fry 2 min per side;Top with berries
+Chicken satay|Asian|30|460|44|14|26|3|chicken|600 g chicken breast;3 tbsp peanut butter;2 tbsp soy sauce;1 lime;1 tsp curry powder;1 tsp honey|Marinate chicken in soy, curry and honey;Thread on skewers and grill 10 min;Whisk peanut butter with lime and warm water;Serve with the sauce
+Korean beef rice bowl|Asian|20|600|40|62|20|2|kofta|400 g lean beef mince;160 g rice;2 tbsp soy sauce;1 tbsp honey;1 tsp sesame oil;2 garlic cloves;spring onions;2 eggs|Cook rice;Brown beef with garlic, add soy, honey and sesame oil;Fry the eggs;Serve beef and egg on rice
+Fish tacos|Mexican|25|450|36|42|14|2|hammour|2 white fish fillets;4 small tortillas;1 cup red cabbage;1 lime;3 tbsp greek yogurt;1 tsp chili|Season fish with chili and grill;Shred cabbage with lime;Fill tortillas with fish and slaw;Top with yogurt
+Chicken quesadilla|Mexican|15|520|44|40|20|1|chicken|1 large tortilla;120 g cooked chicken;40 g cheese;1/2 pepper;salsa|Fill half the tortilla with chicken, pepper and cheese;Fold and toast 3 min per side;Slice and serve with salsa
+Black bean burgers|Vegetarian|30|380|18|52|10|4|lentils|2 cans black beans;60 g oats;1 egg;1 tsp cumin;1 tsp paprika;4 buns|Mash beans;Mix with oats, egg and spices;Shape 4 patties and pan-fry 4 min per side;Serve in buns
+Edamame noodle bowl|Vegan|15|440|26|52|14|1|broccoli|80 g soba noodles;100 g edamame;1 carrot;1 tbsp soy sauce;1 tsp sesame oil;1 tsp peanut butter|Cook soba and edamame;Shred the carrot;Whisk soy, sesame oil and peanut butter;Toss everything
+Turkey meatballs|Meal prep|35|380|38|14|18|4|kofta|600 g lean turkey mince;1 egg;40 g breadcrumbs;1 can tomatoes;2 garlic cloves;basil|Mix turkey, egg and breadcrumbs, shape 20 balls;Brown the meatballs;Add tomatoes and garlic, simmer 15 min;Top with basil
+Chicken stuffed sweet potato|Meal prep|50|460|38|52|10|2|sweetpotato|2 sweet potatoes;250 g cooked chicken;3 tbsp greek yogurt;2 spring onions;1 tsp smoked paprika|Bake sweet potatoes 45 min;Mix chicken with yogurt and paprika;Split potatoes and fill;Top with spring onion
+Grilled chicken with tabbouleh|Arabic|30|460|44|30|18|2|chicken|400 g chicken breast;60 g bulgur;2 bunches parsley;2 tomatoes;1 lemon;2 tbsp olive oil;mint|Soak bulgur in hot water 15 min;Chop parsley, mint and tomatoes;Mix with bulgur, lemon and oil;Serve with grilled chicken
+Spiced lentil and egg breakfast|Arabic|15|380|26|36|14|1|lentils|150 g cooked lentils;2 eggs;1/2 onion;1 tsp cumin;1 tsp olive oil;1 khubz|Fry onion and cumin;Add lentils and warm through;Fry or poach the eggs;Serve on lentils with khubz
+Chicken tagine|Moroccan|60|480|42|34|18|4|chicken|1 kg chicken thighs;2 onions;1 can chickpeas;100 g dried apricots;1 tsp ras el hanout;1 tsp cinnamon;500 ml stock|Brown chicken;Soften onions with spices;Add stock, chickpeas and apricots;Cover and simmer 40 min
+Moroccan harira|Moroccan|50|360|24|42|8|5|lentils|300 g lamb or beef;150 g lentils;1 can chickpeas;1 can tomatoes;1 onion;1 tsp ginger;1 tsp cinnamon;handful coriander|Brown meat and onion;Add spices, tomatoes, lentils and water;Simmer 35 min;Add chickpeas and coriander
+Turkish menemen|Turkish|15|320|20|14|20|2|egg|4 eggs;2 tomatoes;2 green peppers;1 small onion;1 tbsp olive oil;chili flakes|Soften peppers and onion;Add chopped tomatoes, cook 5 min;Stir in eggs gently until creamy;Sprinkle chili
+Chicken doner wrap|Turkish|30|520|44|46|16|2|shawarma|400 g chicken thighs;1 tsp cumin;1 tsp paprika;3 tbsp yogurt;2 lavash wraps;red onion;tomato|Marinate chicken with spices and yogurt;Grill and slice thinly;Fill wraps with chicken and salad
+Greek chicken souvlaki|Greek|30|460|46|24|20|2|chicken|400 g chicken breast;1 lemon;1 tsp oregano;2 pita;tzatziki;tomato;red onion|Marinate chicken in lemon and oregano;Skewer and grill 12 min;Serve in pita with tzatziki and salad
+Japanese chicken katsu (baked)|Asian|35|520|44|50|14|2|chicken|2 chicken breasts;1 egg;60 g panko;160 g rice;3 tbsp katsu sauce;cabbage|Coat chicken in egg and panko;Bake 25 min at 210°C;Cook rice and shred cabbage;Slice chicken and serve with sauce
+Thai basil chicken|Asian|15|480|40|46|14|2|chicken|400 g chicken mince;2 cups thai basil;2 tbsp soy sauce;1 tbsp oyster sauce;2 chilies;3 garlic cloves;160 g rice;2 eggs|Cook rice;Stir-fry garlic and chili, add chicken;Add sauces and basil;Serve with rice and a fried egg
+Vietnamese chicken salad|Asian|20|360|38|20|12|2|chicken|300 g cooked chicken;1/2 cabbage;1 carrot;mint;coriander;2 tbsp fish sauce;1 lime;1 tsp honey|Shred chicken, cabbage and carrot;Mix fish sauce, lime and honey;Toss with herbs
+Beef bibimbap|Asian|30|580|36|70|16|2|rice|160 g rice;250 g lean beef strips;1 carrot;1 zucchini;handful spinach;2 eggs;2 tbsp gochujang|Cook rice;Sauté each vegetable and the beef;Fry eggs;Arrange on rice with gochujang
+Chicken biryani|Indian|60|620|44|72|16|4|machboos|800 g chicken;400 g basmati rice;200 g yogurt;2 onions;2 tbsp biryani masala;1/4 tsp saffron;mint|Marinate chicken in yogurt and masala;Fry onions until golden;Layer half-cooked rice over chicken with onions and saffron;Cover and cook 25 min on low
+Palak chicken|Indian|35|420|42|12|22|3|chicken|600 g chicken breast;300 g spinach;1 onion;2 tomatoes;1 tsp garam masala;2 garlic cloves;1 tsp ginger;2 tbsp yogurt|Blanch and blend spinach;Fry onion, garlic, ginger and tomato;Add chicken and spices, cook 12 min;Stir in spinach and yogurt
+Chana masala|Indian|30|380|16|52|12|3|hummus|2 cans chickpeas;1 onion;2 tomatoes;1 tbsp chana masala spice;2 garlic cloves;1 tsp ginger;coriander|Fry onion, garlic and ginger;Add tomatoes and spice;Add chickpeas and simmer 15 min;Top with coriander
+Pakistani chicken karahi|Pakistani|40|480|44|10|28|3|chicken|900 g chicken;4 tomatoes;2 green chilies;1 tsp ginger;2 garlic cloves;1 tsp cumin;2 tbsp oil;coriander|Fry chicken with garlic and ginger;Add chopped tomatoes and spices;Cook on high until oil separates;Top with chili and coriander
+Bangladeshi fish curry|Bangladeshi|30|380|36|12|20|3|hammour|600 g white fish;1 onion;2 tomatoes;1 tsp turmeric;1 tsp mustard seeds;2 green chilies;1 tbsp mustard oil|Rub fish with turmeric and fry lightly;Fry mustard seeds and onion;Add tomatoes and chilies;Simmer fish in the sauce 10 min
+Sri Lankan chicken curry|Sri Lankan|45|460|42|14|26|4|chicken|1 kg chicken;1 can light coconut milk;1 onion;2 tbsp roasted curry powder;curry leaves;1 cinnamon stick;2 garlic cloves|Fry onion, garlic and curry leaves;Add chicken and spices;Pour in coconut milk;Simmer 30 min
+Nigerian jollof rice with chicken|Nigerian|60|620|40|76|16|4|rice|800 g chicken;400 g long grain rice;1 can tomatoes;2 red peppers;1 onion;2 tbsp tomato paste;1 tsp thyme;1 tsp curry powder|Blend tomatoes, peppers and onion;Fry paste then the blend 15 min;Add rice, spices and stock, cook covered 25 min;Serve with grilled chicken
+Ethiopian lentil wat|Ethiopian|40|360|18|52|8|4|lentils|300 g red lentils;2 onions;2 tbsp berbere;3 garlic cloves;1 tsp ginger;1 tbsp oil|Cook onions slowly until soft;Add berbere, garlic and ginger;Add lentils and water;Simmer 25 min until thick
+Kenyan beef and sukuma|Kenyan|35|480|40|20|26|3|kofta|500 g beef strips;1 bunch kale;2 tomatoes;1 onion;1 tbsp oil;ugali or rice to serve|Brown beef with onion;Add tomatoes and cook 10 min;Fry chopped kale separately;Serve together
+Brazilian chicken and beans|Brazilian|40|540|44|56|12|4|chicken|800 g chicken breast;2 cans black beans;200 g rice;1 onion;2 garlic cloves;1 tsp cumin;1 orange|Cook rice;Simmer beans with onion, garlic and cumin;Grill chicken;Serve with orange slices
+Peruvian chicken with green sauce|Peruvian|50|480|46|20|24|4|chicken|1 kg chicken thighs;1 tsp cumin;1 tsp paprika;1 lime;coriander;1 jalapeño;3 tbsp greek yogurt|Season and roast chicken 40 min at 200°C;Blend coriander, jalapeño, yogurt and lime;Serve chicken with the sauce
+Greek yogurt chicken salad sandwich|Western|10|420|40|34|12|1|greek|120 g cooked chicken;3 tbsp greek yogurt;1 celery stick;1 tsp mustard;2 slices wholegrain bread;lettuce|Chop chicken and celery;Mix with yogurt and mustard;Fill the sandwich with lettuce
+Cheesy protein omelette wrap|Breakfast|10|440|38|26|20|1|egg|3 eggs;1 tortilla;40 g cheese;50 g turkey slices;spinach|Whisk eggs and pour into a pan;Lay the tortilla on top and flip after 1 min;Add cheese, turkey and spinach;Roll up
+Banana oat protein muffins|Snack|30|190|12|26|4|10|banana|3 bananas;2 eggs;150 g oats;2 scoops whey;1 tsp baking powder;handful blueberries|Mash bananas;Mix with eggs, oats, whey and baking powder;Fold in blueberries;Bake in 10 cups for 20 min at 180°C
+Chocolate protein pudding|Snack|5|220|30|16|4|1|whey|200 g greek yogurt;1/2 scoop chocolate whey;1 tsp cocoa;1 tsp honey|Whisk everything until smooth;Chill 10 min
+Labneh and cucumber dip|Snack|5|160|10|8|10|2|labneh|200 g labneh;1 cucumber;1 tsp dried mint;1 tsp olive oil;carrot sticks|Grate the cucumber and squeeze out water;Mix with labneh and mint;Drizzle oil and serve with carrots
+Hummus and veg snack box|Snack|5|260|10|26|14|1|hummus|4 tbsp hummus;1 carrot;1 cucumber;1 pepper;6 almonds|Cut the vegetables into sticks;Pack with hummus and almonds
+Boiled egg and avocado snack|Snack|10|280|14|8|22|1|avocado|2 eggs;1/2 avocado;chili flakes;salt|Boil eggs 9 min;Slice with avocado;Season
+Grilled chicken and hummus plate|Arabic|20|520|50|30|22|1|hummus|200 g chicken breast;4 tbsp hummus;1/2 khubz;salad vegetables;1 tsp sumac|Grill the chicken;Plate with hummus and salad;Sprinkle sumac and serve with khubz
+Lean lamb and rice (mandi style)|Gulf|90|640|44|66|22|4|machboos|1 kg lean lamb;400 g basmati rice;2 tbsp mandi spice;1 onion;2 dried limes;1 tbsp ghee|Rub lamb with spice and slow-roast 75 min at 170°C;Cook rice in the lamb juices with onion and dried lime;Serve lamb on the rice
+Shrimp machboos|Gulf|40|520|36|66|10|4|machboos|600 g shrimp;400 g basmati rice;1 onion;2 tomatoes;2 tbsp machboos spice;1 dried lime;handful coriander|Fry onion and spice;Add tomatoes, dried lime, water and rice;Cook 15 min, add shrimp on top;Cover and cook 8 min more
+Emirati chicken salona|Gulf|45|420|40|26|16|4|chicken|800 g chicken;2 potatoes;1 zucchini;2 tomatoes;1 onion;1 tbsp bzar spice;1 dried lime|Brown chicken and onion;Add tomatoes and spice;Add vegetables, dried lime and water;Simmer 30 min`;
+const RECIPES=RECIPES_RAW.split('\n').map((l,i)=>{const[n,st,mins,kcal,p,c,f,sv,ic,ing,steps]=l.split('|');return{id:'r'+i,n,st,mins:+mins,kcal:+kcal,p:+p,c:+c,f:+f,sv:+sv,ic,ing:ing.split(';'),steps:steps.split(';')}});
+
+/* ================= v0.8: chests, streaks, stats, notes, recipes, follows, Merlift, keyboard, backup ================= */
+
+/* ---- chests: 4 sizes, full-screen opening ---- */
+const CHEST_KINDS=['bag','locker','crate','vault'];
+const CH_ALIAS={wood:'bag',silver:'locker',gold:'crate'};
+const CHEST_INFO={bag:['GYM BAG','#c0392b','#7a1f16',[20,45],.15,90,'NORMAL'],locker:['LOCKER','#5ab4f5','#2d6b8f',[50,110],.35,220,'MEDIUM'],crate:['POWER RACK CRATE','#c97a3a','#6b3d1f',[120,260],.55,520,'BIG'],vault:['GOLDEN DUMBBELL VAULT','#f2b84b','#b8680a',[400,800],1,1200,'LEGENDARY']};
+CHEST_KINDS.forEach(k=>{CHESTS[k]=CHEST_INFO[k]});Object.entries(CH_ALIAS).forEach(([o,n])=>{CHESTS[o]=CHEST_INFO[n]});
+function chestCanvas(kind,open){kind=CH_ALIAS[kind]||kind;const[cc,g]=mk(24,22),[,col,dk]=CHEST_INFO[kind],lt=shade(col,.3),glow='rgba(255,236,150,.9)';
+  if(kind==='bag'){R(g,dk,7,3,10,2);R(g,dk,7,3,2,6);R(g,dk,15,3,2,6);disc(g,col,4,14,5);disc(g,col,19,14,5);R(g,col,4,9,16,11);R(g,lt,4,10,16,1);R(g,dk,2,18,20,2);R(g,'#f6f3ec',10,13,4,3);R(g,dk,11,14,2,1);
+    if(open){R(g,'#1a1433',5,8,14,3);R(g,glow,6,5,12,4)}else R(g,'#d9d2c3',5,9,14,1)}
+  else if(kind==='locker'){if(open){R(g,'#1a1433',6,0,12,22);R(g,glow,7,2,10,18);R(g,col,0,1,6,20);R(g,lt,1,2,1,18);R(g,'#d9d2c3',3,9,1,4)}
+    else{R(g,col,5,0,14,22);R(g,lt,6,1,12,1);for(let y=3;y<9;y+=2)R(g,dk,8,y,8,1);R(g,'#d9d2c3',15,10,2,4);R(g,dk,5,20,14,2);for(let y=14;y<19;y+=2)R(g,dk,8,y,8,1)}}
+  else if(kind==='crate'){if(open){R(g,glow,3,2,18,6);R(g,col,1,0,22,3);R(g,dk,1,2,22,1)}else{R(g,col,1,4,22,5);R(g,dk,1,8,22,1)}
+    R(g,col,1,9,22,12);for(let y=11;y<21;y+=3)R(g,shade(col,-.12),1,y,22,1);R(g,'#5b5f6b',1,9,3,12);R(g,'#5b5f6b',20,9,3,12);R(g,dk,7,13,10,2);R(g,dk,6,12,2,4);R(g,dk,16,12,2,4)}
+  else{if(open){R(g,dk,3,1,18,5);R(g,col,4,2,16,3);R(g,glow,5,6,14,4);for(let i=0;i<4;i++)disc(g,'#ffe08a',7+i*3,7,1.5)}else{R(g,dk,2,4,20,7);R(g,col,3,5,18,5);R(g,lt,3,5,18,1);R(g,'#ff5a5a',5,7,2,2);R(g,'#5ae0ff',17,7,2,2)}
+    R(g,dk,2,11,20,9);R(g,col,3,12,18,7);R(g,shade(col,-.2),3,17,18,2);R(g,'#26232e',8,13,8,3);R(g,'#f6f3ec',9,14,6,1);R(g,'#f6f3ec',8,13,1,3);R(g,'#f6f3ec',15,13,1,3)}
+  outline(cc);return cc}
+function rollChest(kind){kind=CH_ALIAS[kind]||kind;const[,,,cr,odds]=CHEST_INFO[kind],r=Math.random,out=[['coins',cr[0]+Math.floor(r()*(cr[1]-cr[0]))]];
+  const lk=lockedItems(),dec=Object.keys(DECOR).filter(d=>!(ST.deco||[]).includes(d)),giveItem=()=>{if(lk.length&&(r()<.6||!dec.length)){const[k,id]=lk[Math.floor(r()*lk.length)];out.push(['item',k,id])}else if(dec.length)out.push(['deco',dec[Math.floor(r()*dec.length)]])};
+  if(kind==='vault'){giveItem();out.push(['xp',300]);return out}
+  const p=r();if(p<odds&&(lk.length||dec.length))giveItem();else if(p<odds+.35)out.push(['xp',{bag:30,locker:70,crate:150}[kind]]);return out}
+function openChest(kind,why,then){kind=CH_ALIAS[kind]||kind;const[name,col]=CHEST_INFO[kind],items=rollChest(kind),still=matchMedia('(prefers-reduced-motion: reduce)').matches;let taps=0,done=false;
+  const ov=h('div',{class:'chestfs k-'+kind,role:'dialog','aria-label':name}),rays=h('div',{class:'rays','aria-hidden':'true'}),cv=chestCanvas(kind,false),
+    box=h('button',{class:'cbox','aria-label':'Tap the chest to open it'},show(cv,6)),hint=h('span',{class:'label'},'TAP THE CHEST · 3'),list=h('div',{class:'cloot'}),
+    [pc,pg]=mk(120,200);pc.className='cfx';pc.setAttribute('aria-hidden','true');
+  const btn=h('button',{class:'btn wide',hidden:true,onclick:()=>{ov.remove();render(true);then&&then()}},'COLLECT');
+  ov.append(rays,pc,h('div',{class:'ctop'},h('span',{class:'label'},why||'YOU FOUND A CHEST'),h('h2',{},name),h('span',{class:'tag s'},CHEST_INFO[kind][6])),box,hint,list,btn);APP.append(ov);
+  let parts=[];const burst=(n,sp)=>{for(let i=0;i<n;i++){const a=Math.random()*6.283,v=.6+Math.random()*sp;parts.push({x:60,y:92,vx:Math.cos(a)*v,vy:Math.sin(a)*v-1,l:60+Math.random()*40,c:[col,'#ffe08a','#ffffff',tok('a3')][i%4]})}};
+  const loop=()=>{if(!pc.isConnected)return;pg.clearRect(0,0,120,200);parts=parts.filter(p=>p.l-->0);parts.forEach(p=>{p.x+=p.vx;p.y+=p.vy;p.vy+=.05;R(pg,p.c,p.x,p.y,2,2)});requestAnimationFrame(loop)};if(!still)loop();
+  const reveal=()=>{done=true;box.replaceChildren(show(chestCanvas(kind,true),10));ov.classList.add('flash');SFX.lvl();haptic('level');burst(90,3.2);hint.remove();
+    items.forEach(([t,a,b],i)=>setTimeout(()=>{let row;
+      if(t==='coins'){addCoins(a,true);row=h('div',{class:'item'},coinIcon(3),h('span',{class:'grow'},a+' COINS'))}
+      if(t==='xp'){const[b0,a0]=addXPRaw(a);row=h('div',{class:'item'},px('star',3),h('span',{class:'grow'},'+'+a+' XP'));if(a0>b0)setTimeout(()=>levelUp(a0),1200)}
+      if(t==='item'){grant(a,b);row=h('div',{class:'item'},rewardIcon([0,a,b]),h('span',{class:'grow'},ITEMNAME(a,b)),h('span',{class:'tag s'},'NEW'))}
+      if(t==='deco'){ST.deco=[...(ST.deco||[]),a];ST.decoOn=[...(ST.decoOn||[]),a];save();row=h('div',{class:'item'},px('house',3),h('span',{class:'grow'},DECOR[a][0]),h('span',{class:'tag s'},'ROOM'))}
+      tone(700+i*180,.12);haptic('success');row.classList.add('pop');list.append(row);if(i===items.length-1){btn.hidden=false;btn.focus()}},500+i*450))};
+  box.addEventListener('click',()=>{if(done)return;taps++;tone(260+taps*140,.09);tone(130+taps*70,.12,null,.05);haptic(taps>2?'success':'click');
+    box.firstChild.style.width=(24*(6+taps*1.4))+'px';box.firstChild.style.height=(22*(6+taps*1.4))+'px';
+    box.classList.remove('shake');void box.offsetWidth;box.classList.add('shake');burst(10+taps*6,1.2+taps*.4);hint.textContent='TAP THE CHEST · '+(3-taps);if(taps>=3)setTimeout(reveal,180)});
+  setTimeout(()=>box.focus(),100);return ov}
+
+/* ---- streaks ---- */
+function workDays(){return new Set(ST.log.filter(l=>l.done).map(l=>l.d))}
+function streakChain(){const W=workDays(),out=[];const d=new Date();let started=false;
+  for(let i=0;i<400;i++){const ds=dstr(d),did=W.has(ds),planned=!!planFor(ds),isToday=i===0;
+    if(did){out.push([ds,'done']);started=true}else if(isToday)out.push([ds,'today']);else if(planned)break;else out.push([ds,'rest']);d.setDate(d.getDate()-1)}
+  while(out.length&&out[out.length-1][1]!=='done')out.pop();return out.reverse()}
+function calcStreak(){const c=streakChain();return c.filter(x=>x[1]==='done').length}
+function syncStreak(){const s=calcStreak();ST.streak=s;ST.bestStreak=Math.max(ST.bestStreak||0,s)}
+function flameCanvas(s=4){const[c,g]=mk(12,16);c.className='flame';c.setAttribute('aria-hidden','true');show(c,s);const t0=performance.now(),still=matchMedia('(prefers-reduced-motion: reduce)').matches;
+  const F=['#ff3b1f','#ff8c1a','#ffd54a','#fff3b0'];const loop=now=>{if(!c.isConnected)return;const t=(now-t0)/110|0;g.clearRect(0,0,12,16);
+    const rows=[[5,1],[4,3],[4,4],[3,6],[2,8],[2,8],[1,10],[1,10],[1,10],[1,10],[2,8],[2,8],[3,6],[4,4]];rows.forEach(([x,w],y)=>{const wob=((t+y)%4===0)?1:((t+y)%4===2?-1:0);R(g,F[0],x+(y<5?wob:0),y+2,w,1)});
+    [[5,6,2],[4,7,4],[4,8,4],[3,9,6],[3,10,6],[3,11,6],[4,12,4],[4,13,4]].forEach(([x,y,w])=>R(g,F[1],x+(y<8&&t%2?1:0),y+1,w,1));
+    [[5,9,2],[5,10,2],[4,11,4],[4,12,4],[5,13,2]].forEach(([x,y,w])=>R(g,F[2],x,y,w,1));R(g,F[3],5,12,2,1);outline(c);if(!still)requestAnimationFrame(loop)};requestAnimationFrame(loop);return c}
+function streakPage(){syncStreak();save();sheet('STREAK',()=>{const ch=streakChain(),s=ST.streak,best=ST.bestStreak||s,next=[3,7,14,30,60,100,200,365].find(m=>m>s)||s+100;
+  const lastDone=[...ch].reverse().find(x=>x[1]==='done');
+  const nodes=[...ch].reverse().slice(0,40).map(([ds,k])=>{const d=new Date(ds+'T12:00'),lab=d.toLocaleDateString('en',{weekday:'short',day:'numeric',month:'short'}).toUpperCase(),isLast=lastDone&&ds===lastDone[0];
+    return h('div',{class:'snode '+k+(isLast?' last':'')},h('span',{class:'sdot'},isLast?flameCanvas(3):k==='done'?px('dumb',2):k==='today'?h('span',{class:'small'},'?'):h('span',{class:'small'},'·')),
+      h('div',{class:'grow',style:'display:flex;flex-direction:column;gap:3px'},h('span',{class:'label'},lab),h('span',{class:'small'},k==='done'?(ST.log.filter(l=>l.done&&l.d===ds).map(l=>l.name).join(', ')||'Workout'):k==='today'?'Train today to grow your streak':'Rest day')))});
+  return[h('div',{class:'box sthead'},flameCanvas(6),h('div',{class:'grow',style:'display:flex;flex-direction:column;gap:6px'},h('span',{class:'num',style:'font-size:28px'},s),h('span',{class:'label'},s===1?'WORKOUT IN A ROW':'WORKOUTS IN A ROW'),h('span',{class:'small'},'Best: '+best+' · next goal: '+next))),
+    h('div',{class:'bar t'},h('i',{style:`width:${Math.min(100,s/next*100)}%`})),
+    ch.length?h('div',{class:'sline'},...nodes):h('div',{class:'box'},h('h3',{},'NO STREAK YET'),h('p',{},'Finish a workout to light the first flame. Rest days on your plan never break it; only a missed workout day does.')),
+    h('p',{class:'note'},'Your streak counts finished workouts in a row. Planned rest days are safe. Skipping a planned workout day resets it.')]})}
+
+/* ---- pixel charts ---- */
+function pxBars(vals,labels,col,o={}){const n=vals.length,bw=o.bw||8,gap=2,H=o.h||40,W=n*(bw+gap),max=Math.max(1,...vals),[c,g]=mk(W,H);c.className='pxchart';c.setAttribute('role','img');c.setAttribute('aria-label',(o.label||'Chart')+': '+vals.map((v,i)=>labels[i]+' '+v).join(', '));
+  for(let y=H-1;y>=0;y-=10)R(g,tok('line'),0,y,W,1);vals.forEach((v,i)=>{const bh=Math.round(v/max*(H-4));if(bh>0){R(g,shade(col,-.3),i*(bw+gap),H-bh,bw,bh);R(g,col,i*(bw+gap),H-bh,bw-2,bh);R(g,shade(col,.3),i*(bw+gap),H-bh,bw-2,1)}});
+  return h('div',{class:'chartw'},show(c,1),h('div',{class:'clabs',style:`grid-template-columns:repeat(${n},1fr)`},labels.map(l=>h('span',{},l))))}
+function pxLine(pts,col,o={}){const W=120,H=o.h||40,[c,g]=mk(W,H);c.className='pxchart';c.setAttribute('role','img');c.setAttribute('aria-label',o.label||'Line chart');if(pts.length<2){R(g,tok('line'),0,H/2,W,1);return show(c,1)}
+  const mn=Math.min(...pts),mx=Math.max(...pts),rg=Math.max(.5,mx-mn),X=i=>Math.round(i*(W-3)/(pts.length-1))+1,Y=v=>Math.round(H-4-(v-mn)/rg*(H-8));
+  for(let y=0;y<H;y+=10)R(g,tok('line'),0,y,W,1);for(let i=1;i<pts.length;i++)lineW(g,[X(i-1),Y(pts[i-1])],[X(i),Y(pts[i])],1,col);pts.forEach((v,i)=>R(g,col,X(i)-1,Y(v)-1,3,3));return show(c,1)}
+
+/* ---- stats page ---- */
+function statsPage(){syncStreak();sheet('MY STATS',()=>{const L=ST.log.filter(l=>l.done),mins=L.reduce((a,l)=>a+(l.mins||0),0),wxp=L.reduce((a,l)=>a+l.xp,0);
+  const weeks=Array.from({length:8},(_,i)=>{const d=new Date();d.setDate(d.getDate()-7*(7-i));return weekKey(d)}),wc=weeks.map(w=>L.filter(l=>weekKey(new Date(l.d+'T12:00'))===w).length);
+  const wd=[0,0,0,0,0,0,0];L.forEach(l=>{const i=(new Date(l.d+'T12:00').getDay()+6)%7;wd[i]++});
+  const byR={};L.forEach(l=>{byR[l.name]=(byR[l.name]||0)+1});const top=Object.entries(byR).sort((a,b)=>b[1]-a[1]).slice(0,5);
+  const wl=ST.wlog||[],w0=wl[0],w1=wl[wl.length-1],dW=w0&&w1?Math.round((w1[1]-w0[1])*10)/10:0;
+  const days7=Array.from({length:7},(_,i)=>{const d=new Date();d.setDate(d.getDate()-6+i);return dstr(d)}),pl=ST.plog||{},pv=days7.map(d=>pl[d]||0),target=calc().pro,avgP=Math.round(pv.reduce((a,b)=>a+b,0)/7);
+  const tile=(v,l)=>h('div',{class:'stat'},h('span',{class:'num'},v),h('span',{class:'label'},l));
+  const avgW=Math.round(wc.slice(-4).reduce((a,b)=>a+b,0)/4*10)/10;
+  return[h('div',{class:'stats'},tile(L.length,'WORKOUTS'),tile(Math.round(mins/60*10)/10+'H','TIME TRAINED'),tile(wxp,'WORKOUT XP')),
+    h('div',{class:'stats'},tile(ST.streak,'STREAK'),tile(ST.bestStreak||ST.streak,'BEST STREAK'),tile(avgW,'PER WEEK')),
+    h('div',{class:'box'},h('span',{class:'label'},'WORKOUTS PER WEEK · LAST 8 WEEKS'),pxBars(wc,weeks.map(w=>new Date(w+'T12:00').getDate()+''),tok('a3'),{label:'Workouts per week'})),
+    h('div',{class:'box'},h('span',{class:'label'},'YOUR TRAINING DAYS'),pxBars(wd,DAYS.map(d=>d.slice(0,2)),tok('a2'),{label:'Workouts by weekday',bw:14})),
+    h('div',{class:'box'},h('span',{class:'label'},'FAVOURITE ROUTINES'),top.length?top.map(([n,c],i)=>h('div',{class:'srow'},h('span',{},(i+1)+'. '+n),h('span',{class:'tag s'},c+'×'))):h('span',{class:'small'},'Finish a workout to see your favourites.')),
+    h('div',{class:'box'},h('div',{class:'row spread'},h('span',{class:'label'},'BODY WEIGHT'),h('span',{class:'tag'+(dW<0?' s':'')},wl.length>1?(dW>0?'+':'')+fmtW(dW).replace(' ',' '):'LOG MORE')),pxLine(wl.slice(-30).map(x=>x[1]),tok('a1'),{label:'Weight trend'}),
+      h('span',{class:'small'},wl.length?`Start ${fmtW(w0[1])} · now ${fmtW(w1[1])} · ${wl.length} entries`:'Log your weight on the Me page to see your trend.')),
+    h('div',{class:'box'},h('div',{class:'row spread'},h('span',{class:'label'},'PROTEIN · LAST 7 DAYS'),h('span',{class:'small'},'avg '+avgP+' / '+target+' g')),pxBars(pv,days7.map(d=>DAYS[(new Date(d+'T12:00').getDay()+6)%7].slice(0,2)),tok('a1'),{label:'Protein per day',bw:14}),
+      h('span',{class:'small'},`${PLATE.length} foods on your plate now · ${(NOTES.list.find(n=>n.id==='shop')||{items:[]}).items.length} items on your shopping list`)),
+    h('div',{class:'box'},h('span',{class:'label'},'ALL TIME'),...[['Level',lvl()+' · '+rank()],['Total XP',ST.xp],['Coins',ST.coins||0],['League',LG.ko?'Knockout':'League '+lgNum(LG.lg)+' · '+lgName(LG.lg)],['Trophies',LG.cups.gold+LG.cups.silver+LG.cups.bronze],['Member since',META.since||today()]].map(([k,v])=>h('div',{class:'srow'},h('span',{},k),h('span',{class:'tag'},v))))]})}
+
+/* ---- notes (shopping list can't be deleted) ---- */
+let NOTES=store.get('notes',null)||{list:[{id:'shop',title:'SHOPPING LIST',items:[],fixed:true}]};
+if(!NOTES.list.some(n=>n.id==='shop'))NOTES.list.unshift({id:'shop',title:'SHOPPING LIST',items:[],fixed:true});
+const saveNotes=()=>store.set('notes',NOTES);
+const shopList=()=>NOTES.list.find(n=>n.id==='shop');
+function addToShopping(items){const S=shopList(),have=new Set(S.items.map(i=>i.t.toLowerCase()));let n=0;items.forEach(t=>{if(!have.has(t.toLowerCase())){S.items.push({t,done:false});n++}});saveNotes();return n}
+function notesPage(){sheet('NOTES',redraw=>[h('button',{class:'btn alt',onclick:()=>{const n={id:'n'+Date.now(),title:'',text:'',up:Date.now()};NOTES.list.push(n);saveNotes();noteEditor(n,redraw)}},'+ NEW NOTE'),
+  h('div',{class:'list'},NOTES.list.map(n=>h('button',{class:'opt',onclick:()=>n.id==='shop'?shoppingPage(redraw):noteEditor(n,redraw)},px(n.id==='shop'?'leg':'note',3),
+    h('span',{class:'grow',style:'display:flex;flex-direction:column;gap:4px;min-width:0'},h('h3',{},n.title||'UNTITLED'),h('span',{class:'small',style:'overflow:hidden;text-overflow:ellipsis;white-space:nowrap'},n.id==='shop'?(n.items.filter(i=>!i.done).length+' to buy · '+n.items.filter(i=>i.done).length+' done'):(n.text||'Empty note').slice(0,60))),
+    n.fixed?h('span',{class:'tag s'},'PINNED'):null)))])}
+function shoppingPage(back){const ov=sheet('SHOPPING LIST',redraw=>{const S=shopList(),inp=h('input',{id:'shi',placeholder:'Add an item',maxlength:60,'aria-label':'New item'});
+  const add=()=>{const t=inp.value.trim();if(!t)return;S.items.push({t,done:false});saveNotes();redraw();setTimeout(()=>document.getElementById('shi')?.focus(),50)};inp.addEventListener('keydown',e=>{if(e.key==='Enter')add()});
+  return[h('div',{class:'row nowrap'},inp,h('button',{class:'btn',onclick:add},'ADD')),
+    S.items.length?h('div',{class:'list'},S.items.map((it,i)=>h('div',{class:'item'+(it.done?' dim':'')},h('button',{class:'toggle','aria-pressed':String(it.done),'aria-label':(it.done?'Unmark ':'Mark ')+it.t,onclick:()=>{it.done=!it.done;saveNotes();redraw()}}),
+      h('span',{class:'grow',style:it.done?'text-decoration:line-through':''},it.t),h('button',{class:'btn ghost',style:'padding:6px 8px','aria-label':'Remove '+it.t,onclick:()=>{S.items.splice(i,1);saveNotes();redraw()}},'✕')))):h('p',{class:'note'},'Your list is empty. Add items here, or tap "add to shopping list" on any recipe.'),
+    S.items.some(i=>i.done)?h('button',{class:'btn ghost',onclick:()=>{S.items=S.items.filter(i=>!i.done);saveNotes();redraw()}},'CLEAR CHECKED ITEMS'):null,
+    h('span',{class:'small'},'This list is always here and can\'t be deleted.')]});
+  ov.querySelector('header .btn').addEventListener('click',()=>back&&back())}
+function noteEditor(n,back){const ov=sheet(n.title||'NEW NOTE',()=>{const ti=h('input',{id:'nti',value:n.title,placeholder:'Title',maxlength:40,'aria-label':'Note title',oninput:e=>{n.title=e.target.value;n.up=Date.now();saveNotes()}}),
+  tx=h('textarea',{id:'ntx',rows:12,placeholder:'Write anything: PRs, meal ideas, goals…','aria-label':'Note text',oninput:e=>{n.text=e.target.value;n.up=Date.now();saveNotes()}});tx.value=n.text;
+  return[ti,tx,h('span',{class:'small'},'Saved automatically.'),h('button',{class:'btn ghost',onclick:()=>{let m;m=modal(h('h2',{},'DELETE THIS NOTE?'),h('div',{class:'row nowrap'},h('button',{class:'btn ghost grow',onclick:()=>m.remove()},'KEEP'),
+    h('button',{class:'btn grow',onclick:()=>{NOTES.list=NOTES.list.filter(x=>x!==n);saveNotes();m.remove();ov.remove();back&&back()}},'DELETE')))}},'DELETE NOTE')]});
+  ov.querySelector('header .btn').addEventListener('click',()=>{if(!n.title&&!n.text){NOTES.list=NOTES.list.filter(x=>x!==n);saveNotes()}back&&back()})}
+
+/* ---- recipes ---- */
+let RQ={q:'',p:0,k:0,t:0,sort:'p'};
+FUEL.recipes=function(){const res=h('div',{class:'list'}),cnt=h('span',{class:'small'});
+  const draw=()=>{const q=RQ.q.toLowerCase();let L=RECIPES.filter(r=>(!q||r.n.toLowerCase().includes(q)||r.st.toLowerCase().includes(q)||r.ing.some(i=>i.toLowerCase().includes(q)))&&(!RQ.p||r.p>=RQ.p)&&(!RQ.k||r.kcal<=RQ.k)&&(!RQ.t||r.mins<=RQ.t));
+    const S={p:(a,b)=>b.p-a.p,k:(a,b)=>a.kcal-b.kcal,t:(a,b)=>a.mins-b.mins,r:(a,b)=>b.p/b.kcal-a.p/a.kcal,n:(a,b)=>a.n.localeCompare(b.n)}[RQ.sort];L.sort(S);
+    cnt.textContent=L.length+' of '+RECIPES.length+' recipes';
+    res.replaceChildren(...L.map(r=>h('button',{class:'opt rcard',onclick:()=>recipePage(r)},foodIcon(r.ic,3),h('span',{class:'grow',style:'display:flex;flex-direction:column;gap:5px;min-width:0'},h('h3',{},r.n),
+      h('span',{class:'small'},r.st+' · serves '+r.sv),h('span',{class:'row',style:'gap:4px'},h('span',{class:'tag s'},r.p+'G P'),h('span',{class:'tag'},r.kcal+' KCAL'),h('span',{class:'tag'},r.mins+' MIN'))))),
+      L.length?null:h('p',{class:'note'},'No recipe matches. Try fewer filters.'))};
+  const seg=(key,label,opts)=>h('div',{class:'field'},h('span',{class:'label'},label),h('div',{class:'seg'},opts.map(([v,t])=>h('button',{'aria-pressed':String(RQ[key]===v),onclick:e=>{RQ[key]=v;[...e.currentTarget.parentNode.children].forEach(b=>b.setAttribute('aria-pressed',String(b===e.currentTarget)));draw()}},t))));
+  const q=h('input',{id:'rq',type:'search',value:RQ.q,placeholder:'Search name or ingredient (e.g. chicken, oats)','aria-label':'Search recipes',oninput:e=>{RQ.q=e.target.value;draw()}});
+  const sort=h('select',{id:'rs','aria-label':'Sort recipes',onchange:e=>{RQ.sort=e.target.value;draw()}},[['p','Most protein'],['r','Most protein per calorie'],['k','Fewest calories'],['t','Quickest'],['n','Name A–Z']].map(([v,t])=>h('option',{value:v,selected:RQ.sort===v},t)));
+  draw();return[h('div',{class:'row spread'},h('h2',{},'RECIPES'),h('span',{class:'tag s'},RECIPES.length)),q,
+    h('details',{class:'box filt'},h('summary',{class:'label'},'FILTERS & SORT'),seg('p','PROTEIN AT LEAST',[[0,'ANY'],[20,'20G'],[30,'30G'],[40,'40G']]),seg('k','CALORIES UP TO',[[0,'ANY'],[400,'400'],[600,'600'],[800,'800']]),seg('t','READY IN',[[0,'ANY'],[10,'10M'],[20,'20M'],[30,'30M'],[60,'1H']]),
+      h('label',{class:'field',for:'rs'},h('span',{class:'label'},'SORT BY'),h('div',{class:'sel'},sort))),cnt,res,h('p',{class:'note'},'Calories and macros are estimates per serving.')]};
+function recipePage(r){sheet('RECIPE',()=>[h('div',{class:'row nowrap',style:'gap:12px'},foodIcon(r.ic,5),h('div',{style:'display:flex;flex-direction:column;gap:6px'},h('h2',{},r.n),h('span',{class:'small'},r.st+' · '+r.mins+' min · serves '+r.sv))),
+  h('div',{class:'macro',style:'grid-template-columns:repeat(4,1fr)'},[['PROTEIN',r.p+'g'],['KCAL',r.kcal],['CARBS',r.c+'g'],['FAT',r.f+'g']].map(([k,v])=>h('div',{},h('span',{class:'label'},k),h('span',{class:'num',style:'font-size:11px'},v)))),
+  splitBar({p:r.p,c:r.c,f:r.f}),h('span',{class:'small'},'Per serving. '+Math.round(r.p/calc().pro*100)+'% of your daily protein target.'),
+  h('div',{class:'box'},h('span',{class:'label'},'INGREDIENTS · '+r.sv+(r.sv>1?' SERVINGS':' SERVING')),...r.ing.map(i=>h('div',{class:'row nowrap',style:'align-items:flex-start'},h('span',{style:'color:var(--a1)'},'▪'),h('span',{},i))),
+    h('button',{class:'btn alt',onclick:()=>{const n=addToShopping(r.ing);toast(n?n+' ITEMS ADDED TO SHOPPING LIST':'ALREADY ON YOUR LIST');haptic('success')}},'+ ADD TO SHOPPING LIST')),
+  h('div',{class:'box'},h('span',{class:'label'},'STEPS'),...r.steps.map((s,i)=>h('div',{class:'row nowrap',style:'align-items:flex-start'},h('span',{class:'tag s'},i+1),h('span',{},s+'.')))),
+  h('div',{class:'row nowrap'},h('button',{class:'btn grow',onclick:()=>{ST.protein+=r.p;save();toast('+'+r.p+' G PROTEIN LOGGED');haptic('success')}},'I ATE THIS · +'+r.p+' G'),h('button',{class:'btn ghost',onclick:()=>{shoppingPage()}},'LIST'))])}
+
+/* ---- follows (demo players until the online version) ---- */
+if(!CLUB.follow)CLUB.follow={};if(!CLUB.followers)CLUB.followers=[1,3,6];
+const isFollow=i=>!!CLUB.follow[i];
+function followBtn(i,small){const b=h('button',{class:'btn '+(isFollow(i)?'ghost':'alt'),style:small?'padding:6px 8px;font-size:calc(7px*var(--dz))':'','aria-pressed':String(isFollow(i)),onclick:e=>{e.stopPropagation();CLUB.follow[i]=!isFollow(i);if(!CLUB.follow[i])delete CLUB.follow[i];saveClub();
+  b.setAttribute('aria-pressed',String(isFollow(i)));b.className='btn '+(isFollow(i)?'ghost':'alt');b.textContent=isFollow(i)?'FOLLOWING':'FOLLOW';if(isFollow(i)){SFX.coin();toast('FOLLOWING '+demoUser(i).name.toUpperCase())}}},isFollow(i)?'FOLLOWING':'FOLLOW');return b}
+function followPage(start){let t=start||'following';sheet('COMMUNITY',redraw=>{const fol=Object.keys(CLUB.follow).map(Number),all=DEMO_USERS.map((_,i)=>i);
+  const ids=t==='following'?fol:t==='followers'?CLUB.followers:all.filter(i=>!isFollow(i));
+  const row=i=>{const u=demoUser(i);return h('div',{class:'item'},headIcon(u,u.char,2),h('div',{class:'grow',style:'display:flex;flex-direction:column;gap:4px;min-width:0'},h('div',{class:'flagline'},h('span',{},u.name),flag(u.country,1)),h('span',{class:'small'},'LV '+Math.max(1,Math.floor(Math.sqrt(DEMO_USERS[i][3]/50)))+' · '+(CLUB.followers.includes(i)?'follows you':'IronBit player'))),followBtn(i,true))};
+  return[h('div',{class:'seg'},[['following','FOLLOWING · '+fol.length],['followers','FOLLOWERS · '+CLUB.followers.length],['find','FIND']].map(([v,l])=>h('button',{'aria-pressed':String(t===v),onclick:()=>{t=v;redraw()}},l))),
+    ids.length?h('div',{class:'list'},ids.map(row)):h('p',{class:'note'},t==='following'?'You\'re not following anyone yet. Tap FIND to discover players.':'Nobody here yet.'),
+    h('p',{class:'note'},'Players are demo data until the online version is live. Then follows sync with your account.')]})}
+
+/* ---- buying coins ---- */
+const COIN_PACKS=[['c500',500,'$0.99',''],['c1200',1200,'$1.99','+20% BONUS'],['c3500',3500,'$4.99','POPULAR'],['c8000',8000,'$9.99','BEST VALUE']];
+function buyCoins(id){const pk=COIN_PACKS.find(p=>p[0]===id);if(window.IronBitNative&&IronBitNative.buyCoins){IronBitNative.buyCoins(id);return}
+  let m;m=modal(h('div',{class:'row nowrap'},coinIcon(4),h('h2',{},pk[1]+' COINS')),h('p',{},'Buying coins opens when IronBit is on Google Play. Google shows the price in your local currency and handles the payment.'),
+    h('span',{class:'small'},'Coins only unlock looks, chests and decor. Nothing you can buy makes training easier or ranks you higher.'),h('button',{class:'btn',onclick:()=>m.remove()},'OK'))}
+window.ibCoinsBought=(id)=>{const pk=COIN_PACKS.find(p=>p[0]===id);if(pk){addCoins(pk[1]);SFX.lvl();haptic('level')}};
+
+/* ---- export / import ---- */
+function exportData(){const data={app:'IronBit',v:VERSION,at:new Date().toISOString(),keys:{}};for(let i=0;i<localStorage.length;i++){const k=localStorage.key(i);if(k&&k.startsWith('ib2_'))data.keys[k]=localStorage.getItem(k)}
+  const txt=JSON.stringify(data),name='ironbit-backup-'+today()+'.json';
+  if(window.IronBitNative&&IronBitNative.saveFile){IronBitNative.saveFile(name,txt);return}
+  const a=h('a',{href:URL.createObjectURL(new Blob([txt],{type:'application/json'})),download:name});document.body.append(a);a.click();a.remove();toast('BACKUP SAVED')}
+window.ibSaved=ok=>toast(ok?'BACKUP SAVED':'BACKUP NOT SAVED');
+function importData(){const inp=h('input',{type:'file',accept:'application/json,.json',style:'display:none'});document.body.append(inp);
+  inp.addEventListener('change',()=>{const f=inp.files&&inp.files[0];inp.remove();if(!f)return;const rd=new FileReader();rd.onload=()=>{let d;try{d=JSON.parse(rd.result)}catch(e){d=null}
+    if(!d||d.app!=='IronBit'||!d.keys){modal(h('h2',{},'NOT AN IRONBIT BACKUP'),h('p',{},'Pick a file that IronBit exported, named like ironbit-backup-2026-11-06.json.'),h('button',{class:'btn',onclick:e=>e.target.closest('.modal').remove()},'OK'));return}
+    let m;m=modal(h('h2',{},'RESTORE THIS BACKUP?'),h('p',{},'Backup from '+new Date(d.at).toLocaleString('en',{dateStyle:'medium',timeStyle:'short'})+' (IronBit v'+d.v+'). It replaces everything in the app now.'),
+      h('div',{class:'row nowrap'},h('button',{class:'btn ghost grow',onclick:()=>m.remove()},'CANCEL'),h('button',{class:'btn grow',onclick:()=>{Object.keys(localStorage).filter(k=>k.startsWith('ib2_')).forEach(k=>localStorage.removeItem(k));
+        Object.entries(d.keys).forEach(([k,v])=>{if(k.startsWith('ib2_'))localStorage.setItem(k,v)});location.reload()}},'RESTORE')))};rd.readAsText(f)});inp.click()}
+
+/* ---- keyboard: pixel glyphs, emojis, skins, size ---- */
+const EMOJIS='💪 🔥 🏋️ 😀 😂 🤣 😎 😍 🤩 😅 😤 🥵 😴 🤕 🙌 👏 👍 👎 🙏 💯 ⚡ ✨ 💦 ❤️ 🎉 🏆 🥇 🏃 🚴 🧘 ⏰ ✅ ❌ 🍗 🥚 🍌 🥑 🍚 🥗 🥤 ☕ 🍕 🍔 🍩 🎧 🏠 🌙 ☀️'.split(' ');
+const GLY={};
+function cpCanvas(src){const[c,g]=mk(src.width,src.height);g.drawImage(src,0,0);c.className=src.className;c.setAttribute('aria-hidden','true');return c}
+function glyph(ch,col,emoji){const key=ch+col+(emoji?1:0);if(key in GLY)return GLY[key]&&cpCanvas(GLY[key]);const S=emoji?14:14,[c,g]=mk(S,S);g.textBaseline='middle';g.textAlign='center';
+  g.font=emoji?'11px "Noto Color Emoji","Apple Color Emoji","Segoe UI Emoji",sans-serif':'bold 12px "Noto Sans Arabic","Noto Naskh Arabic",Tahoma,sans-serif';g.fillStyle=col;g.fillText(ch,S/2,S/2+1);
+  const d=g.getImageData(0,0,S,S);let any=false;for(let i=0;i<d.data.length;i+=4){if(d.data[i+3]>110){d.data[i+3]=255;any=true;if(!emoji){const v=parseInt(col.slice(1),16);d.data[i]=v>>16;d.data[i+1]=v>>8&255;d.data[i+2]=v&255}}else d.data[i+3]=0}g.putImageData(d,0,0);
+  if(!any){GLY[key]=null;return null}c.className='kg';GLY[key]=c;return cpCanvas(c)}
+function cloneCanvas(c){return c}
+KBL.en[3]=['NUM','LANG','EMO',',','SPACE','.','DONE'];KBL.ar[3]=['NUM','LANG','EMO','،','SPACE','.','DONE'];KBL.num[3]=['ABC','LANG','EMO',',','SPACE','.','DONE'];
+KBL.emo=[EMOJIS.slice(0,8),EMOJIS.slice(8,16),EMOJIS.slice(16,24),EMOJIS.slice(24,32),EMOJIS.slice(32,40),[...EMOJIS.slice(40,47),'BK'],['ABC','SPACE','DONE']];
+const KB_SKINS=[['classic','CLASSIC',0],['retro','RETRO TERMINAL',6],['neon','NEON NIGHT',14],['wood','OAK WOOD',22],['gold','SOLID GOLD',40]];
+UNLOCK.kb={retro:6,neon:14,wood:22,gold:40};
+REWARDS.push([6,'kb','retro','RETRO KEYBOARD'],[14,'kb','neon','NEON KEYBOARD'],[22,'kb','wood','WOOD KEYBOARD'],[40,'kb','gold','GOLD KEYBOARD']);REWARDS.sort((a,b)=>a[0]-b[0]);
+function kbIcon(s=2,skin){const[c,g]=mk(12,9),cols={classic:['#3a3a46','#9aa3b5'],retro:['#0b1a0b','#33ff66'],neon:['#1a1433','#ff5ac8'],wood:['#6b3d1f','#e6c38c'],gold:['#b8680a','#ffe08a']}[skin||'classic'];
+  R(g,cols[0],0,0,12,9);for(let y=1;y<7;y+=3)for(let x=1;x<11;x+=3)R(g,cols[1],x,y,2,2);R(g,cols[1],3,7,6,1);outline(c);return show(c,s)}
+function kbGlyphFor(k){const fg=getComputedStyle(APP).getPropertyValue('--fg').trim()||'#f6e9d0';const skinCol={retro:'#33ff66',neon:'#ff9ff0',wood:'#3b2414',gold:'#3b2414'}[SET.kbSkin];
+  const col=(skinCol||fg).length===4?'#ffffff':(skinCol||fg);
+  if(KB.mode==='emo'&&EMOJIS.includes(k))return glyph(k,col,true);if(/[؀-ۿ]/.test(k))return glyph(k,col,false);if(k==='LANG'&&KB.lang==='en')return glyph('ع',col,false);if(k==='EMO')return glyph('😀',col,true);return null}
+
+/* ---- Merlift, the most jacked wizard ---- */
+const WZ={robe:'#6c3fc4',robeD:'#4d2a94',star:'#ffd54a',skin:'#e0a372',skinD:'#b97a4c',beard:'#f3efe6',beardD:'#cfc8bb',belt:'#f2b84b'};
+function drawWizard(pose='idle',t=0,face='open'){const[c,g]=mk(40,50);const bob=pose==='flex'?Math.round(Math.sin(t/180)):0;
+  // hat
+  for(let y=0;y<13;y++){const w=Math.max(2,Math.round(2+y*1.5)),x=Math.round(20-w/2+(12-y)*.25);R(g,y%5===2?WZ.robeD:WZ.robe,x,y+bob,w,1)}
+  R(g,WZ.robeD,6,13+bob,28,3);R(g,WZ.robe,7,13+bob,26,1);R(g,WZ.star,18,5+bob,1,1);R(g,WZ.star,22,9+bob,1,1);R(g,WZ.star,15,10+bob,1,1);R(g,WZ.star,21,3+bob,1,1);
+  // head
+  R(g,WZ.skin,13,16+bob,14,8);R(g,WZ.skinD,13,23+bob,14,1);
+  if(face==='blink'){R(g,OL,15,19+bob,3,1);R(g,OL,22,19+bob,3,1)}else if(face==='wink'){R(g,OL,15,18+bob,2,2);R(g,OL,22,19+bob,3,1)}else{R(g,OL,15,18+bob,2,2);R(g,OL,23,18+bob,2,2);R(g,'#ffffff',15,18+bob,1,1);R(g,'#ffffff',23,18+bob,1,1)}
+  R(g,WZ.beard,14,16+bob,5,1);R(g,WZ.beard,21,16+bob,5,1);R(g,WZ.skinD,19,19+bob,2,2);
+  // beard
+  R(g,WZ.beard,12,21+bob,16,6);R(g,WZ.beard,14,27+bob,12,3);R(g,WZ.beard,16,30+bob,8,2);R(g,WZ.beard,18,32+bob,4,1);R(g,WZ.beardD,15,22+bob,10,1);R(g,'#8c3a2e',18,23+bob,4,1);
+  R(g,WZ.beardD,17,27+bob,1,3);R(g,WZ.beardD,22,27+bob,1,3);
+  // body: robe vest, huge shoulders
+  R(g,WZ.robe,11,26,18,14);R(g,WZ.robeD,11,26,2,14);R(g,WZ.robeD,27,26,2,14);R(g,WZ.belt,11,36,18,2);R(g,WZ.robeD,19,36,2,2);
+  disc(g,WZ.skin,9,28,3.5);disc(g,WZ.skin,31,28,3.5);
+  const arm=(side,p)=>{const X=side<0?0:40,m=v=>side<0?v:X-v-1,r=(x,y,w,hh,col)=>R(g,col,side<0?x:40-x-w,y,w,hh);
+    if(p==='flex'){r(2,26,8,5,WZ.skin);r(1,17,6,10,WZ.skin);disc(g,WZ.skin,m(6),25,3.5);r(1,15,6,3,WZ.skinD);r(3,24,4,1,WZ.skinD)}
+    else if(p==='wave'){r(4,18,5,10,WZ.skin);r(3,12,6,7,WZ.skin);disc(g,WZ.skin,m(6),22,3);r(3,10,6,3,WZ.skinD)}
+    else{r(5,28,6,11,WZ.skin);disc(g,WZ.skin,m(7),32,3.5);r(5,39,6,3,WZ.skinD)}};
+  arm(-1,pose==='flex'?'flex':'idle');arm(1,pose==='flex'?'flex':pose==='wave'?'wave':'idle');
+  // dumbbell staff for idle
+  if(pose==='idle'){R(g,'#8d6e63',33,14,2,30);R(g,'#5b5f6b',30,10,8,3);R(g,'#5b5f6b',30,14,8,1);R(g,'#9aa3b5',31,11,6,1)}
+  // robe skirt + boots
+  R(g,WZ.robe,12,40,16,7);R(g,WZ.robeD,12,46,16,1);R(g,WZ.star,14,42,1,1);R(g,WZ.star,24,44,1,1);R(g,'#3b2a1a',13,47,6,3);R(g,'#3b2a1a',21,47,6,3);
+  outline(c);return c}
+function wizardFace(s=1){const[c,g]=mk(32,32);g.drawImage(drawWizard('idle',0,'open'),-4,0);return show(c,s)}
+const WZ_JOKES=['I don\'t skip leg day. Leg day skips ME, out of respect.','My spell book is just a training log with more lightning.','They asked me to pull a sword from a stone. I deadlifted the stone.','I once cast "Fireball". It was just my pre-workout.',
+  'Other wizards ride dragons. I carry mine to the car, for cardio.','My beard has abs. Don\'t ask how.','I\'m 900 years old and I\'ve never missed a protein window.','The mirror on the wall says I\'m the most jacked of them all. It\'s scared of me.',
+  'My staff is a 40 kg dumbbell. Walking sticks are for warm-ups.','I turned a frog into a prince. Then I put the prince on a bulking plan.','Abracadabra! …that\'s what I yell on my last rep.','My hat is tall so my biceps have room to flex.',
+  'I don\'t do magic tricks. I do magic SETS.','Gandalf said "You shall not pass." I said "You shall not pass up protein."','My potions are 90% whey, 10% mystery.','I can teleport, but I walk. 10,000 steps, wizard rules.'];
+const WZ_TIPS=['Add a little weight or one extra rep each week. That\'s the real magic: progressive overload.','Sleep 7–9 hours. Muscles are built in bed, not in the gym.','Spread your protein over 3–4 meals; your body uses it better that way.','Warm up with 2 light sets before your first heavy lift.',
+  'Drink water before you feel thirsty. A 2% drop in hydration costs you strength.','Every 6–8 weeks, take an easier week. Wizards call it a deload.','Film one set from the side. Your form will thank you.','Slow down the lowering part of each rep. 2–3 seconds builds more muscle.',
+  'Can\'t make the gym? 20 push-ups, 30 squats and a 1-minute plank still counts.','Track your lifts. If it\'s not written down, it didn\'t happen.'];
+function wizardLines(){const n=P.name||'champ',L=ST.log.filter(l=>l.done),last=L[L.length-1],out=[];const H=new Date().getHours();
+  out.push(pick([`Ah, ${n}! Merlift the Magnificent, most jacked wizard in all the realms, at your service.`,`*POOF* Greetings, ${n}! Don't mind the smoke. That's just my pump.`,`Hail, ${n}! I sensed weak excuses nearby, so I teleported in.`]));
+  const facts=[];
+  if(!L.length)facts.push('Zero workouts in your log? Even my staff has more reps. Let\'s change that today.');
+  else{const days=Math.round((Date.now()-new Date(last.d+'T12:00'))/864e5);if(days>=3)facts.push(`It's been ${days} days since your last workout. My biceps are worried about you.`);else facts.push(`${L.length} workout${L.length>1?'s':''} in your log. My crystal ball says: gains incoming.`);
+    const byR={};L.forEach(l=>byR[l.name]=(byR[l.name]||0)+1);const fav=Object.entries(byR).sort((a,b)=>b[1]-a[1])[0];if(fav&&fav[1]>1)facts.push(`Your favourite spell is ${fav[0]}. You've cast it ${fav[1]} times.`)}
+  if(ST.streak>=2)facts.push(`A ${ST.streak}-workout streak! I once held one for 300 years. Then I discovered cake.`);
+  const t=calc().pro;if(H>=14&&ST.protein<t*.5)facts.push(`You're at ${ST.protein} g of ${t} g protein today. Even a potion of chicken would help.`);
+  const pr=lvlProg();facts.push(`Level ${pr.L}. ${pr.need-pr.cur} XP to level ${pr.L+1}, and ${120-pr.L} levels before you're as swole as me. Not that anyone is.`);
+  const wl=ST.wlog||[];if(wl.length>1){const d=Math.round((wl[wl.length-1][1]-wl[0][1])*10)/10;if(d)facts.push(`Your weight moved ${d>0?'+':''}${fmtW(d)} since you started logging. The scrolls don't lie.`)}
+  try{const rows=standings(false),rk=rows.findIndex(r=>r.me)+1;facts.push(`You're #${rk} in ${LG.ko?'the knockout':lgName(LG.lg)+' League'} this ${LG.ko?'week':'month'}. ${rk<=20?'Top 20! Keep it up.':'Top 20 move up. I believe in you.'}`)}catch(e){}
+  for(let i=facts.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[facts[i],facts[j]]=[facts[j],facts[i]]}
+  out.push(...facts.slice(0,2),'Tip: '+pick(WZ_TIPS),pick(WZ_JOKES),pick(['Merlift OUT! *flexes into a cloud of smoke*','I must go. A dragon needs a spotter.','Farewell! May your pump be eternal.']));return out}
+function wizardOK(force){if(force)return true;if(SET.wizard===false||!P||!P.me||tab!=='home')return false;if(APP.querySelector('.overlay,.modal,.tour,.chestfs,.mpeek'))return false;
+  const D=dayOf(),hr=new Date().getHours(),asleep=D.sleep>D.wake?(hr>=D.sleep||hr<D.wake):(hr>=D.sleep&&hr<D.wake);if(asleep||curScene==='sleep')return false;
+  const last=META.wiz||0;if(Date.now()-last<5*36e5)return false;return!META.wiz?(META.launches||0)>=2:Math.random()<.22}
+function maybeMerlift(force){if(!wizardOK(force))return;META.wiz=Date.now();save();
+  const peek=h('div',{class:'mpeek','aria-hidden':'true'},show(drawWizard('wave',0),3),h('div',{class:'mbub'},'HEY '+(P.name||'CHAMP').toUpperCase()+'!'));APP.append(peek);tone(660,.08);tone(990,.12,null,.1);
+  setTimeout(()=>peek.classList.add('in'),30);setTimeout(()=>peek.classList.remove('in'),2300);setTimeout(()=>{peek.remove();merliftTalk()},2900)}
+function merliftTalk(){const st=APP.querySelector('.stage.scene');if(!st||tab!=='home')return;const lines=wizardLines();let i=0,raf=0;
+  st.replaceWith(homeScene('listen'));const st2=APP.querySelector('.stage.scene');const wc=h('canvas',{class:'mwiz',width:40,height:50,'aria-hidden':'true'}),wg=wc.getContext('2d');st2.append(wc);
+  const t0=performance.now();const anim=now=>{if(!wc.isConnected)return;const t=now-t0,pose=i===lines.length-2?'flex':Math.floor(t/2200)%3===1?'flex':'idle',face=Math.floor(t/2700)%5===4?'blink':(i===lines.length-2&&Math.floor(t/900)%2?'wink':'open');
+    wg.clearRect(0,0,40,50);wg.drawImage(drawWizard(pose,t,face),0,0);raf=requestAnimationFrame(anim)};requestAnimationFrame(anim);
+  const txt=h('p',{}),cnt=h('span',{class:'label'}),nb=h('button',{class:'btn'},'NEXT ▶'),bub=h('div',{class:'box mtalk',role:'status','aria-live':'polite'},h('div',{class:'row nowrap',style:'gap:10px'},wizardFace(1.5),h('div',{class:'grow',style:'display:flex;flex-direction:column;gap:4px'},h('h3',{},'MERLIFT'),cnt)),txt,
+    h('div',{class:'row nowrap'},h('button',{class:'btn ghost',onclick:()=>end()},'BYE'),nb));
+  st2.after(bub);const show2=()=>{txt.textContent=lines[i];cnt.textContent=(i+1)+' / '+lines.length;nb.textContent=i===lines.length-1?'BYE ▶':'NEXT ▶';tone(520+i*60,.05);haptic('tap')};
+  const end=()=>{cancelAnimationFrame(raf);wc.classList.add('out');bub.remove();setTimeout(()=>{if(st2.isConnected)st2.replaceWith(homeScene(pickScene()))},500)};
+  nb.onclick=()=>{i++;if(i>=lines.length)end();else show2()};show2();wizardSchedule()}
+function wizardSchedule(){if(!(window.IronBitNative&&IronBitNative.wizardSchedule))return;if(SET.wizard===false||SET.wizNotif===false){IronBitNative.wizardSchedule('[]');return}
+  const D=dayOf(),out=[];let day=new Date();const L=ST.log.filter(l=>l.done),fav=L.length?L[L.length-1].name:null,n=P&&P.name||'champ';
+  const pool=[['Merlift has a message','Hey '+n+', your muscles called. They miss you.'],['Merlift says','Protein check! Have you hit '+calc().pro+' g today?'],['Merlift says','Drink a glass of water. Wizard\'s orders.'],
+    fav?['Merlift remembers',fav+' is waiting for you. Shall we?']:['Merlift says','One workout today keeps the noodle arms away.'],['A joke from Merlift',pick(WZ_JOKES)],['Merlift\'s tip',pick(WZ_TIPS)]];
+  for(let k=0;k<4;k++){day=new Date(day.getTime()+(2+Math.floor(Math.random()*3))*864e5);const lo=Math.min(D.wake+2,20),hi=Math.max(lo+1,Math.min(D.sleep-2,21));day.setHours(lo+Math.floor(Math.random()*(hi-lo)),Math.floor(Math.random()*60),0,0);
+    const[ti,tx]=pool[Math.floor(Math.random()*pool.length)];out.push({at:day.getTime(),title:ti,text:tx})}
+  IronBitNative.wizardSchedule(JSON.stringify(out))}
+
+function kbSettings(){const segK=(key,label,opts)=>h('div',{class:'srow'},h('span',{},label),h('div',{class:'seg',style:'flex:none'},opts.map(([v,t])=>h('button',{'aria-pressed':String(SET[key]===v),onclick:()=>{SET[key]=v;save();render(true)}},t))));
+  const tgK=(key,label)=>h('div',{class:'srow'},h('span',{},label),h('button',{class:'toggle','aria-pressed':String(SET[key]!==false),'aria-label':label,onclick:()=>{SET[key]=SET[key]===false;save();render(true)}}));
+  return h('div',{class:'box'},h('span',{class:'label'},'KEYBOARD'),segK('pkb','Keyboard',[[true,'PIXEL'],[false,'PHONE']]),
+    SET.pkb!==false?[segK('kbSize','Key size',[['s','S'],['m','M'],['l','L']]),tgK('kbSound','Key sounds'),tgK('kbHap','Key vibration'),
+      h('span',{class:'label'},'SKINS'),h('div',{class:'list'},KB_SKINS.map(([id,n,L])=>{const ok=id==='classic'||unlocked('kb',id),on=(SET.kbSkin||'classic')===id;
+        return h('button',{class:'opt','aria-pressed':String(on),disabled:!ok,onclick:()=>{SET.kbSkin=id;save();render(true)}},kbIcon(3,id),h('span',{class:'grow'},n),h('span',{class:'tag'+(on?' s':'')},on?'ON':ok?'USE':'LVL '+L))})),
+      h('label',{class:'field',for:'kbt'},h('span',{class:'label'},'TRY IT'),h('input',{id:'kbt',placeholder:'Type here to test the keyboard'}))]:h('span',{class:'small'},'Using your phone\'s own keyboard.'))}
+/* ---- sign in (explained, coming with the online version) ---- */
+function accountBox(){return h('div',{class:'box'},h('span',{class:'label'},'ACCOUNT'),h('div',{class:'row nowrap'},px('lock',3),h('span',{class:'grow small'},'No account needed. Sign-in arrives with the online version: it backs up your data, syncs a new phone, and powers real leagues and follows.')),
+  h('button',{class:'btn ghost',disabled:true},'SIGN IN WITH GOOGLE · SOON'))}
+
 /* ================= nav + boot ================= */
 const TABS=[['home','HOME','house'],['train','TRAIN','dumb'],['fuel','FUEL','leg'],['plus','','plus'],['club','CLUB','club'],['map','GYMS','pin'],['me','ME','head']];
 const nav=document.getElementById('nav');
-function render(keep){if(!P)return;renderKeep=!!keep;const y=scr.scrollTop;scr.replaceChildren(...SCREENS[tab]().filter(Boolean));renderKeep=false;updXpTop();updCoinTop();scr.scrollTop=keep?y:0;if(!keep){scr.classList.remove('anim');void scr.offsetWidth;scr.classList.add('anim')}requestAnimationFrame(fitAll);
+function render(keep){if(!P)return;renderKeep=!!keep;const y=scr.scrollTop;scr.replaceChildren(...SCREENS[tab]().filter(Boolean));renderKeep=false;updXpTop();updCoinTop();if(tab==='home')setTimeout(()=>maybeMerlift(),1800);scr.scrollTop=keep?y:0;if(!keep){scr.classList.remove('anim');void scr.offsetWidth;scr.classList.add('anim')}requestAnimationFrame(fitAll);
   nav.replaceChildren(...TABS.map(([id,label,ic])=>id==='plus'?h('button',{class:'plus','aria-label':'Quick actions','aria-expanded':'false',onclick:fabMenu},px('plus',4)):h('button',{'aria-current':id===tab?'page':'false',onclick:()=>{closeFab();if(id==='train')trainView='main';tab=id;render()}},id==='me'?h('span',{class:'dockface'},headIcon(P,P.char,2,todayMood())):px(ic,3),label)))}
 /* Android back button hook: returns true when it handled the press */
 window.ibBack=()=>{if(APP.querySelector('.fab')){closeFab();return true}const m=APP.querySelector('.modal');if(m){m.remove();return true}const o=APP.querySelectorAll('.overlay');if(o.length&&P){o[o.length-1].remove();render();return true}
@@ -2549,6 +2976,6 @@ applyTheme();refreshModeIcons();save();
 if(P){if(!P.dob)P.dob=(new Date().getFullYear()-(P.age||25))+'-01-01';P.age=ageFrom(P.dob)}
 const showLog=P&&META.ver!==VERSION;META.ver=VERSION;save();
 if(P)P.me=true;loadArt();document.getElementById('xpTop').addEventListener('click',openLevelMap);document.getElementById('coinTop').addEventListener('click',itemShop);
-if(P&&!META.coins07){META.coins07=true;ST.coins=(ST.coins||0)+100;save()}if(P)checkLeague();
+if(!META.since)META.since=today();if(P){syncStreak();setTimeout(wizardSchedule,3000)}if(P&&!META.coins07){META.coins07=true;ST.coins=(ST.coins||0)+100;save()}if(P)checkLeague();
 if(!P)onboard('intro',false);else{render();const brief=META.brief!==today();if(brief)openBriefing();if(showLog)setTimeout(changelogModal,900);else if(!brief&&!META.rated&&META.launches>=META.rateNext)setTimeout(rateModal,1500)}
 </script>

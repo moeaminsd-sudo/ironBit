@@ -1,4 +1,4 @@
-# IronBit (Android) · v0.7
+# IronBit (Android) · v0.8
 
 Pixel-art gym app. Training, food, muscle map, calendar and gym maps run offline from bundled files in `app/src/main/assets/`. The club, leaderboard and ideas use demo data until the online version is added. The weather card is the only feature that uses the internet; without a connection it simply hides.
 
@@ -13,6 +13,10 @@ Pixel-art gym app. Training, food, muscle map, calendar and gym maps run offline
 ## Music controls
 
 IronBit can show and control whatever is playing (Spotify, Anghami, YouTube Music and others). Android asks once for **notification access**; IronBit uses it only to find the active music player and never reads or stores notifications.
+
+## Merlift notifications
+
+Merlift schedules a few rare reminders on the phone itself (no internet or server). Android 13+ asks once for notification permission when the user turns them on. The large picture is `res/drawable-nodpi/wizard_face.png`; the status-bar icon is `res/drawable/ic_stat_wizard.xml`.
 
 ## Custom art
 
