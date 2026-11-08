@@ -1,4 +1,4 @@
-# IronBit (Android) · v0.9
+# IronBit (Android) · v0.91
 
 Pixel-art gym app. Training, food, muscle map, calendar and gym maps run offline from bundled files in `app/src/main/assets/`. The club, leaderboard and ideas use demo data until the online version is added. The weather card is the only feature that uses the internet; without a connection it simply hides.
 
@@ -21,6 +21,21 @@ Merlift schedules a few rare reminders on the phone itself (no internet or serve
 ## Custom art
 
 Drop your PNGs into `app/src/main/assets/art/` and list their names (without `.png`) in `art/manifest.json`. Anything listed replaces the built-in drawing with the same name. See the IronBit Art Kit for names and sizes.
+
+## Where the code is
+
+The app is split into small files in `app/src/web/`:
+
+- `index.template.html`: the page shell
+- `css/`: styles, one file per version of changes
+- `js/`: the app, one file per area (character, food, onboarding, leagues…), loaded in file-name order
+- `fonts-local.css`: the offline fonts
+
+Every build stitches them into `app/src/main/assets/index.html` automatically (the `buildWeb` task in `app/build.gradle`). Edit the files in `src/web/`, never `index.html`. To preview on a computer, run `python3 tools/build_web.py app/src/web preview.html google` and open `preview.html` in Chrome.
+
+## Updating the app on your phone
+
+Every build is signed with the same test key (`app/debug.keystore`), so new APKs install over old ones. If an older test version is on your phone, uninstall it once first; after that, updates install normally.
 
 ## Build locally instead
 

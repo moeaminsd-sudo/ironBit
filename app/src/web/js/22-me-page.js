@@ -1,0 +1,30 @@
+/* ================= me page ================= */
+function meScreen(){const pr=lvlProg(),c=calc(),C=effChar(P,P.char),has=a=>C.acc.includes(a),mood=todayMood(),nice=s=>(LABELS[s]||s||'none').toUpperCase();
+  const slot=(lab,val,col,tk,cat)=>h('button',{class:'slot',onclick:()=>gearPicker(cat)},h('span',{class:'label'},lab),h('span',{class:'row nowrap',style:'gap:6px;min-width:0;max-width:100%'},col?h('i',{class:'swatch',style:`background:${col}`}):null,h('span',{class:'sv'},val)));
+  return[
+   h('div',{class:'row nowrap',style:'align-items:center'},h('div',{class:'pfp'},headIcon(P,P.char,4,mood)),
+     h('div',{class:'grow',style:'display:flex;flex-direction:column;gap:7px'},avatarRow(2),h('span',{class:'small'},`${P.city||''} · ${P.age} yrs · ${P.height} cm · ${fmtW(P.weight)}`),
+       h('div',{class:'row nowrap'},h('span',{class:'tag s'},'LVL '+pr.L),h('span',{class:'label'},rank())),h('div',{class:'bar'},h('i',{style:`width:${pr.pct}%`})),
+       h('div',{class:'igstats'},h('button',{onclick:()=>{tab='club';clubTab='feed';render()},'aria-label':'Your posts'},h('span',{class:'num'},CLUB.posts.filter(x=>x.me).length),h('span',{class:'label'},'POSTS')),h('button',{onclick:()=>followPage('followers'),'aria-label':'Followers'},h('span',{class:'num'},CLUB.followers.length),h('span',{class:'label'},'FOLLOWERS')),h('button',{onclick:()=>followPage('following'),'aria-label':'Following'},h('span',{class:'num'},Object.keys(CLUB.follow).length),h('span',{class:'label'},'FOLLOWING'))))),
+   P.incomplete?h('button',{class:'opt',style:'border-color:var(--a2)',onclick:()=>onboard('info',true)},px('bolt',3),h('span',{class:'grow'},'Finish your profile so your plan and protein target fit you'),h('span',{class:'tag c'},'SETUP')):null,
+   h('button',{class:'opt',onclick:openBriefing},px('sun',3),h('span',{class:'grow'},'Today\'s briefing: plan, weather and food'),h('span',{class:'tag s'},'DAILY')),
+   moodBox(),
+   h('div',{class:'box'},h('div',{class:'row spread'},h('span',{class:'label'},'EQUIPMENT'),h('span',{class:'small'},'Tap a slot to change it')),
+     h('div',{class:'gearg'},
+       h('div',{class:'gcol'},slot('HEAD',nice(C.head),C.head!=='none'?C.headC:null,'gear','head'),slot('TOP',nice(P.char.top),C.topC,'outfit','top'),slot('BOTTOMS',nice(C.bottom),C.botC,'outfit','bottom')),
+       h('div',{class:'stage gbody'},show(drawFront(P,P.char,mood),3)),
+       h('div',{class:'gcol'},slot('L WRIST',has('watch')?'WATCH':'EMPTY',null,'gear','lw'),slot('R WRIST',has('wristband')?'BAND':has('ring')?'RING':'EMPTY',has('wristband')?C.accC:null,'gear','rw'),slot('FEET','SNEAKERS',C.shoeC,'outfit','feet'))),
+     h('span',{class:'label'},'ACCESSORIES'),
+     h('div',{class:'inv'},['glasses','earbuds','chain','gloves','cape','aura'].map(a=>h('button',{class:'islot'+(has(a)?' on':''),'aria-label':a+(has(a)?' equipped, tap to remove':' tap to wear'),'aria-pressed':String(has(a)),onclick:()=>toggleAcc(a)},unlocked('acc',a)?px(a,3):px('lock',3))))),
+   h('div',{class:'row nowrap'},h('button',{class:'btn alt grow',onclick:openLevelMap},'LEVEL MAP'),h('button',{class:'btn ghost grow',onclick:()=>onboard('char',true)},'EDIT LOOK')),
+   h('div',{class:'ptiles'},h('button',{class:'tile',onclick:statsPage},px('star',3),'STATS'),h('button',{class:'tile',onclick:inventoryPage},px('shirt',3),'INVENTORY'),h('button',{class:'tile',onclick:notesPage},px('note',3),'NOTES'),h('button',{class:'tile',onclick:streakPage},px('flame',3),'STREAK')),
+   h('button',{class:'opt',onclick:itemShop},coinIcon(3),h('span',{class:'grow',style:'display:flex;flex-direction:column;gap:4px'},h('span',{},'Item shop'),h('span',{class:'small'},'Chests, outfits, themes and room decor')),h('span',{class:'tag s'},(ST.coins||0)+' COINS')),
+   h('button',{class:'opt',onclick:()=>{tab='club';clubTab='board';lbTab='league';render()}},LG.ko?px('crown',3):lgBadge(LG.lg,2),h('span',{class:'grow',style:'display:flex;flex-direction:column;gap:4px'},h('span',{},LG.ko?'Knockout · '+KO[LG.ko][0]:'League '+lgNum(LG.lg)+' · '+lgName(LG.lg)),h('span',{class:'small'},'Trophies: '+(LG.cups.gold+LG.cups.silver+LG.cups.bronze))),h('span',{class:'tag'},'LEAGUE')),
+   h('details',{class:'box xp'},h('summary',{},h('span',{class:'label'},'COLLECTION'),h('span',{class:'small'},REWARDS.filter(r=>unlocked(r[1],r[2])).length+' / '+REWARDS.length)),
+     h('div',{class:'coll'},REWARDS.map(r=>{const ok=unlocked(r[1],r[2]);return h('button',{class:'citem'+(ok?' got':' locked'),style:'color:var(--fg);text-align:left',onclick:()=>ok?(r[1]==='pal'||r[1]==='sfx'?(tab='settings',render()):onboard('char',true,r[1]==='top'?'outfit':'gear')):toast('REACH LVL '+r[0]+' TO UNLOCK')},
+       ok?rewardIcon(r):px('lock',2),h('span',{class:'grow',style:'display:flex;flex-direction:column;gap:3px;min-width:0'},h('span',{class:'label',style:'color:var(--fg)'},r[3]),h('span',{class:'label'},ok?'UNLOCKED':'LVL '+r[0])))}))),
+   h('div',{class:'box'},h('span',{class:'label'},'MY GOAL'),h('h3',{},GOALS[P.goal.type][0]),
+     h('span',{class:'small'},`${P.goal.days} days/week · ${P.goal.mins} min · ${P.goal.level} · ${{gym:'full gym',db:'dumbbells',none:'no equipment'}[P.goal.equip]}`),
+     h('div',{class:'macro'},h('div',{},h('span',{class:'label'},'KCAL'),h('span',{class:'num',style:'font-size:11px'},c.kcal)),h('div',{},h('span',{class:'label'},'PROTEIN'),h('span',{class:'num',style:'font-size:11px'},c.pro+'g')),h('div',{},h('span',{class:'label'},'XP'),h('span',{class:'num',style:'font-size:11px'},ST.xp))),
+     h('div',{class:'row nowrap'},h('button',{class:'btn ghost grow',onclick:()=>onboard('goal',true)},'CHANGE GOAL'),h('button',{class:'btn ghost grow',onclick:()=>onboard('info',true)},'EDIT INFO'))),
+   weighBox()]}

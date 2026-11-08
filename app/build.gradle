@@ -1,4 +1,5 @@
 plugins { id 'com.android.application' }
+
 android {
     namespace 'com.ironbit.app'
     compileSdk 34
@@ -6,15 +7,52 @@ android {
         applicationId 'com.ironbit.app'
         minSdk 24
         targetSdk 34
-        versionCode 9
-        versionName '0.9'
+        versionCode 10
+        versionName '0.91'
+    }
+    // One fixed test key for every build, so new APKs install over old ones
+    // (GitHub made a new random key each time, which caused "App not installed").
+    signingConfigs {
+        debug {
+            storeFile file('debug.keystore')
+            storePassword 'android'
+            keyAlias 'androiddebugkey'
+            keyPassword 'android'
+        }
     }
     buildTypes {
+        debug { signingConfig signingConfigs.debug }
         release { minifyEnabled true; shrinkResources true; proguardFiles getDefaultProguardFile('proguard-android-optimize.txt') }
     }
     compileOptions { sourceCompatibility JavaVersion.VERSION_17; targetCompatibility JavaVersion.VERSION_17 }
 }
+
 dependencies {
     implementation 'androidx.webkit:webkit:1.11.0'
     implementation 'androidx.core:core:1.13.1'
 }
+
+/*
+ * The app's code lives in small files under src/web/ (css/ and js/, loaded in file-name order).
+ * Before every build they are stitched into one file: src/main/assets/index.html.
+ * Edit the files in src/web/, never index.html.
+ */
+tasks.register('buildWeb') {
+    def web = file('src/web')
+    def out = file('src/main/assets/index.html')
+    inputs.dir web
+    outputs.file out
+    doLast {
+        def css = new StringBuilder()
+        file("${web}/css").listFiles().findAll { it.name.endsWith('.css') }.sort { it.name }.each { css << it.getText('UTF-8') << '\n' }
+        def js = new StringBuilder()
+        file("${web}/js").listFiles().findAll { it.name.endsWith('.js') }.sort { it.name }.each { js << it.getText('UTF-8') << '\n' }
+        def fonts = file("${web}/fonts-local.css").getText('UTF-8')
+        def html = file("${web}/index.template.html").getText('UTF-8')
+        html = html.replace('<!--FONTS-->', '<style>\n' + fonts + '</style>')
+                   .replace('/*@CSS*/', css.toString())
+                   .replace('/*@JS*/', js.toString())
+        out.write(html, 'UTF-8')
+    }
+}
+preBuild.dependsOn 'buildWeb'
