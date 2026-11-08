@@ -1,4 +1,4 @@
-# IronBit (Android) · v0.8
+# IronBit (Android) · v0.9
 
 Pixel-art gym app. Training, food, muscle map, calendar and gym maps run offline from bundled files in `app/src/main/assets/`. The club, leaderboard and ideas use demo data until the online version is added. The weather card is the only feature that uses the internet; without a connection it simply hides.
 

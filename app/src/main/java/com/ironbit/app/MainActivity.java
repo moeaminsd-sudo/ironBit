@@ -251,6 +251,9 @@ public class MainActivity extends Activity {
         }
 
         @JavascriptInterface
+        public void updateWidget(String json) { IronBitWidget.save(MainActivity.this, json); }
+
+        @JavascriptInterface
         public void wizardSchedule(String json) { WizardReceiver.schedule(MainActivity.this, json); }
 
         @JavascriptInterface
@@ -278,6 +281,12 @@ public class MainActivity extends Activity {
             pendingCamera = null;
         }
     }
+
+    @Override
+    protected void onPause() { super.onPause(); if (web != null) web.onPause(); }      // lets the page stop the camera
+
+    @Override
+    protected void onResume() { super.onResume(); if (web != null) web.onResume(); }   // the page restarts the camera
 
     @Override
     protected void onActivityResult(int code, int result, Intent data) {
